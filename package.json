@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ThatGuyNamedBry/API-Project#readme",
   "dependencies": {
-    "bcrypt": "^5.1.0"
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3"
   }
 }
