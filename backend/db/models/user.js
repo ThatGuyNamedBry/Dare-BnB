@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Spot, {
+         foreignKey: 'userId',
+         through: models.Booking });
       User.hasMany(models.Review, { foreignKey: 'userId' });
       User.hasMany(models.Booking, { foreignKey: 'userId' });
     }
@@ -66,3 +69,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return User;
 };
+
