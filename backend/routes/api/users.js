@@ -1,6 +1,7 @@
 // backend/routes/api/users.js
 
 const express = require('express');
+const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
