@@ -77,6 +77,8 @@ router.get(
           id: user.id,
           email: user.email,
           username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName
         };
         return res.json({
           user: safeUser
@@ -84,6 +86,25 @@ router.get(
       } else return res.json({ user: null });
     }
 );
+
+// Get current user
+router.get('/current-user', requireAuth, (req, res) => {
+  const { user } = req;
+  if (user) {
+    const safeUser = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName
+    };
+    return res.json({
+      user: safeUser
+    });
+  } else {
+    return res.json({ user: null });
+  }
+});
 
 //Test router
 // router.post('/test', function(req, res) {
