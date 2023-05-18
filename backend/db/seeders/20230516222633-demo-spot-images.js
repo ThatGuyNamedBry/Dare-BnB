@@ -1,5 +1,10 @@
 'use strict';
+const bcrypt = require("bcryptjs");
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -12,6 +17,30 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    options.tableName = 'SpotImages';
+    return queryInterface.bulkInsert(options, [
+      {
+        spotId: 1,
+        url: 'https://example.com/image1.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        url: 'https://example.com/image2.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        url: 'https://example.com/image3.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +50,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'SpotImages';
+    return queryInterface.bulkDelete(options);
   }
 };

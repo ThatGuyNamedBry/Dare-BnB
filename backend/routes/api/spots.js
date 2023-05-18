@@ -30,8 +30,21 @@ router.get('/', async (req, res) => {
       'price',
       'createdAt',
       'updatedAt',
-      'avgRating',
-      'previewImage'
+      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
+      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+
+    ],
+    include: [
+      {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      },
+      {
+        model: SpotImage,
+        as: 'SpotImages',
+        attributes: []
+      }
     ]
   });
 
@@ -137,7 +150,7 @@ router.post('/', requireAuth, async (req, res, next) => {
 
 
 // Get all Spots owned by the Current User
-router.get('/owned', requireAuth, async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
   const ownerId = req.user.id;
 
   const spots = await Spot.findAll({
@@ -158,8 +171,8 @@ router.get('/owned', requireAuth, async (req, res) => {
       'price',
       'createdAt',
       'updatedAt',
-      'avgRating',
-      'previewImage'
+      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
+      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
     ]
   });
 
@@ -169,8 +182,8 @@ router.get('/owned', requireAuth, async (req, res) => {
 });
 
 // Get details of a Spot by ID
-router.get('/:id', async (req, res, next) => {
-  const spotId = req.params.id;
+router.get('/:spotId', async (req, res, next) => {
+  const spotId = req.params.spotId;
 
   try {
     const spot = await Spot.findByPk(spotId, {
@@ -210,7 +223,7 @@ router.get('/:id', async (req, res, next) => {
       ]
     });
 
-    if (!spot) {
+    if (!spot || !spot.id) {
       return res.status(404).json({
         message: "Spot couldn't be found"
       });
@@ -237,6 +250,185 @@ router.get('/:id', async (req, res, next) => {
     };
 
     return res.json(spotData);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const { url, preview } = req.body;
+
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot || !spot.id) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+
+    // Check if the current user is the owner of the spot
+    if (spot.ownerId !== req.user.id) {
+      return res.status(403).json({
+        message: 'Spot must belong to the current user'
+      });
+    }
+
+    // Create and add the image to the spot
+    const image = await SpotImage.create({
+      spotId,
+      url,
+      preview
+    });
+
+    return res.status(200).json({
+      id: image.id,
+      url: image.url,
+      preview: image.preview
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Edit a Spot
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const ownerId = req.user.id;
+
+  try {
+    if (!address) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { address: 'Street address is required' }
+      });
+    }
+    if (!city) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { city: 'City is required' }
+      });
+    }
+    if (!state) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { state: 'State is required' }
+      });
+    }
+    if (!country) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { country: 'Country is required' }
+      });
+    }
+    if (!lat || isNaN(lat)) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { lat: 'Latitude is not valid' }
+      });
+    }
+    if (!lng || isNaN(lng)) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { lng: 'Longitude is not valid' }
+      });
+    }
+    if (!name || name.length > 50) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { name: 'Name must be less than 50 characters' }
+      });
+    }
+    if (!description) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { description: 'Description is required' }
+      });
+    }
+    if (!price) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { price: 'Price per day is required' }
+      });
+    }
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot || !spot.id) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+
+    // Check if the current user is the owner of the spot
+    if (spot.ownerId !== ownerId) {
+      return res.status(403).json({
+        message: 'Only the owner of the spot is authorized to edit'
+      });
+    }
+
+    // Update the spot
+    spot.address = address;
+    spot.city = city;
+    spot.state = state;
+    spot.country = country;
+    spot.lat = lat;
+    spot.lng = lng;
+    spot.name = name;
+    spot.description = description;
+    spot.price = price;
+
+    await spot.save();
+
+    return res.status(200).json({
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Delete a Spot
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const ownerId = req.user.id;
+
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot || !spot.id) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+
+    // Check if the current user is the owner of the spot
+    if (spot.ownerId !== ownerId) {
+      return res.status(403).json({
+        message: 'Only the owner of the spot is authorized to delete'
+      });
+    }
+
+    // Delete the spot
+    await spot.destroy();
+
+    return res.status(200).json({
+      message: 'Successfully deleted'
+    });
   } catch (error) {
     return next(error);
   }
