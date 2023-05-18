@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId' });
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' });
       Spot.belongsToMany(models.User, {
         through: models.Booking,
-        foreignKey: 'spotId' });
-      Spot.hasMany(models.Review, { foreignKey: 'spotId' });
-      Spot.hasMany(models.SpotImage, { foreignKey: 'spotId' });
+        foreignKey: 'spotId',
+        as: 'BookedUsers', });
+      Spot.hasMany(models.Review, { foreignKey: 'spotId', as: 'Reviews' });
+      Spot.hasMany(models.SpotImage, { foreignKey: 'spotId', as: 'SpotImages' });
     }
   }
   Spot.init({
@@ -36,4 +37,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Spot;
 };
-

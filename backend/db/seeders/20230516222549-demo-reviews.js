@@ -18,6 +18,33 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    options.tableName = 'Reviews';
+    return queryInterface.bulkInsert(options, [
+      {
+        spotId: 1,
+        userId: 1,
+        review: 'Great place to stay!',
+        stars: 5,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        review: 'Had a wonderful experience.',
+        stars: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'Big cleaning fee',
+        stars: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -27,5 +54,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'Reviews';
+    return queryInterface.bulkDelete(options);
   }
 };
