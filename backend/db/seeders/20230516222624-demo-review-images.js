@@ -18,6 +18,26 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('ReviewImages', [
+      {
+        reviewId: 1,
+        url: 'https://example.com/image1.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        reviewId: 2,
+        url: 'https://example.com/image2.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        reviewId: 3,
+        url: 'https://example.com/image3.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -27,5 +47,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'ReviewImages';
+    return queryInterface.bulkDelete(options, {
+      reviewId: { [Op.in]: ['1', '2', '3'] }
+    }, {});
   }
 };

@@ -40,6 +40,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        spotId: 3,
+        url: 'https://example.com/image4.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
   },
 
@@ -51,6 +58,8 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'SpotImages';
-    return queryInterface.bulkDelete(options);
+    return queryInterface.bulkDelete(options, {
+      spotId: { [Op.in]: ['1', '2', '3'] }
+    }, {});
   }
 };

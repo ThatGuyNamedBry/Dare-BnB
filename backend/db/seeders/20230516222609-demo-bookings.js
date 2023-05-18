@@ -18,6 +18,48 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('Bookings', [
+      {
+        spotId: 1,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 3,
+        userId: 1,
+        startDate: new Date(),
+        endDate: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        startDate: new Date(),
+        endDate: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        startDate: new Date(),
+        endDate: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 3,
+        userId: 3,
+        startDate: new Date(),
+        endDate: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -27,5 +69,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    options.tableName = 'Bookings';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      userId: { [Op.in]: ['1', '2', '3'] }
+    }, {});
   }
 };
