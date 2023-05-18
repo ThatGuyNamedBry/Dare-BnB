@@ -50,9 +50,16 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
+    await queryInterface.addColumn('Spots', 'avgRating', {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0.0
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Reviews";
     await queryInterface.dropTable(options);
+    options.columnName = 'avgRating';
+    await queryInterface.removeColumn(options);
   }
 };
