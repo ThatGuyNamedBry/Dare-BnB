@@ -41,9 +41,15 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
+    await queryInterface.addColumn('Spots', 'previewImage', {
+      type: Sequelize.STRING,
+      allowNull: true
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "SpotImages";
     await queryInterface.dropTable(options);
+    options.columnName = 'previewImage'
+    await queryInterface.removeColumn(options);
   }
 };
