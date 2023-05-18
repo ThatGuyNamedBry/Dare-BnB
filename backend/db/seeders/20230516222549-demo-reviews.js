@@ -43,7 +43,16 @@ module.exports = {
         stars: 3,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        spotId: 3,
+        userId: 1,
+        review: 'Terrible experience, avoid!',
+        stars: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
+
     ], {});
   },
 
@@ -55,6 +64,9 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'Reviews';
-    return queryInterface.bulkDelete(options);
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      userId: { [Op.in]: ['1', '2', '3'] }
+    }, {});
   }
 };
