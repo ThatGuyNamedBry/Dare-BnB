@@ -39,17 +39,22 @@ router.get('/', async (req, res) => {
       {
         model: Review,
         as: 'Reviews',
-        attributes: [],
-        required: false
+        attributes: []
       },
       {
         model: SpotImage,
         as: 'SpotImages',
-        attributes: [],
-        required: false
+        attributes: []
       }
     ]
   });
+
+    // Lazy load review data for each spot
+    for (const spot of spots) {
+      spot.Reviews = await spot.getReviews({
+        attributes: ['id', 'stars'], 
+    });
+  }
 
   return res.json({
     Spots: spots
