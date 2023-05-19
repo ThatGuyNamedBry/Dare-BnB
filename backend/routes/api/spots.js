@@ -13,12 +13,9 @@ const review = require('../../db/models/review');
 
 
 
+
 // Get all Spots
 router.get('/', async (req, res) => {
-
-  const page = req.query.page || 1;
-  const limit = req.query.limit || 10;
-  const offset = (page - 1) * limit;
 
   const spots = await Spot.findAll({
     attributes: [
@@ -34,25 +31,58 @@ router.get('/', async (req, res) => {
       'description',
       'price',
       'createdAt',
-      'updatedAt',
-      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
-      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
-
+      'updatedAt'
     ],
     include: [
-      {
-        model: Review,
-        as: 'Reviews',
-        attributes: []
-      },
       {
         model: SpotImage,
         as: 'SpotImages',
         attributes: []
       }
+    ]
+  });
+
+  // Retrieve additional data using lazy loading
+  const spotIds = spots.map(spot => spot.id);
+
+  const avgRatings = await Review.findAll({
+    attributes: [
+      [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
+      'spotId'
     ],
-    offset,
-    limit
+    where: {
+      spotId: spotIds
+    },
+    group: 'spotId'
+  });
+
+  const previewImages = await SpotImage.findAll({
+    attributes: [
+      'url',
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds,
+      preview: true
+    },
+    group: 'spotId'
+  });
+
+  // Map the additional data to the respective spots
+  const avgRatingsMap = {};
+  avgRatings.forEach(rating => {
+    avgRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgRating) || 0; // Convert to a number
+  });
+
+  const previewImagesMap = {};
+  previewImages.forEach(image => {
+    previewImagesMap[image.spotId] = image.url;
+  });
+
+  // Attach additional data to the spots
+  spots.forEach(spot => {
+    spot.dataValues.avgRating = avgRatingsMap[spot.id] || 0;
+    spot.dataValues.previewImage = previewImagesMap[spot.id] || null;
   });
 
   return res.json({
@@ -61,12 +91,7 @@ router.get('/', async (req, res) => {
 });
 
 
-// // Lazy load review data for each spot
-// for (const spot of spots) {
-//   spot.Reviews = await spot.getReviews({
-//     attributes: ['id', 'stars'],
-// });
-// }
+
 // Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
