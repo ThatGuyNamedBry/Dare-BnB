@@ -15,16 +15,6 @@ const review = require('../../db/models/review');
 
 // Get all Spots
 router.get('/', async (req, res) => {
-  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-
-  // Construct filter conditions based on the query parameters
-  const filters = {};
-  if (minLat) filters.lat = { [Op.gte]: minLat };
-  if (maxLat) filters.lat = { ...filters.lat, [Op.lte]: maxLat };
-  if (minLng) filters.lng = { [Op.gte]: minLng };
-  if (maxLng) filters.lng = { ...filters.lng, [Op.lte]: maxLng };
-  if (minPrice) filters.price = { [Op.gte]: minPrice };
-  if (maxPrice) filters.price = { ...filters.price, [Op.lte]: maxPrice };
 
   const spots = await Spot.findAll({
     attributes: [
