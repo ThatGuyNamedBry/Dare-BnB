@@ -67,7 +67,7 @@ if (!existingReview) {
 // Check if the review belongs to the current user
 if (existingReview.userId !== user.id) {
   res.status(403).json({
-    message: "Review must belong to the current user"
+    message: "Forbidden"
   });
   return;
 }
@@ -128,7 +128,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     // Check if the review belongs to the current user
     if (existingReview.userId !== user.id) {
       res.status(403).json({
-        message: "Review must belong to the current user"
+        message: "Forbidden"
       });
       return;
     }
@@ -197,7 +197,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     // Check if the review belongs to the current user
     if (existingReview.userId !== user.id) {
       res.status(403).json({
-        message: "Review must belong to the current user"
+        message: "Forbidden"
       });
       return;
     }
