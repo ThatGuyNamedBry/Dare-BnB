@@ -358,7 +358,7 @@ router.get('/current', requireAuth, async (req, res) => {
       price: spot.price,
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
-      avgRating: spot.getDataValue('avgRating') || 0,
+      avgRating: Number(spot.getDataValue('avgRating')) || 0,
       previewImage: spot.SpotImages[0]?.url || 'img url'
     };
   });
