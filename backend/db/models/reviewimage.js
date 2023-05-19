@@ -23,5 +23,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return ReviewImage;
 };
-
-module.exports = db;
