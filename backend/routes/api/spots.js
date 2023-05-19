@@ -39,12 +39,14 @@ router.get('/', async (req, res) => {
       {
         model: Review,
         as: 'Reviews',
-        attributes: []
+        attributes: [],
+        required: false
       },
       {
         model: SpotImage,
         as: 'SpotImages',
-        attributes: []
+        attributes: [],
+        required: false
       }
     ]
   });
