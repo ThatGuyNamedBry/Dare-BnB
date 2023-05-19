@@ -33,7 +33,7 @@ const validateSignup = [
 router.post(
     '/',
     validateSignup,
-    async (req, res) => {
+    async (req, res, next) => {
       const { email, password, username, firstName, lastName } = req.body;
 
       // Check if the email or username already exists

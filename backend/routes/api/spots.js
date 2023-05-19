@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
   });
 
   return res.json({
-    Spots: formattedSpots
+    Spots: formattedSpots,
   });
 });
 
@@ -578,7 +578,7 @@ router.get('/:spotId', async (req, res, next) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       numReviews: spot.getDataValue('numReviews'),
-      avgStarRating: spot.getDataValue('avgStarRating').toFixed(2) || 0,
+      avgStarRating: spot.getDataValue('avgStarRating') || 0,
       SpotImages: spot.SpotImages,
       Owner: spot.Owner
     };
