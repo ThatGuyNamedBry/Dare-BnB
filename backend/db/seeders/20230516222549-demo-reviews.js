@@ -51,8 +51,15 @@ module.exports = {
         stars: 1,
         createdAt: new Date(),
         updatedAt: new Date()
-      }
-
+      },
+      // {
+      //   spotId: 4,
+      //   userId: 3,
+      //   review: 'Me and the family had fun!',
+      //   stars: 5,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }
     ], {});
   },
 
