@@ -6,7 +6,7 @@ const router = express.Router();
 const { Op, Sequelize } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
@@ -428,6 +428,100 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
     return res.status(200).json({
       message: 'Successfully deleted'
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+  // Get all Reviews by a Spot's id
+  router.get('/:spotId/reviews', async (req, res) => {
+    const { spotId } = req.params;
+
+    try {
+      const spot = await Spot.findByPk(spotId);
+
+      if (!spot || !spot.id) {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+      }
+
+      const reviews = await Review.findAll({
+        where: {
+          spotId
+        },
+        include: [
+          {
+            model: User,
+            as: 'User',
+            attributes: ['id', 'firstName', 'lastName']
+          },
+          {
+            model: ReviewImage,
+            as: 'ReviewImages',
+            attributes: ['id', 'url']
+          }
+        ]
+      });
+
+      res.status(200).json({ Reviews: reviews });
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  // Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const { review, stars } = req.body;
+  const userId = req.user.id;
+
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot || !spot.id) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+    //Body validations
+    if (!Number.isInteger(req.body.stars) || req.body.stars < 1 || req.body.stars > 5) {
+      res.status(400).json({
+        message: 'Bad Request',
+        errors: {
+          stars: 'Stars must be an integer from 1 to 5'
+        }
+      });
+      return;
+    }
+    // Check if the user already has a review for the spot
+    const existingReview = await Review.findOne({
+      where: {
+        spotId,
+        userId
+      }
+    });
+    if (existingReview) {
+      return res.status(403).json({
+        message: 'User already has a review for this spot'
+      });
+    }
+
+    // Create and add the review to the spot
+    const newReview = await Review.create({
+      spotId,
+      userId,
+      review,
+      stars
+    });
+
+    return res.status(201).json({
+      id: newReview.id,
+      userId: newReview.userId,
+      spotId: newReview.spotId,
+      review: newReview.review,
+      stars: newReview.stars,
+      createdAt: newReview.createdAt,
+      updatedAt: newReview.updatedAt
     });
   } catch (error) {
     return next(error);

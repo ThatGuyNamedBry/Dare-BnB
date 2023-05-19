@@ -47,6 +47,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      // {
+      //   spotId: 4,
+      //   url: 'https://example.com/image5.jpg',
+      //   preview: true,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // },
     ], {});
   },
 
@@ -58,6 +65,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'SpotImages';
+    const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       spotId: { [Op.in]: ['1', '2', '3'] }
     }, {});
