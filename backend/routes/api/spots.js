@@ -35,24 +35,24 @@ router.get('/', async (req, res) => {
       [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
 
     ],
-    include: [
-      {
-        model: Review,
-        as: 'Reviews',
-        attributes: []
-      },
-      {
-        model: SpotImage,
-        as: 'SpotImages',
-        attributes: []
-      }
-    ]
+    // include: [
+    //   {
+    //     model: Review,
+    //     as: 'Reviews',
+    //     attributes: []
+    //   },
+    //   {
+    //     model: SpotImage,
+    //     as: 'SpotImages',
+    //     attributes: []
+    //   }
+    // ]
   });
 
     // Lazy load review data for each spot
     for (const spot of spots) {
       spot.Reviews = await spot.getReviews({
-        attributes: ['id', 'stars'], 
+        attributes: ['id', 'stars'],
     });
   }
 
