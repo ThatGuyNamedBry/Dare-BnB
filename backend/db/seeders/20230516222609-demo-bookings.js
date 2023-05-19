@@ -18,6 +18,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    options.tableName = 'Bookings';
     await queryInterface.bulkInsert('Bookings', [
       {
         spotId: 1,
