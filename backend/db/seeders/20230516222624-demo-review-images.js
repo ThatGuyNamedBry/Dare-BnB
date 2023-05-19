@@ -18,7 +18,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('ReviewImages', [
+    options.tableName = 'ReviewImages';
+    return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
         url: 'https://example.com/image1.jpg',
