@@ -577,8 +577,8 @@ router.get('/:spotId', async (req, res, next) => {
       price: spot.price,
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
-      numReviews: spot.getDataValue('numReviews'),
-      avgStarRating: spot.getDataValue('avgStarRating') || 0,
+      numReviews: Number(spot.getDataValue('numReviews')),
+      avgStarRating: Number(spot.getDataValue('avgStarRating')) || 0,
       SpotImages: spot.SpotImages,
       Owner: spot.Owner
     };
