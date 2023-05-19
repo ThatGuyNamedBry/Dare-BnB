@@ -12,6 +12,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
 
 
+
 // Get all Spots
 router.get('/', async (req, res) => {
 
@@ -29,65 +30,131 @@ router.get('/', async (req, res) => {
       'description',
       'price',
       'createdAt',
-      'updatedAt'
+      'updatedAt',
+      [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
     ],
     include: [
       {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      },
+      {
         model: SpotImage,
         as: 'SpotImages',
-        attributes: []
+        attributes: ['url'],
+        where: {
+          preview: true
+        },
+        required: false,
+        limit: 1
       }
+    ],
+    group: [
+      'Spot.id',
     ]
   });
 
-  // Retrieve additional data using lazy loading
-  const spotIds = spots.map(spot => spot.id);
-
-  const avgRatings = await Review.findAll({
-    attributes: [
-      [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
-      'spotId'
-    ],
-    where: {
-      spotId: spotIds
-    },
-    group: 'spotId'
-  });
-
-  const previewImages = await SpotImage.findAll({
-    attributes: [
-      'url',
-      'spotId'
-    ],
-    where: {
-      spotId: spotIds,
-      preview: true
-    },
-    group: ['spotId', 'url'] // Include url column in the GROUP BY clause
-  });
-
-  // Map the additional data to the respective spots
-  const avgRatingsMap = {};
-  avgRatings.forEach(rating => {
-    avgRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgRating) || 0; // Convert to a number
-  });
-
-  const previewImagesMap = {};
-  previewImages.forEach(image => {
-    previewImagesMap[image.spotId] = image.url;
-  });
-
-  // Attach additional data to the spots
-  spots.forEach(spot => {
-    spot.dataValues.avgRating = avgRatingsMap[spot.id] || 0;
-    spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image url';
+  const formattedSpots = spots.map(spot => {
+    return {
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
+      avgRating: spot.getDataValue('avgRating') || 0,
+      previewImage: spot.SpotImages[0]?.url || 'https://image.url/image.jpg'
+    };
   });
 
   return res.json({
-    Spots: spots
+    Spots: formattedSpots
   });
 });
 
+// // Get all Spots
+// router.get('/', async (req, res) => {
+
+//   const spots = await Spot.findAll({
+//     attributes: [
+//       'id',
+//       'ownerId',
+//       'address',
+//       'city',
+//       'state',
+//       'country',
+//       'lat',
+//       'lng',
+//       'name',
+//       'description',
+//       'price',
+//       'createdAt',
+//       'updatedAt'
+//     ],
+//     include: [
+//       {
+//         model: SpotImage,
+//         as: 'SpotImages',
+//         attributes: []
+//       }
+//     ]
+//   });
+
+//   // Retrieve additional data using lazy loading
+//   const spotIds = spots.map(spot => spot.id);
+
+//   const avgRatings = await Review.findAll({
+//     attributes: [
+//       [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
+//       'spotId'
+//     ],
+//     where: {
+//       spotId: spotIds
+//     },
+//     group: 'spotId'
+//   });
+
+//   const previewImages = await SpotImage.findAll({
+//     attributes: [
+//       'url',
+//       'spotId'
+//     ],
+//     where: {
+//       spotId: spotIds,
+//       preview: true
+//     },
+//     group: ['spotId', 'url'] // Include url column in the GROUP BY clause
+//   });
+
+//   // Map the additional data to the respective spots
+//   const avgRatingsMap = {};
+//   avgRatings.forEach(rating => {
+//     avgRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgRating) || 0; // Convert to a number
+//   });
+
+//   const previewImagesMap = {};
+//   previewImages.forEach(image => {
+//     previewImagesMap[image.spotId] = image.url;
+//   });
+
+//   // Attach additional data to the spots
+//   spots.forEach(spot => {
+//     spot.dataValues.avgRating = avgRatingsMap[spot.id] || 0;
+//     spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image url';
+//   });
+
+//   return res.json({
+//     Spots: spots
+//   });
+// });
 
 /*
 // Get all Spots
