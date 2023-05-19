@@ -1,3 +1,5 @@
+//models/spot.js
+
 'use strict';
 const {
   Model
@@ -37,5 +39,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Spot;
 };
-
-
