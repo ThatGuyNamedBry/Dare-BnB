@@ -11,7 +11,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
 
 // Get all Reviews of the Current User
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', requireAuth, async (req, res, next) => {
     const { user } = req;
 
     try {
@@ -43,7 +43,7 @@ router.get('/current', requireAuth, async (req, res) => {
   });
 
 // Add an Image to a Review
-router.post('/:reviewId/images', requireAuth, async (req, res) => {
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
   const { reviewId } = req.params;
   const { url } = req.body;
   const { user } = req;
@@ -103,7 +103,7 @@ if (existingReview.userId !== user.id) {
 });
 
 // Edit a Review
-router.put('/:reviewId', requireAuth, async (req, res) => {
+router.put('/:reviewId', requireAuth, async (req, res, next) => {
   const { user } = req;
   const { reviewId } = req.params;
   const { review, stars } = req.body;
@@ -174,7 +174,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 });
 
 // Delete a Review
-router.delete('/:reviewId', requireAuth, async (req, res) => {
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
   const { user } = req;
   const { reviewId } = req.params;
 

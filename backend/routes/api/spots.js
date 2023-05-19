@@ -249,27 +249,88 @@ router.get('/current', requireAuth, async (req, res) => {
       'description',
       'price',
       'createdAt',
-      'updatedAt',
-      [Sequelize.fn('COALESCE', Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 0), 'avgRating'],
-      [Sequelize.fn('MAX', Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)')), 'previewImage']
+      'updatedAt'
     ],
     include: [
       {
         model: Review,
         as: 'Reviews',
         attributes: []
+      },
+      {
+        model: SpotImage,
+        as: 'SpotImages',
+        attributes: []
       }
-    ],
-    group: [
-      'Spot.id',
-      'Reviews.id'
     ]
+  });
+
+  // Retrieve additional data using lazy loading
+  const spotIds = spots.map(spot => spot.id);
+
+  const reviewCounts = await Review.findAll({
+    attributes: [
+      [Sequelize.fn('COUNT', Sequelize.col('id')), 'numReviews'],
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds
+    },
+    group: 'spotId'
+  });
+
+  const avgStarRatings = await Review.findAll({
+    attributes: [
+      [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgStarRating'],
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds
+    },
+    group: 'spotId'
+  });
+
+  const previewImages = await SpotImage.findAll({
+    attributes: [
+      'url',
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds,
+      preview: true
+    },
+    group: ['spotId', 'url']
+  });
+
+  // Map the additional data to the respective spots
+  const reviewCountsMap = {};
+  reviewCounts.forEach(count => {
+    reviewCountsMap[count.spotId] = count.numReviews || 0;
+  });
+
+  const avgStarRatingsMap = {};
+  avgStarRatings.forEach(rating => {
+    avgStarRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgStarRating) || 0;
+  });
+
+  const previewImagesMap = {};
+  previewImages.forEach(image => {
+    previewImagesMap[image.spotId] = image.url;
+  });
+
+  // Attach additional data to the spots
+  spots.forEach(spot => {
+    spot.dataValues.numReviews = reviewCountsMap[spot.id] || 0;
+    spot.dataValues.avgStarRating = avgStarRatingsMap[spot.id] || 0;
+    spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image url';
   });
 
   return res.json({
     Spots: spots
   });
 });
+
+
 
 // // Get all Spots owned by the Current User
 // router.get('/current', requireAuth, async (req, res) => {
@@ -342,7 +403,13 @@ router.get('/:spotId', async (req, res, next) => {
           as: 'Reviews',
           attributes: []
         }
-      ]
+      ],
+      group: [
+        'Spot.id',
+        'SpotImages.id',
+        'Owner.id'
+      ],
+      subQuery: false,
     });
 
     if (!spot || !spot.id) {
@@ -376,6 +443,7 @@ router.get('/:spotId', async (req, res, next) => {
     return next(error);
   }
 });
+
 
 // Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
