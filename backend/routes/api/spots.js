@@ -16,6 +16,10 @@ const review = require('../../db/models/review');
 // Get all Spots
 router.get('/', async (req, res) => {
 
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 10;
+  const offset = (page - 1) * limit;
+
   const spots = await Spot.findAll({
     attributes: [
       'id',
@@ -35,32 +39,34 @@ router.get('/', async (req, res) => {
       [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
 
     ],
-    // include: [
-    //   {
-    //     model: Review,
-    //     as: 'Reviews',
-    //     attributes: []
-    //   },
-    //   {
-    //     model: SpotImage,
-    //     as: 'SpotImages',
-    //     attributes: []
-    //   }
-    // ]
+    include: [
+      {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      },
+      {
+        model: SpotImage,
+        as: 'SpotImages',
+        attributes: []
+      }
+    ],
+    offset,
+    limit
   });
-
-    // Lazy load review data for each spot
-    for (const spot of spots) {
-      spot.Reviews = await spot.getReviews({
-        attributes: ['id', 'stars'],
-    });
-  }
 
   return res.json({
     Spots: spots
   });
 });
 
+
+// // Lazy load review data for each spot
+// for (const spot of spots) {
+//   spot.Reviews = await spot.getReviews({
+//     attributes: ['id', 'stars'],
+// });
+// }
 // Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
