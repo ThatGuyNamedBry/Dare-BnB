@@ -12,9 +12,9 @@ const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
 
 
-
 // Get all Spots
 router.get('/', async (req, res) => {
+
   const spots = await Spot.findAll({
     attributes: [
       'id',
@@ -29,109 +29,64 @@ router.get('/', async (req, res) => {
       'description',
       'price',
       'createdAt',
-      'updatedAt',
-      [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+      'updatedAt'
     ],
     include: [
-      {
-        model: Review,
-        as: 'Reviews',
-        attributes: []
-      },
       {
         model: SpotImage,
         as: 'SpotImages',
         attributes: []
       }
-    ],
-    group: [
-      'Spot.id',
-      'Reviews.id',
-      'SpotImages.id'
     ]
+  });
+
+  // Retrieve additional data using lazy loading
+  const spotIds = spots.map(spot => spot.id);
+
+  const avgRatings = await Review.findAll({
+    attributes: [
+      [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds
+    },
+    group: 'spotId'
+  });
+
+  const previewImages = await SpotImage.findAll({
+    attributes: [
+      'url',
+      'spotId'
+    ],
+    where: {
+      spotId: spotIds,
+      preview: true
+    },
+    group: ['spotId', 'url'] // Include url column in the GROUP BY clause
+  });
+
+  // Map the additional data to the respective spots
+  const avgRatingsMap = {};
+  avgRatings.forEach(rating => {
+    avgRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgRating) || 0; // Convert to a number
+  });
+
+  const previewImagesMap = {};
+  previewImages.forEach(image => {
+    previewImagesMap[image.spotId] = image.url;
+  });
+
+  // Attach additional data to the spots
+  spots.forEach(spot => {
+    spot.dataValues.avgRating = avgRatingsMap[spot.id] || 0;
+    spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image url';
   });
 
   return res.json({
     Spots: spots
   });
 });
-
-// // Get all Spots
-// router.get('/', async (req, res) => {
-
-//   const spots = await Spot.findAll({
-//     attributes: [
-//       'id',
-//       'ownerId',
-//       'address',
-//       'city',
-//       'state',
-//       'country',
-//       'lat',
-//       'lng',
-//       'name',
-//       'description',
-//       'price',
-//       'createdAt',
-//       'updatedAt'
-//     ],
-//     include: [
-//       {
-//         model: SpotImage,
-//         as: 'SpotImages',
-//         attributes: []
-//       }
-//     ]
-//   });
-
-//   // Retrieve additional data using lazy loading
-//   const spotIds = spots.map(spot => spot.id);
-
-//   const avgRatings = await Review.findAll({
-//     attributes: [
-//       [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
-//       'spotId'
-//     ],
-//     where: {
-//       spotId: spotIds
-//     },
-//     group: 'spotId'
-//   });
-
-//   const previewImages = await SpotImage.findAll({
-//     attributes: [
-//       'url',
-//       'spotId'
-//     ],
-//     where: {
-//       spotId: spotIds,
-//       preview: true
-//     },
-//     group: ['spotId', 'url'] // Include url column in the GROUP BY clause
-//   });
-
-//   // Map the additional data to the respective spots
-//   const avgRatingsMap = {};
-//   avgRatings.forEach(rating => {
-//     avgRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgRating) || 0; // Convert to a number
-//   });
-
-//   const previewImagesMap = {};
-//   previewImages.forEach(image => {
-//     previewImagesMap[image.spotId] = image.url;
-//   });
-
-//   // Attach additional data to the spots
-//   spots.forEach(spot => {
-//     spot.dataValues.avgRating = avgRatingsMap[spot.id] || 0;
-//     spot.dataValues.previewImage = previewImagesMap[spot.id] || null;
-//   });
-
-//   return res.json({
-//     Spots: spots
-//   });
-// });
 
 /*
 // Get all Spots
@@ -273,7 +228,6 @@ router.post('/', requireAuth, async (req, res, next) => {
   }
 });
 
-
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res) => {
   const ownerId = req.user.id;
@@ -296,8 +250,19 @@ router.get('/current', requireAuth, async (req, res) => {
       'price',
       'createdAt',
       'updatedAt',
-      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
-      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+      [Sequelize.fn('COALESCE', Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 0), 'avgRating'],
+      [Sequelize.fn('MAX', Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)')), 'previewImage']
+    ],
+    include: [
+      {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      }
+    ],
+    group: [
+      'Spot.id',
+      'Reviews.id'
     ]
   });
 
@@ -305,6 +270,38 @@ router.get('/current', requireAuth, async (req, res) => {
     Spots: spots
   });
 });
+
+// // Get all Spots owned by the Current User
+// router.get('/current', requireAuth, async (req, res) => {
+//   const ownerId = req.user.id;
+
+//   const spots = await Spot.findAll({
+//     where: {
+//       ownerId
+//     },
+//     attributes: [
+//       'id',
+//       'ownerId',
+//       'address',
+//       'city',
+//       'state',
+//       'country',
+//       'lat',
+//       'lng',
+//       'name',
+//       'description',
+//       'price',
+//       'createdAt',
+//       'updatedAt',
+//       [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
+//       [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+//     ]
+//   });
+
+//   return res.json({
+//     Spots: spots
+//   });
+// });
 
 // Get details of a Spot by ID
 router.get('/:spotId', async (req, res, next) => {
