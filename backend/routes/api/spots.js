@@ -6,7 +6,7 @@ const router = express.Router();
 const { Op, Sequelize } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
@@ -15,6 +15,17 @@ const review = require('../../db/models/review');
 
 // Get all Spots
 router.get('/', async (req, res) => {
+  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+  // Construct filter conditions based on the query parameters
+  const filters = {};
+  if (minLat) filters.lat = { [Op.gte]: minLat };
+  if (maxLat) filters.lat = { ...filters.lat, [Op.lte]: maxLat };
+  if (minLng) filters.lng = { [Op.gte]: minLng };
+  if (maxLng) filters.lng = { ...filters.lng, [Op.lte]: maxLng };
+  if (minPrice) filters.price = { [Op.gte]: minPrice };
+  if (maxPrice) filters.price = { ...filters.price, [Op.lte]: maxPrice };
+
   const spots = await Spot.findAll({
     attributes: [
       'id',
@@ -272,7 +283,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== req.user.id) {
       return res.status(403).json({
-        message: 'Spot must belong to the current user'
+        message: 'Forbidden'
       });
     }
 
@@ -365,7 +376,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== ownerId) {
       return res.status(403).json({
-        message: 'Only the owner of the spot is authorized to edit'
+        message: 'Forbidden'
       });
     }
 
@@ -419,7 +430,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== ownerId) {
       return res.status(403).json({
-        message: 'Only the owner of the spot is authorized to delete'
+        message: 'Forbidden'
       });
     }
 
@@ -522,6 +533,156 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
       stars: newReview.stars,
       createdAt: newReview.createdAt,
       updatedAt: newReview.updatedAt
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+
+  try {
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+
+    const bookings = await Booking.findAll({
+      where: {
+        spotId
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        }
+      ]
+    });
+
+    if (spot.ownerId === req.user.id) {
+      // User is the owner of the spot
+      const formattedBookings = bookings.map(booking => {
+        return {
+          User: booking.User,
+          id: booking.id,
+          spotId: booking.spotId,
+          userId: booking.userId,
+          startDate: booking.startDate,
+          endDate: booking.endDate,
+          createdAt: booking.createdAt,
+          updatedAt: booking.updatedAt
+        };
+      });
+
+      return res.status(200).json({
+        Bookings: formattedBookings
+      });
+    } else {
+      // User is not the owner of the spot
+      const formattedBookings = bookings.map(booking => {
+        return {
+          spotId: booking.spotId,
+          startDate: booking.startDate,
+          endDate: booking.endDate
+        };
+      });
+
+      return res.status(200).json({
+        Bookings: formattedBookings
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const { startDate, endDate } = req.body;
+  const userId = req.user.id;
+
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot || !spot.id) {
+      return res.status(404).json({
+        message: "Spot couldn't be found"
+      });
+    }
+
+    // Check if the spot belongs to the current user
+    if (spot.ownerId === userId) {
+      return res.status(403).json({
+        message: 'Forbidden'
+      });
+    }
+
+    // Handle endDate on or before startDate error
+    if (endDate <= startDate) {
+      return res.status(400).json({
+        message: 'Bad Request',
+        errors: { endDate: 'endDate cannot be on or before startDate' }
+      });
+    }
+
+    // Check if there is a booking conflict
+    const existingBooking = await Booking.findOne({
+      where: {
+        spotId,
+        [Op.or]: [
+          {
+            startDate: {
+              [Op.lte]: endDate
+            },
+            endDate: {
+              [Op.gte]: startDate
+            }
+          },
+          {
+            startDate: {
+              [Op.gte]: startDate
+            },
+            endDate: {
+              [Op.lte]: endDate
+            }
+          }
+        ]
+      }
+    });
+
+    if (existingBooking) {
+      return res.status(403).json({
+        message: 'Sorry, this spot is already booked for the specified dates',
+        errors: {
+          startDate: 'Start date conflicts with an existing booking',
+          endDate: 'End date conflicts with an existing booking'
+        }
+      });
+    }
+
+
+    // Create the booking
+    const booking = await Booking.create({
+      spotId,
+      userId,
+      startDate,
+      endDate
+    });
+
+    return res.status(200).json({
+      id: booking.id,
+      spotId: booking.spotId,
+      userId: booking.userId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt
     });
   } catch (error) {
     return next(error);
