@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
       spotId: spotIds,
       preview: true
     },
-    group: 'spotId'
+    group: ['spotId', 'url'] // Include url column in the GROUP BY clause
   });
 
   // Map the additional data to the respective spots
@@ -89,6 +89,7 @@ router.get('/', async (req, res) => {
     Spots: spots
   });
 });
+
 
 
 
