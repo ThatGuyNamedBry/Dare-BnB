@@ -37,7 +37,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu}>
-      <i class="fa-sharp fa-solid fa-id-card"></i>
+      <i className="fa-sharp fa-solid fa-id-card"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li>{user.username}</li>
@@ -52,3 +52,8 @@ function ProfileButton({ user }) {
 }
 
 export default ProfileButton;
+
+/*
+<i class="fa-sharp fa-solid fa-id-card"></i>
+<i className="fas fa-user-circle" />
+*/
