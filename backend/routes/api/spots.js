@@ -121,7 +121,7 @@ router.get('/', validateQueryParameters, async (req, res) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       avgRating,
-      previewImage: spot.SpotImages[0]?.url || 'https://image.url/image.jpg'
+      previewImage: spot.SpotImages[0]?.url
     };
   });
 
@@ -131,115 +131,6 @@ router.get('/', validateQueryParameters, async (req, res) => {
     size: limit
   });
 });
-
-// // Get all Spots
-// router.get('/', async (req, res) => {
-//   const spots = await Spot.findAll({
-//     attributes: [
-//       'id',
-//       'ownerId',
-//       'address',
-//       'city',
-//       'state',
-//       'country',
-//       'lat',
-//       'lng',
-//       'name',
-//       'description',
-//       'price',
-//       'createdAt',
-//       'updatedAt',
-//       [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
-//     ],
-//     include: [
-//       {
-//         model: Review,
-//         as: 'Reviews',
-//         attributes: []
-//       },
-//       {
-//         model: SpotImage,
-//         as: 'SpotImages',
-//         attributes: ['url'],
-//         where: {
-//           preview: true
-//         },
-//         required: false,
-//         limit: 1
-//       }
-//     ],
-//     group: [
-//       'Spot.id',
-//     ]
-//   });
-
-//   const formattedSpots = spots.map(spot => {
-//     return {
-//       id: spot.id,
-//       ownerId: spot.ownerId,
-//       address: spot.address,
-//       city: spot.city,
-//       state: spot.state,
-//       country: spot.country,
-//       lat: spot.lat,
-//       lng: spot.lng,
-//       name: spot.name,
-//       description: spot.description,
-//       price: spot.price,
-//       createdAt: spot.createdAt,
-//       updatedAt: spot.updatedAt,
-//       avgRating: Number(spot.getDataValue('avgRating')) || 0,
-//       previewImage: spot.SpotImages[0]?.url || 'https://image.url/image.jpg'
-//     };
-//   });
-
-//   return res.json({
-//     Spots: formattedSpots,
-//   });
-// });
-/*
-// Get all Spots
-router.get('/', async (req, res) => {
-
-  const spots = await Spot.findAll({
-    attributes: [
-      'id',
-      'ownerId',
-      'address',
-      'city',
-      'state',
-      'country',
-      'lat',
-      'lng',
-      'name',
-      'description',
-      'price',
-      'createdAt',
-      'updatedAt',
-      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
-      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
-
-    ],
-    include: [
-      {
-        model: Review,
-        as: 'Reviews',
-        attributes: []
-      },
-      {
-        model: SpotImage,
-        as: 'SpotImages',
-        attributes: []
-      }
-    ]
-  });
-
-  return res.json({
-    Spots: spots
-  });
-});
-*/
-
 
 
 // Create a Spot
@@ -409,146 +300,6 @@ router.get('/current', requireAuth, async (req, res) => {
   });
 });
 
-// // Get all Spots owned by the Current User
-// router.get('/current', requireAuth, async (req, res) => {
-//   const ownerId = req.user.id;
-
-//   const spots = await Spot.findAll({
-//     where: {
-//       ownerId
-//     },
-//     attributes: [
-//       'id',
-//       'ownerId',
-//       'address',
-//       'city',
-//       'state',
-//       'country',
-//       'lat',
-//       'lng',
-//       'name',
-//       'description',
-//       'price',
-//       'createdAt',
-//       'updatedAt'
-//     ],
-//     include: [
-//       {
-//         model: Review,
-//         as: 'Reviews',
-//         attributes: []
-//       },
-//       {
-//         model: SpotImage,
-//         as: 'SpotImages',
-//         attributes: ['url'],
-//         where: {
-//           preview: true
-//         },
-//         required: false,
-//         limit: 1
-//       }
-//     ]
-//   });
-
-//   // Retrieve additional data using lazy loading
-//   const spotIds = spots.map(spot => spot.id);
-
-//   const reviewCounts = await Review.findAll({
-//     attributes: [
-//       [Sequelize.fn('COUNT', Sequelize.col('id')), 'numReviews'],
-//       'spotId'
-//     ],
-//     where: {
-//       spotId: spotIds
-//     },
-//     group: 'spotId'
-//   });
-
-//   const avgStarRatings = await Review.findAll({
-//     attributes: [
-//       [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgStarRating'],
-//       'spotId'
-//     ],
-//     where: {
-//       spotId: spotIds
-//     },
-//     group: 'spotId'
-//   });
-
-//   const previewImages = await SpotImage.findAll({
-//     attributes: [
-//       'url',
-//       'spotId'
-//     ],
-//     where: {
-//       spotId: spotIds,
-//       preview: true
-//     },
-//     group: ['spotId', 'url']
-//   });
-
-//   // Map the additional data to the respective spots
-//   const reviewCountsMap = {};
-//   reviewCounts.forEach(count => {
-//     reviewCountsMap[count.spotId] = count.numReviews || 0;
-//   });
-
-//   const avgStarRatingsMap = {};
-//   avgStarRatings.forEach(rating => {
-//     avgStarRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgStarRating) || 0;
-//   });
-
-//   const previewImagesMap = {};
-//   previewImages.forEach(image => {
-//     previewImagesMap[image.spotId] = image.url;
-//   });
-
-//   // Attach additional data to the spots
-//   spots.forEach(spot => {
-//     spot.dataValues.numReviews = reviewCountsMap[spot.id] || 0;
-//     spot.dataValues.avgStarRating = avgStarRatingsMap[spot.id] || 0;
-//     spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image.url';
-//   });
-
-//   return res.json({
-//     Spots: spots
-//   });
-// });
-
-
-
-// // Get all Spots owned by the Current User
-// router.get('/current', requireAuth, async (req, res) => {
-//   const ownerId = req.user.id;
-
-//   const spots = await Spot.findAll({
-//     where: {
-//       ownerId
-//     },
-//     attributes: [
-//       'id',
-//       'ownerId',
-//       'address',
-//       'city',
-//       'state',
-//       'country',
-//       'lat',
-//       'lng',
-//       'name',
-//       'description',
-//       'price',
-//       'createdAt',
-//       'updatedAt',
-//       [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
-//       [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
-//     ]
-//   });
-
-//   return res.json({
-//     Spots: spots
-//   });
-// });
 
 // Get details of a Spot by ID
 router.get('/:spotId', async (req, res, next) => {
@@ -1055,3 +806,253 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
 });
 
 module.exports = router;
+
+
+// // Get all Spots
+// router.get('/', async (req, res) => {
+//   const spots = await Spot.findAll({
+//     attributes: [
+//       'id',
+//       'ownerId',
+//       'address',
+//       'city',
+//       'state',
+//       'country',
+//       'lat',
+//       'lng',
+//       'name',
+//       'description',
+//       'price',
+//       'createdAt',
+//       'updatedAt',
+//       [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
+//     ],
+//     include: [
+//       {
+//         model: Review,
+//         as: 'Reviews',
+//         attributes: []
+//       },
+//       {
+//         model: SpotImage,
+//         as: 'SpotImages',
+//         attributes: ['url'],
+//         where: {
+//           preview: true
+//         },
+//         required: false,
+//         limit: 1
+//       }
+//     ],
+//     group: [
+//       'Spot.id',
+//     ]
+//   });
+
+//   const formattedSpots = spots.map(spot => {
+//     return {
+//       id: spot.id,
+//       ownerId: spot.ownerId,
+//       address: spot.address,
+//       city: spot.city,
+//       state: spot.state,
+//       country: spot.country,
+//       lat: spot.lat,
+//       lng: spot.lng,
+//       name: spot.name,
+//       description: spot.description,
+//       price: spot.price,
+//       createdAt: spot.createdAt,
+//       updatedAt: spot.updatedAt,
+//       avgRating: Number(spot.getDataValue('avgRating')) || 0,
+//       previewImage: spot.SpotImages[0]?.url || 'https://image.url/image.jpg'
+//     };
+//   });
+
+//   return res.json({
+//     Spots: formattedSpots,
+//   });
+// });
+/*
+// Get all Spots
+router.get('/', async (req, res) => {
+
+  const spots = await Spot.findAll({
+    attributes: [
+      'id',
+      'ownerId',
+      'address',
+      'city',
+      'state',
+      'country',
+      'lat',
+      'lng',
+      'name',
+      'description',
+      'price',
+      'createdAt',
+      'updatedAt',
+      [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
+      [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+
+    ],
+    include: [
+      {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      },
+      {
+        model: SpotImage,
+        as: 'SpotImages',
+        attributes: []
+      }
+    ]
+  });
+
+  return res.json({
+    Spots: spots
+  });
+});
+*/
+
+// // Get all Spots owned by the Current User
+// router.get('/current', requireAuth, async (req, res) => {
+//   const ownerId = req.user.id;
+
+//   const spots = await Spot.findAll({
+//     where: {
+//       ownerId
+//     },
+//     attributes: [
+//       'id',
+//       'ownerId',
+//       'address',
+//       'city',
+//       'state',
+//       'country',
+//       'lat',
+//       'lng',
+//       'name',
+//       'description',
+//       'price',
+//       'createdAt',
+//       'updatedAt'
+//     ],
+//     include: [
+//       {
+//         model: Review,
+//         as: 'Reviews',
+//         attributes: []
+//       },
+//       {
+//         model: SpotImage,
+//         as: 'SpotImages',
+//         attributes: ['url'],
+//         where: {
+//           preview: true
+//         },
+//         required: false,
+//         limit: 1
+//       }
+//     ]
+//   });
+
+//   // Retrieve additional data using lazy loading
+//   const spotIds = spots.map(spot => spot.id);
+
+//   const reviewCounts = await Review.findAll({
+//     attributes: [
+//       [Sequelize.fn('COUNT', Sequelize.col('id')), 'numReviews'],
+//       'spotId'
+//     ],
+//     where: {
+//       spotId: spotIds
+//     },
+//     group: 'spotId'
+//   });
+
+//   const avgStarRatings = await Review.findAll({
+//     attributes: [
+//       [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgStarRating'],
+//       'spotId'
+//     ],
+//     where: {
+//       spotId: spotIds
+//     },
+//     group: 'spotId'
+//   });
+
+//   const previewImages = await SpotImage.findAll({
+//     attributes: [
+//       'url',
+//       'spotId'
+//     ],
+//     where: {
+//       spotId: spotIds,
+//       preview: true
+//     },
+//     group: ['spotId', 'url']
+//   });
+
+//   // Map the additional data to the respective spots
+//   const reviewCountsMap = {};
+//   reviewCounts.forEach(count => {
+//     reviewCountsMap[count.spotId] = count.numReviews || 0;
+//   });
+
+//   const avgStarRatingsMap = {};
+//   avgStarRatings.forEach(rating => {
+//     avgStarRatingsMap[rating.spotId] = parseFloat(rating.dataValues.avgStarRating) || 0;
+//   });
+
+//   const previewImagesMap = {};
+//   previewImages.forEach(image => {
+//     previewImagesMap[image.spotId] = image.url;
+//   });
+
+//   // Attach additional data to the spots
+//   spots.forEach(spot => {
+//     spot.dataValues.numReviews = reviewCountsMap[spot.id] || 0;
+//     spot.dataValues.avgStarRating = avgStarRatingsMap[spot.id] || 0;
+//     spot.dataValues.previewImage = previewImagesMap[spot.id] || 'image.url';
+//   });
+
+//   return res.json({
+//     Spots: spots
+//   });
+// });
+
+
+
+// // Get all Spots owned by the Current User
+// router.get('/current', requireAuth, async (req, res) => {
+//   const ownerId = req.user.id;
+
+//   const spots = await Spot.findAll({
+//     where: {
+//       ownerId
+//     },
+//     attributes: [
+//       'id',
+//       'ownerId',
+//       'address',
+//       'city',
+//       'state',
+//       'country',
+//       'lat',
+//       'lng',
+//       'name',
+//       'description',
+//       'price',
+//       'createdAt',
+//       'updatedAt',
+//       [Sequelize.literal('(SELECT COALESCE(AVG(stars), 0) FROM "Reviews" WHERE "Reviews"."spotId" = "Spot"."id")'), 'avgRating'],
+//       [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+//     ]
+//   });
+
+//   return res.json({
+//     Spots: spots
+//   });
+// });
