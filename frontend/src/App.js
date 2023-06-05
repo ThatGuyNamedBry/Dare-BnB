@@ -1,9 +1,10 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import SpotList from './components/SpotList';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +16,11 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Switch></Switch>}
+      {isLoaded && (
+      <Switch>
+      <Route exact path="/" component={SpotList} />
+        </Switch>
+      )}
     </>
   );
 }

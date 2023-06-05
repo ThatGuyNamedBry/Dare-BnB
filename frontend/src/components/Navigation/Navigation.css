@@ -2,7 +2,11 @@
     display: none;
 }
 
-ul {
+.profile-dropdown {
+    list-style: none;
+}
+
+#navigation-ul {
     display: flex;
     justify-content: space-between;
     align-items: center;

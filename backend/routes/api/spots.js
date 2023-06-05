@@ -121,7 +121,7 @@ router.get('/', validateQueryParameters, async (req, res) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       avgRating,
-      previewImage: spot.SpotImages[0]?.url || 'https://image.url/image.jpg'
+      previewImage: spot.SpotImages[0]?.url
     };
   });
 
