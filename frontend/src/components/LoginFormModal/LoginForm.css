@@ -1,17 +1,13 @@
-body form {
+/* body form {
     display: flex;
     justify-content: center;
     gap: 10px;
-}
+} */
 
 form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-h1 {
-    display: flex;
-    justify-content: center;
+    padding: 20px;
 }
