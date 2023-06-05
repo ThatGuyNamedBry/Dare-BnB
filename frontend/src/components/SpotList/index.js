@@ -16,16 +16,19 @@ const SpotList = () => {
   if (!spots) {
     return <h1>No Spots showing, get to debugging!</h1>;
   }
-  console.log(spots);
+  // console.log(spots);
   return (
     <ul id = 'SpotsGrid'>
       {spots.map((spot) => (
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
-          <img src={spot.previewImage.url} alt={'Spot Image Thumbnail'} />
+          <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
           <div>{spot.city}, {spot.state}</div>
-          <div>{spot.price} night</div>
-          <div>{spot.avgRating? spot.avgRating : 'New'}</div>
+          <div>${spot.price} night</div>
+          <div>
+            <i className="fa-sharp fa-solid fa-star"></i>
+            {spot.avgRating || 'New'}
+          </div>
           {/* <div>{spot.name}</div> */}
           </Link>
         </li>
