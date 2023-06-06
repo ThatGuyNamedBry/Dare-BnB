@@ -1,7 +1,7 @@
 // frontend/src/components/SpotList/index.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSpotsThunk } from '../../store/spots';
+import { getAllSpotsThunk } from '../../store/spots';
 import { Link } from 'react-router-dom';
 import './SpotList.css';
 
@@ -10,16 +10,16 @@ const SpotList = () => {
   const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
-    dispatch(fetchSpotsThunk());
+    dispatch(getAllSpotsThunk());
   }, [dispatch]);
 
-  if (!spots) {
+  if (!spots || spots === null) {
     return <h1>No Spots showing, get to debugging!</h1>;
   }
   // console.log(spots);
   return (
     <ul id='SpotsGrid'>
-      {spots.map((spot) => (
+      {Object.values(spots).map((spot) => (
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
             <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
