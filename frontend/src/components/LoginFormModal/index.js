@@ -31,7 +31,10 @@ function LoginFormModal() {
       password: "password"
     };
     dispatch(sessionActions.login(demoUserCredentials))
-      .then(closeModal)
+      .then(() => {
+        closeModal();
+        alert("Demo user logged in 😎");
+      })
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -66,7 +69,7 @@ function LoginFormModal() {
           <p>{errors.credential}</p>
         )}
         <button type="submit">Log In</button>
-        <button type="submit" onClick={demoUserLogin}>Demo User</button>
+        <button type="button" onClick={demoUserLogin}>Demo User</button>
       </form>
     </>
   );
