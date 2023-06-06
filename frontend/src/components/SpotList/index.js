@@ -23,13 +23,13 @@ const SpotList = () => {
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
             <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
+          </Link>
             <div>{spot.city}, {spot.state}</div>
             <div>${spot.price} night</div>
             <div>
               <i className="fa-sharp fa-solid fa-star"></i>
               {spot.avgRating || 'New'}
             </div>
-          </Link>
         </li>
       ))}
     </ul>
