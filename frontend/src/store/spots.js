@@ -10,13 +10,15 @@ export const loadSpots = (spots) => ({
   payload: spots,
 });
 
-export const fetchSpots = () => async (dispatch) => {
+//Thunk
+export const fetchSpotsThunk = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
   const spots = await response.json();
   dispatch(loadSpots(spots.Spots));
+  return response;
 };
 
-//Reducer initilization and function
+//Reducer
 const initialState = {
   spots: [],
 };
