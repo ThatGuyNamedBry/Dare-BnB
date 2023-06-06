@@ -1,7 +1,9 @@
+// frontend/src/components/SpotDetails/index.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSpotByIdThunk } from '../../store/spots';
+import './SpotDetails.css';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
@@ -17,20 +19,23 @@ const SpotDetails = () => {
   }
 
   return (
-    <div>
-      <h1>{spot.name}</h1>
-      <h3>Location: {spot.city}, {spot.state}, {spot.country}</h3>
+    <div id='SpotDetailsContainer'>
+      <h1 id='SpotName'>{spot.name}</h1>
+      <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
       {spot.SpotImages?.map((image) => (
-        <img src={image.url} alt="Spot Image" />
+        <img key={image.id} src={image.url} alt="Spot Image" />
       ))}
-      <p>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</p>
-      <p>{spot.description}</p>
-      <div>
-        <span>${spot.price} night</span>
-        <button onClick={() => alert('Feature coming soon')}>Reserve</button>
+      <div id='SDLeftContainer'>
+        <div id ='HostedBy'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
+        <div id ='SpotDescription'>{spot.description}</div>
+      </div>
+      <div id='SDRightContainer'>
+      <div id ='price'>${spot.price} night</div>
+      <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
       </div>
     </div>
   );
 };
 
 export default SpotDetails;
+
