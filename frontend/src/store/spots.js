@@ -1,10 +1,13 @@
 // frontend/src/store/spots.js
 import { csrfFetch } from "./csrf";
 
-//Action Types
+//                                           Action Types
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
+const LOAD_SPOT = 'spots/LOAD_SPOT';
 
-//Action Creators
+//                                         Action Creators
+
+//Get All Spots Action
 export const getAllSpotsAction = (spots) => {
   const spotsObject = {};
   spots.forEach((spot) => {
@@ -17,7 +20,17 @@ export const getAllSpotsAction = (spots) => {
   };
 };
 
-//Thunk
+//Get Spot by ID Action
+export const getSpotByIdAction = (spot) => {
+  return {
+    type: LOAD_SPOT,
+    payload: spot,
+  };
+};
+
+//                                             Thunks
+
+//Get All Spots Thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
   const spots = await response.json();
@@ -25,15 +38,26 @@ export const getAllSpotsThunk = () => async (dispatch) => {
   return response;
 };
 
+//Get Spot by ID Thunk
+export const getSpotByIdThunk = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`);
+  const spot = await response.json();
+  dispatch(getSpotByIdAction(spot));
+  return response;
+};
+
+
 //Reducer function
 const initialState = {spots: {}};
 
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOTS:
-      return Object.assign({ ...state, spots: action.payload });
-      default:
-        return state;
+      return { ...state, spots: action.payload };
+    case LOAD_SPOT:
+      return { ...state, spots: { ...state.spots, [action.payload.id]: action.payload } };
+    default:
+      return state;
   }
 };
 
