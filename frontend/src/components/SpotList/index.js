@@ -1,7 +1,7 @@
 // frontend/src/components/SpotList/index.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSpots } from '../../store/spots';
+import { fetchSpotsThunk } from '../../store/spots';
 import { Link } from 'react-router-dom';
 import './SpotList.css';
 
@@ -10,7 +10,7 @@ const SpotList = () => {
   const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
-    dispatch(fetchSpots());
+    dispatch(fetchSpotsThunk());
   }, [dispatch]);
 
   if (!spots) {
@@ -18,18 +18,17 @@ const SpotList = () => {
   }
   // console.log(spots);
   return (
-    <ul id = 'SpotsGrid'>
+    <ul id='SpotsGrid'>
       {spots.map((spot) => (
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
-          <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
-          <div>{spot.city}, {spot.state}</div>
-          <div>${spot.price} night</div>
-          <div>
-            <i className="fa-sharp fa-solid fa-star"></i>
-            {spot.avgRating || 'New'}
-          </div>
-          {/* <div>{spot.name}</div> */}
+            <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
+            <div>{spot.city}, {spot.state}</div>
+            <div>${spot.price} night</div>
+            <div>
+              <i className="fa-sharp fa-solid fa-star"></i>
+              {spot.avgRating || 'New'}
+            </div>
           </Link>
         </li>
       ))}
