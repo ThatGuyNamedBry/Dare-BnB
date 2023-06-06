@@ -8,11 +8,6 @@
     margin: 0 auto;
     max-width: 1300px;
 }
-/* @media (min-width: 1200px) {
-    #SpotsGrid {
-        grid-template-columns: repeat(4, minmax(300px, 1fr));
-    }
-} */
 
 #SpotsGrid > li {
     border: solid 2px black;
