@@ -13,3 +13,7 @@
     border: solid 2px black;
     list-style: none;
 }
+
+#SpotsGrid > li a {
+    text-decoration: none;
+}
