@@ -22,7 +22,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={SpotList} />
         <Route path="/spots/:spotId" component={SpotDetails} />
-        {/* <Route path="/spots/new" component={CreateSpotForm} /> */}
+        <Route path="/spots/new" component={CreateSpotForm} />
       </Switch>
       )}
     </>

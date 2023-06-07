@@ -79,9 +79,9 @@ const spotReducer = (state = initialState, action) => {
       });
       return { ...state, allSpots: allSpotsObject };
       case LOAD_SPOT:
-        return { ...state, singleSpot: {...state.singleSpot, [action.payload.id]: action.payload} };
+        return { ...state, singleSpot: {[action.payload.id]: action.payload} };
         case CREATE_SPOT:
-          return {...state, allSpots: { ...state.allSpots, [action.payload.id]: action.payload }};
+          return {...state, allSpots: { [action.payload.id]: action.payload }};
     default:
       return state;
     }
