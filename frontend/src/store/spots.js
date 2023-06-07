@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 //                                           Action Types
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT = 'spots/LOAD_SPOT';
+const CREATE_SPOT = 'spots/CREATE_SPOT';
 
 //                                         Action Creators
 
@@ -27,6 +28,15 @@ export const getSpotByIdAction = (spot) => {
     payload: spot,
   };
 };
+
+//Create Spot Action
+export const createSpotAction = (spot) => {
+  return {
+    type: CREATE_SPOT,
+    payload: spot,
+  };
+};
+
 
 //                                             Thunks
 
@@ -56,6 +66,8 @@ const spotReducer = (state = initialState, action) => {
       return { ...state, spots: action.payload };
     case LOAD_SPOT:
       return { ...state, spots: { ...state.spots, [action.payload.id]: action.payload } };
+    case CREATE_SPOT:
+      return {...state, spots: { ...state.spots, [action.payload.id]: action.payload }};
     default:
       return state;
   }
