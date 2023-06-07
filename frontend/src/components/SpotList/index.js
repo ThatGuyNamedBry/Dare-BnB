@@ -7,7 +7,7 @@ import './SpotList.css';
 
 const SpotList = () => {
   const dispatch = useDispatch();
-  const spots = useSelector((state) => state.spots.spots);
+  const spots = useSelector((state) => state.spots.allSpots);
 
   useEffect(() => {
     dispatch(getAllSpotsThunk());

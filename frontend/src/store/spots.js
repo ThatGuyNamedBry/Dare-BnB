@@ -10,14 +10,9 @@ const CREATE_SPOT = 'spots/CREATE_SPOT';
 
 //Get All Spots Action
 export const getAllSpotsAction = (spots) => {
-  const spotsObject = {};
-  spots.forEach((spot) => {
-    spotsObject[spot.id] = spot;
-  });
-
   return {
     type: LOAD_SPOTS,
-    payload: spotsObject,
+    payload: spots,
   };
 };
 
@@ -56,30 +51,51 @@ export const getSpotByIdThunk = (spotId) => async (dispatch) => {
   return response;
 };
 
+//Create a Spot Thunk
+export const createSpotThunk = (payload) => async (dispatch) => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const spot = await response.json();
+  dispatch(createSpotAction(spot));
+  return response;
+};
+
 
 //Reducer function
-const initialState = {spots: {}};
+const initialState = {
+  allSpots: {},
+  singleSpot: {}
+}
 
 const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOTS:
-      return { ...state, spots: action.payload };
-    case LOAD_SPOT:
-      return { ...state, spots: { ...state.spots, [action.payload.id]: action.payload } };
-    case CREATE_SPOT:
-      return {...state, spots: { ...state.spots, [action.payload.id]: action.payload }};
+      const allSpotsObject = {};
+      action.payload.forEach((spot) => {
+        allSpotsObject[spot.id] = spot;
+      });
+      return { ...state, allSpots: allSpotsObject };
+      case LOAD_SPOT:
+        return { ...state, singleSpot: {...state.singleSpot, [action.payload.id]: action.payload} };
+        case CREATE_SPOT:
+          return {...state, allSpots: { ...state.allSpots, [action.payload.id]: action.payload }};
     default:
       return state;
-  }
-};
+    }
+  };
 
 
-export default spotReducer;
+  export default spotReducer;
 
 
-//Old code
-//Action Creators
-// export const getAllSpotsAction = (spots) => ({
-//   type: LOAD_SPOTS,
-//   payload: spots,
-// });
+  //Old code
+  //Action Creators
+  // export const getAllSpotsAction = (spots) => ({
+    //   type: LOAD_SPOTS,
+    //   payload: spots,
+    // });
+
+    // const initialState = {spots: {}};

@@ -8,14 +8,14 @@ import './SpotDetails.css';
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const spot = useSelector((state) => state.spots.spots[spotId]);
+  const spot = useSelector((state) => state.spots.allSpots[spotId]); //faster with allSpots?
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
   }, [dispatch, spotId]);
 
   if (!spot || spot === null) {
-    return <h1>No Spot details to display, get to debugging!</h1>;
+    return <h1>Spot details loading...</h1>;
   }
 
   return (
@@ -38,4 +38,3 @@ const SpotDetails = () => {
 };
 
 export default SpotDetails;
-
