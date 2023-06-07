@@ -22,7 +22,7 @@ const SpotList = () => {
       {Object.values(spots).map((spot) => (
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
-            <img src={spot.previewImage} alt={'Spot Image Thumbnail'} />
+            <img src={spot.previewImage} alt={'Spot Thumbnail'} />
           </Link>
             <div>{spot.city}, {spot.state}</div>
             <div>${spot.price} night</div>
