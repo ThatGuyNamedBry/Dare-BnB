@@ -6,6 +6,7 @@ import './CreateSpotForm.css';
 
 const CreateSpotForm = ({spot}) => {
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState('');
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -24,32 +25,46 @@ const CreateSpotForm = ({spot}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Add Validators/UseEffect Here
+    setErrors({})
 
-    dispatch(createSpotThunk({}))
+    dispatch(createSpotThunk({
+      country,
+      address,
+      city,
+      state,
+      lat,
+      lng,
+      description,
+      name,
+      price,
+      images: [
+      previewImage,
+      image1,
+      image2,
+      image3,
+      image4
+      ]
+    }))
   };
 
   return (
     <div>
       <h2>Create a New Spot</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div id='LocationDiv'>
           <h3>Where's your place located?</h3>
           <p>Guests will only get your exact address once they booked a reservation.</p>
           <label>Country:</label>
           <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' required/>
-        </div>
-        <div>
           <label>Street Address:</label>
           <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' required/>
-        </div>
-        <div>
+        <div id='CityStateInnerDiv'>
           <label>City:</label>
           <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' required/>
-        </div>
-        <div>
+          <span>,</span>
           <label>State:</label>
-          <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='State' required/>
+          <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' required/>
+        </div>
         </div>
         <div id='DescriptionDiv'>
             <h3>Describe your place to guests</h3>
@@ -61,20 +76,22 @@ const CreateSpotForm = ({spot}) => {
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot' required/>
         </div>
-        <div id='PriveDiv'>
+        <div id='PriceDiv'>
           <h3>Set a base price for your spot</h3>
           <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+          <div>
           <label>$ </label>
           <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder='Price per night (USD)' required/>
+          </div>
         </div>
         <div id='ImageDiv'>
           <h3>Liven up your spot with photos</h3>
           <p>Submit a link to at least one photo to publish your spot.</p>
           <input type="text" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder='Preview Image URL' required/>
-          <input type="text" value={image1} onChange={(e) => setImage1(e.target.value)} placeholder='Image 1 URL'/>
-          <input type="text" value={image2} onChange={(e) => setImage2(e.target.value)} placeholder='Image 2 URL'/>
-          <input type="text" value={image3} onChange={(e) => setImage3(e.target.value)} placeholder='Image 3 URL'/>
-          <input type="text" value={image4} onChange={(e) => setImage4(e.target.value)} placeholder='Image 4 URL'/>
+          <input type="text" value={image1} onChange={(e) => setImage1(e.target.value)} placeholder='Image URL'/>
+          <input type="text" value={image2} onChange={(e) => setImage2(e.target.value)} placeholder='Image URL'/>
+          <input type="text" value={image3} onChange={(e) => setImage3(e.target.value)} placeholder='Image URL'/>
+          <input type="text" value={image4} onChange={(e) => setImage4(e.target.value)} placeholder='Image URL'/>
         </div>
         <button type='submit'>Create Spot</button>
       </form>

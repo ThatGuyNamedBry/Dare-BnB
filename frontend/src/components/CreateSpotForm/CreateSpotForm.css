@@ -1,5 +1,40 @@
+h2 {
+    text-align: center;
+}
 #ImageDiv {
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
+
+#PriceDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#SpotNameDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#DescriptionDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#LocationDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#LocationDiv label {
+    margin-left: 5px;
+    text-align: left;
+}
+
+/* #CityStateInnerDiv {
+    display: flex;
+} */
