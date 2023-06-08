@@ -1,0 +1,23 @@
+/* frontend/src/components/CurrentUserSpotList/CurrentUserSpotList.css */
+
+#SpotsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-gap: 20px;
+    margin: 0 auto;
+    max-width: 1024px;
+}
+
+#SpotsGrid > li {
+    border: solid 2px black;
+    list-style: none;
+}
+
+#SpotsGrid > li a {
+    text-decoration: none;
+}
+
+#SpotsGrid > li img {
+    max-width: 100%;
+    height: 80%;
+}
