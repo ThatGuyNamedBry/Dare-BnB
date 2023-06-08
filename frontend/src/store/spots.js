@@ -52,11 +52,11 @@ export const getSpotByIdThunk = (spotId) => async (dispatch) => {
 };
 
 //Create a Spot Thunk
-export const createSpotThunk = (formData) => async (dispatch) => {
+export const createSpotThunk = (formData, imageData) => async (dispatch) => {
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(formData, imageData),
   });
   if (response.ok) {
     const spot = await response.json();
@@ -83,7 +83,8 @@ const spotReducer = (state = initialState, action) => {
       });
       return { ...state, allSpots: allSpotsObject };
       case LOAD_SPOT:
-        return { ...state, singleSpot: {[action.payload.id]: action.payload} };
+        return { ...state, singleSpot: { ...state.singleSpot, [action.payload.id]: action.payload }};
+        // { ...state, singleSpot: {[action.payload.id]: action.payload} };
         case CREATE_SPOT:
           return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
     default:
