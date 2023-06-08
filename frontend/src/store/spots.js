@@ -6,6 +6,7 @@ const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT = 'spots/LOAD_SPOT';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
 // const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGE';
+const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 
 
 //                                         Action Creators
@@ -38,10 +39,17 @@ export const createSpotAction = (spot) => {
 // export const createSpotImageAction = (image) => {
 //   return {
 //     type: CREATE_SPOT_IMAGE,
-//     payload: {image},
+//     payload: image,
 //   };
 // };
 
+// Edit/Update a Spot Action
+export const updateSpotAction = (spot) => {
+  return {
+    type: UPDATE_SPOT,
+    payload: spot,
+  };
+};
 
 //                                             Thunks
 
@@ -98,6 +106,23 @@ export const createImageforSpotThunk = (spot, image) => async (dispatch) => {
   }
 };
 
+//Edit/Update a Spot Thunk
+export const updateSpotThunk = (spotId, formData) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  });
+
+  if (response.ok) {
+    const spot = await response.json();
+    dispatch(updateSpotAction(spot));
+    return spot;
+  } else {
+    const errorData = await response.json();
+    return errorData;
+  }
+};
 
 //Reducer function
 const initialState = {
@@ -113,11 +138,13 @@ const spotReducer = (state = initialState, action) => {
         allSpotsObject[spot.id] = spot;
       });
       return { ...state, allSpots: allSpotsObject };
-      case LOAD_SPOT:
-        return { ...state, singleSpot: {[action.payload.id]: action.payload} };
+    case LOAD_SPOT:
+      return { ...state, singleSpot: {[action.payload.id]: action.payload}};
       //return { ...state, singleSpot: { ...state.singleSpot, [action.payload.id]: action.payload }};
-        case CREATE_SPOT:
-          return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
+    case CREATE_SPOT:
+      return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
+    case UPDATE_SPOT:
+      return {...state, singleSpot: {[action.payload.id]: action.payload}};
     default:
       return state;
     }

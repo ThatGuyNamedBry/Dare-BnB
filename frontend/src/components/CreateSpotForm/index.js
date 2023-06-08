@@ -66,13 +66,13 @@ const CreateSpotForm = ({spot, SpotImages}) => {
           <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' required/>
           <label>Street Address:</label>
           <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' required/>
-        <div id='CityStateInnerDiv'>
-          <label>City:</label>
-          <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' required/>
-          <span>,</span>
-          <label>State:</label>
-          <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' required/>
-        </div>
+          <div id='CityStateInnerDiv'>
+            <label>City:</label>
+            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' required/>
+            <span>,</span>
+            <label>State:</label>
+            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' required/>
+          </div>
         </div>
         <div id='DescriptionDiv'>
             <h3>Describe your place to guests</h3>
