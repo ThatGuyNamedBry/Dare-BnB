@@ -91,7 +91,7 @@ export const createImageforSpotThunk = (spot, image) => async (dispatch) => {
     spot.previewImage = newImage.url;
     dispatch(createSpotAction(spot));
     // dispatch(createSpotImageAction(spot));
-    return image;
+    return response;
   } else {
     const errorData = await response.json();
     return errorData;
