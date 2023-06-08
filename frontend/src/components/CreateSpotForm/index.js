@@ -1,33 +1,41 @@
 // frontend/src/components/CreateSpotForm/index.js
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { createSpotThunk } from '../../store/spots';
+import { createSpotThunk, createImageForSpotThunk } from '../../store/spots';
 import './CreateSpotForm.css';
+import { useHistory } from 'react-router-dom';
 
-const CreateSpotForm = ({spot}) => {
+const CreateSpotForm = ({spot, SpotImages}) => {
   const dispatch = useDispatch();
-  const [errors, setErrors] = useState('');
+  const history = useHistory();
+  const [errors, setErrors] = useState({});
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [lat, setlat] = useState(100 || '');
-  const [lng, setlng] = useState(110 || '');
+  const [lat, setLat] = useState(100 || '');
+  const [lng, setLng] = useState(110 || '');
   const [description, setDescription] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState(spot?.previewImage || '');
-  const [image1, setImage1] = useState('');
-  const [image2, setImage2] = useState('');
-  const [image3, setImage3] = useState('');
-  const [image4, setImage4] = useState('');
+  const [image1, setImage1] = useState(SpotImages?.url || '');
+  const [image2, setImage2] = useState(SpotImages?.url || '');
+  const [image3, setImage3] = useState(SpotImages?.url || '');
+  const [image4, setImage4] = useState(SpotImages?.url || '');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setErrors({})
+    const images = [
+      { url: previewImage, preview: true },
+      { url: image1, preview: false },
+      { url: image2, preview: false },
+      { url: image3, preview: false },
+      { url: image4, preview: false }
+    ];
 
-    dispatch(createSpotThunk({
+    const formData = {
       country,
       address,
       city,
@@ -37,14 +45,14 @@ const CreateSpotForm = ({spot}) => {
       description,
       name,
       price,
-      images: [
-      previewImage,
-      image1,
-      image2,
-      image3,
-      image4
-      ]
-    }))
+      images
+    };
+    const data = await dispatch(createSpotThunk(formData));
+    if (!data.errors) {
+    history.push(`/spots/${data.id}`)
+    } else {
+      setErrors(data.errors);
+    }
   };
 
   return (
