@@ -9,13 +9,22 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul id='navigation-ul'>
+    <ul id="navigation-ul">
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>
-      {isLoaded && (
+      {isLoaded && sessionUser ? (
+        <>
+          <li>
+            <NavLink exact to="/spots/new">Create a New Spot</NavLink>
+          </li>
+          <li>
+            <ProfileButton user={sessionUser} />
+          </li>
+        </>
+      ) : (
         <li>
-          <ProfileButton user={sessionUser} />
+          <ProfileButton />
         </li>
       )}
     </ul>

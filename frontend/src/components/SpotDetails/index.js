@@ -8,25 +8,25 @@ import './SpotDetails.css';
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const spot = useSelector((state) => state.spots.spots[spotId]);
+  const spot = useSelector((state) => state.spots.singleSpot[spotId]); //faster with allSpots?
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
   }, [dispatch, spotId]);
 
   if (!spot || spot === null) {
-    return <h1>No Spot details to display, get to debugging!</h1>;
+    return <h1>I am a turtle...</h1>;
   }
 
   return (
     <div id='SpotDetailsContainer'>
       <h1 id='SpotName'>{spot.name}</h1>
       <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
-      {spot.SpotImages?.map((image) => (
-        <img key={image.id} src={image.url} alt="Spot Image" />
+      {spot.SpotImages.map((image) => (
+        <img key={image.id} src={image.url} alt="Spot Thumbnail" />
       ))}
       <div id='SDLeftContainer'>
-        <div id ='HostedBy'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
+        <div id ='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
         <div id ='SpotDescription'>{spot.description}</div>
       </div>
       <div id='SDRightContainer'>
@@ -38,4 +38,3 @@ const SpotDetails = () => {
 };
 
 export default SpotDetails;
-
