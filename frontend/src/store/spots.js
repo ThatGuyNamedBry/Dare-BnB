@@ -36,13 +36,6 @@ export const createSpotAction = (spot) => {
   };
 };
 
-// Create Spot Image Action
-// export const createSpotImageAction = (image) => {
-//   return {
-//     type: CREATE_SPOT_IMAGE,
-//     payload: image,
-//   };
-// };
 
 // Edit/Update a Spot Action
 export const updateSpotAction = (spot) => {
@@ -65,6 +58,14 @@ export const deleteSpotAction = (spotId) => {
 //Get All Spots Thunk
 export const getAllSpotsThunk = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
+  const spots = await response.json();
+  dispatch(getAllSpotsAction(spots.Spots));
+  return response;
+};
+
+//Get All Spots by Current User Thunk
+export const getCurrentUserAllSpotsThunk = () => async (dispatch) => {
+  const response = await csrfFetch('/api/spots/current');
   const spots = await response.json();
   dispatch(getAllSpotsAction(spots.Spots));
   return response;
@@ -162,30 +163,39 @@ const spotReducer = (state = initialState, action) => {
         allSpotsObject[spot.id] = spot;
       });
       return { ...state, allSpots: allSpotsObject };
-    case LOAD_SPOT:
-      return { ...state, singleSpot: {[action.payload.id]: action.payload}};
-      //return { ...state, singleSpot: { ...state.singleSpot, [action.payload.id]: action.payload }};
-    case CREATE_SPOT:
-      return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
+      case LOAD_SPOT:
+        return { ...state, singleSpot: {[action.payload.id]: action.payload}};
+        case CREATE_SPOT:
+          return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
     case UPDATE_SPOT:
       return {...state, singleSpot: {[action.payload.id]: action.payload}};
-    case DELETE_SPOT:
-      const newSpots = { ...state.allSpots };
-      delete newSpots[action.payload];
-      return { ...state, allSpots: newSpots };
-    default:
-      return state;
-    }
-  };
+      case DELETE_SPOT:
+        const newSpots = { ...state.allSpots };
+        delete newSpots[action.payload];
+        return { ...state, allSpots: newSpots };
+        default:
+          return state;
+        }
+      };
 
-export default spotReducer;
+      export default spotReducer;
 
 
-  //Old code
-  //Action Creators
-  // export const getAllSpotsAction = (spots) => ({
-    //   type: LOAD_SPOTS,
-    //   payload: spots,
-    // });
+      //Old code
+      //Action Creators
+      // export const getAllSpotsAction = (spots) => ({
+        //   type: LOAD_SPOTS,
+        //   payload: spots,
+        // });
 
-    // const initialState = {spots: {}};
+        // const initialState = {spots: {}};
+
+        // Create Spot Image Action
+        // export const createSpotImageAction = (image) => {
+          //   return {
+            //     type: CREATE_SPOT_IMAGE,
+            //     payload: image,
+            //   };
+            // };
+
+            //return { ...state, singleSpot: { ...state.singleSpot, [action.payload.id]: action.payload }};
