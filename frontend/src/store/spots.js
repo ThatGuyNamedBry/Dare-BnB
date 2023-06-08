@@ -7,6 +7,7 @@ const LOAD_SPOT = 'spots/LOAD_SPOT';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
 // const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGE';
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
+const DELETE_SPOT = 'spots/DELETE_SPOT';
 
 
 //                                         Action Creators
@@ -48,6 +49,14 @@ export const updateSpotAction = (spot) => {
   return {
     type: UPDATE_SPOT,
     payload: spot,
+  };
+};
+
+//Delete a Spot Action
+export const deleteSpotAction = (spotId) => {
+  return {
+    type: DELETE_SPOT,
+    payload: spotId,
   };
 };
 
@@ -124,6 +133,21 @@ export const updateSpotThunk = (spotId, formData) => async (dispatch) => {
   }
 };
 
+//Delete a Spot Thunk
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    dispatch(deleteSpotAction(spotId));
+    return response;
+  }
+};
+
+
+
+
 //Reducer function
 const initialState = {
   allSpots: {},
@@ -145,6 +169,10 @@ const spotReducer = (state = initialState, action) => {
       return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
     case UPDATE_SPOT:
       return {...state, singleSpot: {[action.payload.id]: action.payload}};
+    case DELETE_SPOT:
+      const newSpots = { ...state.allSpots };
+      delete newSpots[action.payload];
+      return { ...state, allSpots: newSpots };
     default:
       return state;
     }
