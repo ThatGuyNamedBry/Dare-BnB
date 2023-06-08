@@ -21,28 +21,28 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'https://example.com/image1.jpg',
+        url: 'https://i.redd.it/njmigiw3l7p31.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://example.com/image2.jpg',
+        url: 'https://cdn.vox-cdn.com/thumbor/OCqrB7vRkjgnErhNL4h8FhmpkuM=/0x0:1023x682/1200x0/filters:focal(0x0:1023x682):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/19299314/Stinson.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://example.com/image3.jpg',
-        preview: true,
+        url: 'https://cdn.vox-cdn.com/thumbor/7QlBrrAWq4JPln0I1pYb66mUWYU=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19299312/Stinson_2.jpg',
+        preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 3,
-        url: 'https://example.com/image4.jpg',
+        url: 'https://thumbs.dreamstime.com/b/view-golden-gate-bridge-15270243.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -72,4 +72,9 @@ module.exports = {
   }
 };
 
-//https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_465/project%20prism%2Fcolor%20search%20archive%2Ff3c7768d0ec543a9c3d3d6891c3f780865145b56
+/*
+https://example.com/image1.jpg
+https://example.com/image2.jpg
+https://example.com/image3.jpg
+https://example.com/image4.jpg
+*/
