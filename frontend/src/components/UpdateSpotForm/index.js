@@ -9,15 +9,15 @@ const UpdateSpotForm = ({ spot }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
-  const [country, setCountry] = useState(spot.country || '');
-  const [address, setAddress] = useState(spot.address || '');
-  const [city, setCity] = useState(spot.city || '');
-  const [state, setState] = useState(spot.state || '');
-  const [lat, setLat] = useState(spot.lat || '');
-  const [lng, setLng] = useState(spot.lng || '');
-  const [description, setDescription] = useState(spot.description || '');
-  const [name, setName] = useState(spot.name || '');
-  const [price, setPrice] = useState(spot.price || '');
+  const [country, setCountry] = useState(spot?.country || '');
+  const [address, setAddress] = useState(spot?.address || '');
+  const [city, setCity] = useState(spot?.city || '');
+  const [state, setState] = useState(spot?.state || '');
+  const [lat, setLat] = useState(spot?.lat || 100 || '');
+  const [lng, setLng] = useState(spot?.lng || 100 || '');
+  const [description, setDescription] = useState(spot?.description || '');
+  const [name, setName] = useState(spot?.name || '');
+  const [price, setPrice] = useState(spot?.price || '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,11 +34,16 @@ const UpdateSpotForm = ({ spot }) => {
       price,
     };
 
-    const data = await dispatch(updateSpotThunk(spot.id, formData));
-    if (!data.errors) {
-      history.push(`/spots/${data.id}`);
-    } else {
-      setErrors(data.errors);
+    try {
+      const data = await dispatch(updateSpotThunk(formData));
+      console.log('update a spot data ', data)
+      if (!data.errors) {
+        history.push(`/spots/${data.id}`);
+      } else {
+        setErrors(data.errors);
+      }
+    } catch (errors) {
+      console.error('An error occurred while updating the spot:', errors);
     }
   };
 

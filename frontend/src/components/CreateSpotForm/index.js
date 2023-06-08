@@ -47,7 +47,9 @@ const CreateSpotForm = ({spot, SpotImages}) => {
       price,
       images
     };
+    //might need a then catch
     const data = await dispatch(createSpotThunk(formData));
+    console.log('create a spot data ', data)
     if (!data.errors) {
     history.push(`/spots/${data.id}`)
     } else {

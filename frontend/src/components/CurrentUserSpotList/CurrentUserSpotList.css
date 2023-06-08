@@ -1,5 +1,4 @@
-/*frontend/src/components/SpotList/SpotList.css
-*/
+/* frontend/src/components/CurrentUserSpotList/CurrentUserSpotList.css */
 
 #SpotsGrid {
     display: grid;
@@ -19,7 +18,6 @@
 }
 
 #SpotsGrid > li img {
-    /* border: solid 2px black; */
-    max-width: 100%; /* Ensure images fit within their boxes */
+    max-width: 100%;
     height: 80%;
 }

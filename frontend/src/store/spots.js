@@ -5,7 +5,6 @@ import { csrfFetch } from "./csrf";
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const LOAD_SPOT = 'spots/LOAD_SPOT';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
-// const CREATE_SPOT_IMAGE = 'spots/CREATE_SPOT_IMAGE';
 const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 
@@ -81,16 +80,22 @@ export const getSpotByIdThunk = (spotId) => async (dispatch) => {
 
 //Create a Spot Thunk
 export const createSpotThunk = (formData) => async (dispatch) => {
+  console.log('Create spot thunk running, this is the formData', formData)
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
   });
+  console.log('After csrf fetch, this is the response', response)
   if (response.ok) {
     const spot = await response.json();
-    // dispatch(createSpotAction(spot));
-    dispatch(createImageforSpotThunk(spot, formData.images));
-    return response;
+    console.log('If response is okay running, this is spot', spot)
+    for (const image of formData.images) {
+      if (image.url) {
+        await dispatch(createImageforSpotThunk(spot, image));
+      }
+    }
+    return spot;
   } else {
     const errorData = await response.json();
     return errorData;
@@ -98,18 +103,19 @@ export const createSpotThunk = (formData) => async (dispatch) => {
 };
 
 //Create Spot Image Thunk
-export const createImageforSpotThunk = (spot, image) => async (dispatch) => {
+export const createImageforSpotThunk = (spot, images) => async (dispatch) => {
+  console.log('Create Image for Spot Thunk, this is spot and image ', spot, images)
   const response = await csrfFetch(`/api/spots/${spot.id}/images`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(image),
+    body: JSON.stringify(images),
   });
   if (response.ok) {
     const newImage = await response.json();
+    console.log('THIS IS NEW IMAGE RESPONSE', newImage)
     spot.previewImage = newImage.url;
     dispatch(createSpotAction(spot));
-    // dispatch(createSpotImageAction(spot));
-    return response;
+    return newImage;
   } else {
     const errorData = await response.json();
     return errorData;
@@ -117,8 +123,9 @@ export const createImageforSpotThunk = (spot, image) => async (dispatch) => {
 };
 
 //Edit/Update a Spot Thunk
-export const updateSpotThunk = (spotId, formData) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
+export const updateSpotThunk = (spot, formData) => async (dispatch) => {
+  console.log('Edit/Update a Spot Thunk, this is spot and formData ', spot)
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
