@@ -23,7 +23,7 @@ const SpotDetails = () => {
       <h1 id='SpotName'>{spot.name}</h1>
       <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
       {spot.SpotImages.map((image) => (
-        <img key={image.id} src={image.url} alt="Spot Thumbnail" />
+        <img key={image.id} src={image.url} alt="Spot Thumbnail Details" />
       ))}
       <div id='SDLeftContainer'>
         <div id ='HostedBy'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>

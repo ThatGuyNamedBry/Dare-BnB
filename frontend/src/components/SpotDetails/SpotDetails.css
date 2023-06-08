@@ -2,7 +2,14 @@
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
+  grid-template-columns: 1fr 1fr;
 }
+
+#SpotDetailsContainer img {
+  width: 50%;
+  height: auto;
+}
+
 
 #SDLeftContainer {
   display: flex;

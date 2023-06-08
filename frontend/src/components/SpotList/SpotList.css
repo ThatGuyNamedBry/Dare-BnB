@@ -3,10 +3,10 @@
 
 #SpotsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-gap: 20px;
     margin: 0 auto;
-    max-width: 1300px;
+    max-width: 1024px;
 }
 
 #SpotsGrid > li {
@@ -16,4 +16,10 @@
 
 #SpotsGrid > li a {
     text-decoration: none;
+}
+
+#SpotsGrid > li img {
+    /* border: solid 2px black; */
+    max-width: 100%; /* Ensure images fit within their boxes */
+    height: 80%;
 }
