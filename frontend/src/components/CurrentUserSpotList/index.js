@@ -1,8 +1,10 @@
 // frontend/src/components/CurrentUserSpotList/index.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentUserAllSpotsThunk, deleteSpotThunk } from '../../store/spots';
+import { getCurrentUserAllSpotsThunk } from '../../store/spots';
 import { Link, useHistory } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 
 const CurrentUserSpotList = () => {
   const dispatch = useDispatch();
@@ -12,10 +14,6 @@ const CurrentUserSpotList = () => {
   useEffect(() => {
     dispatch(getCurrentUserAllSpotsThunk());
   }, [dispatch]);
-
-  const handleDelete = (spot) => {
-    dispatch(deleteSpotThunk(spot.id))
-  };
 
   const handleUpdate = (spot) => {
     history.push(`/spots/${spot.id}/edit`);
@@ -42,12 +40,21 @@ const CurrentUserSpotList = () => {
           </div>
           <div id='UpdateDeleteButtons'>
             <button onClick={() => handleUpdate(spot)}>Update</button>
-            <button onClick={() => handleDelete(spot)}>Delete</button>
+            <OpenModalButton
+              modalComponent={<DeleteConfirmationModal spot={spot} />}
+              buttonText="Delete"
+            />
           </div>
         </li>
       ))}
     </ul>
   );
-}
+};
 
 export default CurrentUserSpotList;
+
+//                             Old Code
+//
+//   const handleDelete = (spot) => {
+//     dispatch(deleteSpotThunk(spot.id))
+//   };
