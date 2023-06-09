@@ -124,7 +124,8 @@ export const createImageforSpotThunk = (spot, images) => async (dispatch) => {
 
 //Edit/Update a Spot Thunk
 export const updateSpotThunk = (spot, formData) => async (dispatch) => {
-  console.log('Edit/Update a Spot Thunk, this is spot and formData ', spot)
+  console.log('Edit/Update a Spot Thunk, this is formData ', formData);
+  console.log('Edit/Update a Spot Thunk, this is spot  ', spot);
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -170,22 +171,22 @@ const spotReducer = (state = initialState, action) => {
         allSpotsObject[spot.id] = spot;
       });
       return { ...state, allSpots: allSpotsObject };
-      case LOAD_SPOT:
-        return { ...state, singleSpot: {[action.payload.id]: action.payload}};
-        case CREATE_SPOT:
-          return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
+    case LOAD_SPOT:
+      return { ...state, singleSpot: {[action.payload.id]: action.payload}};
+    case CREATE_SPOT:
+      return {...state, allSpots: {  ...state.allSpots, [action.payload.id]: action.payload }};
     case UPDATE_SPOT:
-      return {...state, singleSpot: {[action.payload.id]: action.payload}};
-      case DELETE_SPOT:
-        const newSpots = { ...state.allSpots };
-        delete newSpots[action.payload];
-        return { ...state, allSpots: newSpots };
-        default:
-          return state;
-        }
-      };
+      return {...state, singleSpot: { [action.payload.id]: action.payload}};
+    case DELETE_SPOT:
+      const newSpots = { ...state.allSpots };
+      delete newSpots[action.payload];
+      return { ...state, allSpots: newSpots };
+    default:
+      return state;
+      }
+    };
 
-      export default spotReducer;
+    export default spotReducer;
 
 
       //Old code

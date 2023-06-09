@@ -1,11 +1,11 @@
 // frontend/src/components/CreateSpotForm/index.js
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { createSpotThunk, createImageForSpotThunk } from '../../store/spots';
+import { createSpotThunk } from '../../store/spots';
 import './CreateSpotForm.css';
 import { useHistory } from 'react-router-dom';
 
-const CreateSpotForm = ({spot, SpotImages}) => {
+const CreateSpotForm = ({spot}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -19,10 +19,10 @@ const CreateSpotForm = ({spot, SpotImages}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState(spot?.previewImage || '');
-  const [image1, setImage1] = useState(SpotImages?.url || '');
-  const [image2, setImage2] = useState(SpotImages?.url || '');
-  const [image3, setImage3] = useState(SpotImages?.url || '');
-  const [image4, setImage4] = useState(SpotImages?.url || '');
+  const [image1, setImage1] = useState('');
+  const [image2, setImage2] = useState('');
+  const [image3, setImage3] = useState('');
+  const [image4, setImage4] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
