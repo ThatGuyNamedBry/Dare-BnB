@@ -5,7 +5,7 @@ import { updateSpotThunk} from '../../store/spots';
 // import './UpdateSpotForm.css';
 import { useHistory, useParams } from 'react-router-dom';
 
-const UpdateSpotForm = ({ spot }) => {
+const UpdateSpotForm = ({spot}) => {
   const { spotId } = useParams();
 
   const dispatch = useDispatch();
@@ -24,7 +24,8 @@ const UpdateSpotForm = ({ spot }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log('this is spotId in UpdateSpotForm', spotId)
+    console.log('this is spotId in UpdateSpotForm handleSubmit', spotId)
+    console.log('this is spot in UpdateSpotForm handleSubmit', spot)
     const formData = {
       id: spotId,
       country,
