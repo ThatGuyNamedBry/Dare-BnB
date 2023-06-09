@@ -1,9 +1,9 @@
-#SpotDetailsContainer {
+/* #SpotDetailsContainer {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 2;
-}
+  grid-template-columns: 2 2fr;
+} */
 
 #SpotDetailsContainer img {
   width: 50%;
@@ -20,4 +20,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+#IconandRaitingDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dot {
+  margin: 0 0.25rem;
 }

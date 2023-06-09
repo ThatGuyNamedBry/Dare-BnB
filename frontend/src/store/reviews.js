@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 
 // Action Types
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS';
-const ADD_REVIEW = 'reviews/ADD_REVIEW';
+const CREATE_REVIEW = 'reviews/CREATE_REVIEW';
 
 // Action Creators
 export const loadReviewsAction = (reviews) => {
@@ -13,9 +13,9 @@ export const loadReviewsAction = (reviews) => {
   };
 };
 
-export const addReviewAction = (review) => {
+export const createReviewAction = (review) => {
   return {
-    type: ADD_REVIEW,
+    type: CREATE_REVIEW,
     payload: review,
   };
 };
@@ -37,7 +37,7 @@ export const createReviewThunk = (spotId, formData) => async (dispatch) => {
 
   if (response.ok) {
     const review = await response.json();
-    dispatch(addReviewAction(review));
+    dispatch(createReviewAction(review));
     return review;
   } else {
     const errorData = await response.json();
@@ -47,18 +47,18 @@ export const createReviewThunk = (spotId, formData) => async (dispatch) => {
 
 // Reducer
 const initialState = {
-  reviews: {},
+  reviews: {}
 };
 
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_REVIEWS:
       const allReviewsObject = {};
-      action.payload.forEach((review) => {
+      action.payload.Reviews.forEach((review) => {
         allReviewsObject[review.id] = review;
       });
       return { ...state, reviews: allReviewsObject };
-    case ADD_REVIEW:
+    case CREATE_REVIEW:
       return { ...state, reviews: { ...state.reviews, [action.payload.id]: action.payload } };
     default:
       return state;
@@ -66,4 +66,3 @@ const reviewsReducer = (state = initialState, action) => {
 };
 
 export default reviewsReducer;
-
