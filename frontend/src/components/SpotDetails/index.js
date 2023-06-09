@@ -8,7 +8,7 @@ import './SpotDetails.css';
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const spot = useSelector((state) => state.spots.singleSpot[spotId]); //faster with allSpots?
+  const spot = useSelector((state) => state.spots.singleSpot[spotId]);
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
@@ -19,6 +19,7 @@ const SpotDetails = () => {
   }
 
   return (
+  <>
     <div id='SpotDetailsContainer'>
       <h1 id='SpotName'>{spot.name}</h1>
       <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
@@ -31,9 +32,19 @@ const SpotDetails = () => {
       </div>
       <div id='SDRightContainer'>
       <div id ='price'>${spot.price} night</div>
+      <div>
+        <i className="fa-sharp fa-solid fa-star"></i>
+        {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
+      </div>
       <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
       </div>
     </div>
+    <div id='SDReviewsContainer'>
+      <h2>Reviews</h2>
+      <div></div>
+    </div>
+  </>
+
   );
 };
 
