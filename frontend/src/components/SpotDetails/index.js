@@ -52,7 +52,7 @@ const SpotDetails = () => {
     <div id='SDReviewsContainer'>
       <div id='IconandRaitingDiv'>
         <i className="fa-sharp fa-solid fa-star"></i>
-        {spot.avgStarRating.toFixed(1)}
+        {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
         <span className="dot"> · </span>
         <p>{Object.values(reviews).length} reviews</p>
       </div>
