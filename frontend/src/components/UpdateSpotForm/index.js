@@ -8,7 +8,6 @@ import { useHistory, useParams } from 'react-router-dom';
 const UpdateSpotForm = ({ spot }) => {
   const { spotId } = useParams();
 
-  console.log('this is spotId in UpdateSpotForm', spotId)
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -25,7 +24,9 @@ const UpdateSpotForm = ({ spot }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('this is spotId in UpdateSpotForm', spotId)
     const formData = {
+      id: spotId,
       country,
       address,
       city,
@@ -36,8 +37,8 @@ const UpdateSpotForm = ({ spot }) => {
       name,
       price,
     };
-
-      const data = await dispatch(updateSpotThunk(spotId, formData));
+    console.log('update a spot data, this is spot ', formData)
+      const data = await dispatch(updateSpotThunk(formData));
       console.log('update a spot data ', data)
       if (!data.errors) {
         history.push(`/spots/${data.id}`);
