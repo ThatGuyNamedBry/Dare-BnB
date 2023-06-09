@@ -24,22 +24,29 @@ const SpotDetails = () => {
   return (
   <>
     <div id='SpotDetailsContainer'>
-      <h1 id='SpotName'>{spot.name}</h1>
-      <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
+      <div id='SpotInfo'>
+        <h1 id='SpotName'>{spot.name}</h1>
+        <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
+      </div>
+      <div id='ImagesContainer'>
       {spot.SpotImages?.map((image) => (
         <img key={image.id} src={image.url} alt="Spot Thumbnail Details" />
       ))}
-      <div id='SDLeftContainer'>
+      </div>
+      <div id='HostedByDesc'>
         <div id ='HostedBy'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
         <div id ='SpotDescription'>{spot.description}</div>
       </div>
-      <div id='SDRightContainer'>
-      <div id ='price'>${spot.price} night</div>
-      <div>
-        <i className="fa-sharp fa-solid fa-star"></i>
-        {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
-      </div>
-      <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
+      <div id='ReserveBttnContainer'>
+        <div id='AboveBttn'>
+          <div id ='price'>${spot.price} night</div>
+          <div>
+            <i className="fa-sharp fa-solid fa-star"></i>
+            {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
+            <p>{Object.values(reviews).length} reviews</p>
+          </div>
+        </div>
+        <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
       </div>
     </div>
     <div id='SDReviewsContainer'>

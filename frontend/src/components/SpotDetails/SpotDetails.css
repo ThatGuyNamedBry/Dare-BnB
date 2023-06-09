@@ -1,25 +1,34 @@
-/* #SpotDetailsContainer {
+#SpotDetailsContainer {
   max-width: 1000px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2 2fr;
-} */
+  display: grid
+}
 
 #SpotDetailsContainer img {
   width: 50%;
   height: auto;
 }
 
-
-#SDLeftContainer {
+#SpotInfo {
   display: flex;
   flex-direction: column;
 }
 
-#SDRightContainer {
+#HostedByDesc {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  flex: 1
+}
+
+#ReserveBttnContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items:end;
+}
+#AboveBttn {
+  display: flex;
+  flex-direction: row;
 }
 
 #IconandRaitingDiv {
