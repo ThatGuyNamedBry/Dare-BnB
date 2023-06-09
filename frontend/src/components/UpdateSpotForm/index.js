@@ -1,11 +1,14 @@
 // frontend/src/components/UpdateSpotForm/index.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateSpotThunk } from '../../store/spots';
+import { updateSpotThunk} from '../../store/spots';
 // import './UpdateSpotForm.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const UpdateSpotForm = ({ spot }) => {
+  const { spotId } = useParams();
+
+  console.log('this is spotId in UpdateSpotForm', spotId)
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -34,17 +37,13 @@ const UpdateSpotForm = ({ spot }) => {
       price,
     };
 
-    try {
-      const data = await dispatch(updateSpotThunk(formData));
+      const data = await dispatch(updateSpotThunk(spotId, formData));
       console.log('update a spot data ', data)
       if (!data.errors) {
         history.push(`/spots/${data.id}`);
       } else {
         setErrors(data.errors);
       }
-    } catch (errors) {
-      console.error('An error occurred while updating the spot:', errors);
-    }
   };
 
   return (
