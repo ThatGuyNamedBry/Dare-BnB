@@ -36,7 +36,7 @@ const CurrentUserSpotList = () => {
           <div>${spot.price} night</div>
           <div>
             <i className="fa-sharp fa-solid fa-star"></i>
-            {spot.avgRating || 'New'}
+            {spot.avgRating !== 0 ? spot.avgRating.toFixed(1) : 'New'}
           </div>
           <div id='UpdateDeleteButtons'>
             <button onClick={() => handleUpdate(spot)}>Update</button>
@@ -53,8 +53,11 @@ const CurrentUserSpotList = () => {
 
 export default CurrentUserSpotList;
 
+
+
+
 //                             Old Code
-//
+// deletespotthunk moved to deleteconfirmationmodal
 //   const handleDelete = (spot) => {
 //     dispatch(deleteSpotThunk(spot.id))
 //   };
