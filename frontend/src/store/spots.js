@@ -124,8 +124,7 @@ export const createImageforSpotThunk = (spot, images) => async (dispatch) => {
 
 //Edit/Update a Spot Thunk
 export const updateSpotThunk = (spot) => async (dispatch) => {
-  // console.log('Edit/Update a Spot Thunk, this is formData ', formData);
-  console.log('Edit/Update a Spot Thunk, this is spot  ', spot);
+  // console.log('Edit/Update a Spot Thunk, this is spot  ', spot);
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

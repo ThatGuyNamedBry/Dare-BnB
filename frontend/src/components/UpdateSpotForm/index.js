@@ -24,7 +24,7 @@ const UpdateSpotForm = ({ spot }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('this is spotId in UpdateSpotForm', spotId)
+    // console.log('this is spotId in UpdateSpotForm', spotId)
     const formData = {
       id: spotId,
       country,
@@ -37,9 +37,9 @@ const UpdateSpotForm = ({ spot }) => {
       name,
       price,
     };
-    console.log('update a spot data, this is spot ', formData)
+    // console.log('UpdateSpotForm before dispatch, this is formData ', formData)
       const data = await dispatch(updateSpotThunk(formData));
-      console.log('update a spot data ', data)
+      // console.log('UpdateSpotForm after dispatch, this is data ', data)
       if (!data.errors) {
         history.push(`/spots/${data.id}`);
       } else {
