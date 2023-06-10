@@ -1,31 +1,49 @@
 // frontend/src/components/UpdateSpotForm/index.js
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateSpotThunk} from '../../store/spots';
-// import './UpdateSpotForm.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSpotThunk, getSpotByIdThunk } from '../../store/spots';
 import { useHistory, useParams } from 'react-router-dom';
 
-const UpdateSpotForm = ({spot}) => {
+const UpdateSpotForm = () => {
   const { spotId } = useParams();
-
+  const spot = useSelector((state) => state.spots.singleSpot[spotId]);
   const dispatch = useDispatch();
   const history = useHistory();
+
   const [errors, setErrors] = useState({});
-  const [country, setCountry] = useState(spot?.country || '');
-  const [address, setAddress] = useState(spot?.address || '');
-  const [city, setCity] = useState(spot?.city || '');
-  const [state, setState] = useState(spot?.state || '');
-  const [lat, setLat] = useState(spot?.lat || 100 || '');
-  const [lng, setLng] = useState(spot?.lng || 100 || '');
-  const [description, setDescription] = useState(spot?.description || '');
-  const [name, setName] = useState(spot?.name || '');
-  const [price, setPrice] = useState(spot?.price || '');
+  const [country, setCountry] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [lat, setLat] = useState(100);
+  const [lng, setLng] = useState(100);
+  const [description, setDescription] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!spot) {
+        await dispatch(getSpotByIdThunk(spotId));
+      } else {
+        setCountry(spot.country);
+        setAddress(spot.address);
+        setCity(spot.city);
+        setState(spot.state);
+        setLat(spot.lat);
+        setLng(spot.lng);
+        setDescription(spot.description);
+        setName(spot.name);
+        setPrice(spot.price);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, spot, spotId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('this is spotId in UpdateSpotForm handleSubmit', spotId)
-    console.log('this is spot in UpdateSpotForm handleSubmit', spot)
     const formData = {
       id: spotId,
       country,
@@ -38,14 +56,14 @@ const UpdateSpotForm = ({spot}) => {
       name,
       price,
     };
-    // console.log('UpdateSpotForm before dispatch, this is formData ', formData)
-      const data = await dispatch(updateSpotThunk(formData));
-      // console.log('UpdateSpotForm after dispatch, this is data ', data)
-      if (!data.errors) {
-        history.push(`/spots/${data.id}`);
-      } else {
-        setErrors(data.errors);
-      }
+
+    const data = await dispatch(updateSpotThunk(formData));
+
+    if (!data.errors) {
+      history.push(`/spots/${data.id}`);
+    } else {
+      setErrors(data.errors);
+    }
   };
 
   return (
