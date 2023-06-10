@@ -63,6 +63,7 @@ const SpotDetails = () => {
             {Object.values(reviews).map((review) => (
               <li key={review.id}>
                 <p>{review.User.firstName}</p>
+                <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                 <p>{review.review}</p>
                 <p>Rating: {review.stars}</p>
               </li>
