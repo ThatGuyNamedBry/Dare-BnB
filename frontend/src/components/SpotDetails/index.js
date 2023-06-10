@@ -14,7 +14,7 @@ const SpotDetails = () => {
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));
-    dispatch(getReviewsBySpotIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
+    dispatch(getReviewsBySpotIdThunk(spotId));
   }, [dispatch, spotId]);
 
   if (!spot || spot === null) {
