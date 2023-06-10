@@ -1,8 +1,7 @@
-#SpotDetailsContainer {
+/* #SpotDetailsContainer {
   max-width: 1000px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: grid
 }
 
 #SpotDetailsContainer img {
@@ -10,14 +9,133 @@
   height: auto;
 }
 
-
-#SDLeftContainer {
+#SpotInfo {
   display: flex;
   flex-direction: column;
 }
 
-#SDRightContainer {
+#HostedByDesc {
+  display: flex;
+  flex-direction: column;
+  flex: 1
+}
+
+#ReserveBttnContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items:end;
+  border: 3px solid black;
+}
+#AboveBttn {
+  display: flex;
+  flex-direction: row;
+}
+
+#ReserveBttn {
+  font-size: larger;
+  background-color: red;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+#IconandRaitingDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: larger;
+}
+
+.dot {
+  margin: 0 0.25rem;
+} */
+
+#SpotDetailsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-gap: 1rem;
+}
+
+#SpotInfo {
+  grid-column: 1 / 3;
+}
+
+#SpotName {
+  font-size: 2rem;
+}
+
+#SpotLocation {
+  font-size: 1.5rem;
+}
+
+#ImagesContainer {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 200px 200px;
+  grid-gap: 0.5rem;
+}
+
+#ImagesContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: center;
+}
+
+
+#ImagesContainer img:first-child {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+  width: 100%;
+}
+
+#ImagesContainer img:nth-child(2),
+#ImagesContainer img:nth-child(3),
+#ImagesContainer img:nth-child(4),
+#ImagesContainer img:nth-child(5) {
+  width: 100%;
+}
+
+#HostedByDesc {
+  grid-column: 1 / 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#ReserveBttnContainer {
+  border: 3px solid black;
+  grid-column: 2 / 3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+#AboveBttn {
+  display: flex;
+  flex-direction: row;
+}
+
+#price {
+  margin-right: 1rem;
+}
+
+#ReserveBttn {
+  font-size: larger;
+  background-color: red;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+#IconandRaitingDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: larger;
+}
+
+.dot {
+  margin: 0 0.25rem;
 }

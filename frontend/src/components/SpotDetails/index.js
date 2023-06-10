@@ -3,15 +3,18 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSpotByIdThunk } from '../../store/spots';
+import { getReviewsBySpotIdThunk } from '../../store/reviews';
 import './SpotDetails.css';
 
 const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const spot = useSelector((state) => state.spots.singleSpot[spotId]); //faster with allSpots?
+  const spot = useSelector((state) => state.spots.singleSpot[spotId]);
+  const reviews = useSelector((state) => state.reviews.reviews);
 
   useEffect(() => {
-    dispatch(getSpotByIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
+    dispatch(getSpotByIdThunk(spotId));
+    dispatch(getReviewsBySpotIdThunk(spotId));//Need to pass in spotId here to ensure the right spotId is passed into our Thunk
   }, [dispatch, spotId]);
 
   if (!spot || spot === null) {
@@ -19,21 +22,57 @@ const SpotDetails = () => {
   }
 
   return (
+  <>
     <div id='SpotDetailsContainer'>
-      <h1 id='SpotName'>{spot.name}</h1>
-      <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
+      <div id='SpotInfo'>
+        <h1 id='SpotName'>{spot.name}</h1>
+        <h3 id='SpotLocation'>{spot.city}, {spot.state}, {spot.country}</h3>
+      </div>
+      <div id='ImagesContainer'>
       {spot.SpotImages?.map((image) => (
         <img key={image.id} src={image.url} alt="Spot Thumbnail Details" />
       ))}
-      <div id='SDLeftContainer'>
+      </div>
+      <div id='HostedByDesc'>
         <div id ='HostedBy'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
         <div id ='SpotDescription'>{spot.description}</div>
       </div>
-      <div id='SDRightContainer'>
-      <div id ='price'>${spot.price} night</div>
-      <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
+      <div id='ReserveBttnContainer'>
+        <div id='AboveBttn'>
+          <div id ='price'>${spot.price} night</div>
+          <div>
+            <i className="fa-sharp fa-solid fa-star"></i>
+            {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
+            <p>{Object.values(reviews).length} reviews</p>
+          </div>
+        </div>
+        <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
       </div>
     </div>
+    <div id='SDReviewsContainer'>
+      <div id='IconandRaitingDiv'>
+        <i className="fa-sharp fa-solid fa-star"></i>
+        {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
+        <span className="dot"> · </span>
+        <p>{Object.values(reviews).length} reviews</p>
+      </div>
+      {!Object.values(reviews) ? (
+        <p>No reviews available. Create one!</p>
+        ) : (
+          <ul>
+            {Object.values(reviews).map((review) => (
+              <li key={review.id}>
+                <p>{review.User.firstName}</p>
+                <p>{review.review}</p>
+                <p>Rating: {review.stars}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      <div></div>
+    </div>
+  </>
+
   );
 };
 

@@ -28,7 +28,7 @@ const SpotList = () => {
             <div>${spot.price} night</div>
             <div>
               <i className="fa-sharp fa-solid fa-star"></i>
-              {spot.avgRating || 'New'}
+              {spot.avgRating !== 0 ? spot.avgRating.toFixed(1) : 'New'}
             </div>
         </li>
       ))}
@@ -37,3 +37,6 @@ const SpotList = () => {
 }
 
 export default SpotList;
+
+//Old Code
+// {spot.avgRating || 'New'}
