@@ -18,7 +18,7 @@ const SpotDetails = () => {
   }, [dispatch, spotId]);
 
   if (!spot || spot === null) {
-    return <h1>I am a turtle...</h1>;
+    return <h1>Loading...</h1>;
   }
 
   return (
