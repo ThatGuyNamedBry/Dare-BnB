@@ -84,28 +84,28 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: 'https://thumbs.dreamstime.com/b/view-golden-gate-bridge-15270243.jpg',
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-entrance.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 3,
-        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/halloweentown-cromwell-house.jpg?w=840&ssl=1',
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/halloweentown-cromwell-house.jpg',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 3,
-        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-entryway.jpg?w=840&ssl=1',
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-entryway.jpg',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 3,
-        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-kitchen.jpg?w=840&ssl=1',
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-kitchen.jpg',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
