@@ -31,7 +31,7 @@ module.exports = {
       {
         spotId: 2,
         userId: 2,
-        review: 'Had a wonderful experience.',
+        review: 'Had a wonderful experience here. I loved the decor and location of the place!',
         stars: 4,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -39,7 +39,7 @@ module.exports = {
       {
         spotId: 1,
         userId: 2,
-        review: 'Big cleaning fee',
+        review: 'Big cleaning fee, other than that enjoyed our trip!',
         stars: 3,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -47,19 +47,19 @@ module.exports = {
       {
         spotId: 3,
         userId: 1,
-        review: 'Terrible experience, avoid!',
+        review: 'No one warned us it would be THAT scary.',
         stars: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      // {
-      //   spotId: 4,
-      //   userId: 3,
-      //   review: 'Me and the family had fun!',
-      //   stars: 5,
-      //   createdAt: new Date(),
-      //   updatedAt: new Date()
-      // }
+      {
+        spotId: 4,
+        userId: 3,
+        review: 'Me and the family had fun!',
+        stars: 5,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ], {});
   },
 

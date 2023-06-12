@@ -21,21 +21,63 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'https://i.redd.it/njmigiw3l7p31.jpg',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-669738651494426046/original/aec3bfdd-a7c7-4da1-ad41-826c62b5147e.jpeg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-669738651494426046/original/dbd485b3-7830-454b-8548-742da7a1f483.jpeg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-669738651494426046/original/3c8132b0-42e0-4614-9224-cd3c30e32b05.jpeg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-669738651494426046/original/97977537-7faf-4643-8ed8-daa30445119a.jpeg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-669738651494426046/original/9bebf2ad-8dff-4493-8e0b-39154467b215.jpeg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        url: 'https://cdn.thecoolist.com/wp-content/uploads/2016/10/New-York-State-of-Mind-halloween-decorations.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://cdn.vox-cdn.com/thumbor/OCqrB7vRkjgnErhNL4h8FhmpkuM=/0x0:1023x682/1200x0/filters:focal(0x0:1023x682):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/19299314/Stinson.jpg',
-        preview: true,
+        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom8.png',
+        preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://cdn.vox-cdn.com/thumbor/7QlBrrAWq4JPln0I1pYb66mUWYU=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19299312/Stinson_2.jpg',
+        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom9.png',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 2,
+        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom7.png',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -47,13 +89,84 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      // {
-      //   spotId: 4,
-      //   url: 'https://example.com/image5.jpg',
-      //   preview: true,
-      //   createdAt: new Date(),
-      //   updatedAt: new Date()
-      // },
+      {
+        spotId: 3,
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/halloweentown-cromwell-house.jpg?w=840&ssl=1',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 3,
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-entryway.jpg?w=840&ssl=1',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 3,
+        url: 'https://i0.wp.com/www.allhallowsgeek.com/wp-content/uploads/2018/11/cromwell-kitchen.jpg?w=840&ssl=1',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 4,
+        url: 'https://s.abcnews.com/images/Lifestyle/haunted-house-ht-ml-171025_16x9_992.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 4,
+        url: 'https://s.abcnews.com/images/Lifestyle/haunted-house2-ht-ml-171025_4x5_992.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 4,
+        url: 'https://s.abcnews.com/images/Lifestyle/haunted-house1-ht-ml-171025_4x5_992.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 5,
+        url: 'https://www.dirt.com/wp-content/uploads/2020/10/LB-Elise-House-Insidious-Chapter-2-2.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 5,
+        url: 'https://www.dirt.com/wp-content/uploads/2020/10/LB-Elise-House-Insidious-Chapter-2-3.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 5,
+        url: 'https://www.dirt.com/wp-content/uploads/2020/10/LB-Elise-House-Insidious-Chapter-2-4.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 5,
+        url: 'https://www.dirt.com/wp-content/uploads/2020/10/LB-Elise-House-Insidious-Chapter-2-6.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 5,
+        url: 'https://www.dirt.com/wp-content/uploads/2020/10/LB-Elise-House-Insidious-Chapter-2-8.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
     ], {});
   },
 
