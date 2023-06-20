@@ -22,7 +22,7 @@ const SpotDetails = () => {
   }
 
   return (
-  <>
+  <div id='WholeSpotDetailsPage'>
     <div id='SpotDetailsContainer'>
       <div id='SpotInfo'>
         <h1 id='SpotName'>{spot.name}</h1>
@@ -70,9 +70,9 @@ const SpotDetails = () => {
             ))}
           </ul>
         )}
-      <div></div>
+      {/* <div></div> */}
     </div>
-  </>
+  </div>
 
   );
 };
