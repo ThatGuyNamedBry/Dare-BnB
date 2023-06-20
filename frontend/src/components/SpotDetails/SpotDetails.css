@@ -7,16 +7,23 @@
   grid-gap: 1rem;
 }
 
+#WholeSpotDetailsPage {
+  padding: 0px 40px 0px 50px;
+}
+
 #SpotInfo {
   grid-column: 1 / 3;
+  margin-bottom: -1.5rem;
 }
 
 #SpotName {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: -0.5rem;
 }
 
 #SpotLocation {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: normal;
 }
 
 #ImagesContainer {
