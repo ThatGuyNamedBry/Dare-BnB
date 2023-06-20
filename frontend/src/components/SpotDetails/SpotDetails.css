@@ -5,7 +5,10 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   grid-gap: 1rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid black;
 }
+
 
 #WholeSpotDetailsPage {
   padding: 0px 40px 0px 50px;
@@ -24,6 +27,10 @@
 #SpotLocation {
   font-size: 1.1rem;
   font-weight: normal;
+}
+
+#HostedBy {
+  font-size: 1.2rem;
 }
 
 #ImagesContainer {
@@ -95,6 +102,9 @@
   margin: 0 0.25rem;
 }
 
+#SDReviewsContainer li{
+  list-style: none;
+}
 
 
 
