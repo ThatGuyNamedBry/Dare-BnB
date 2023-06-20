@@ -1,2 +1,10 @@
+/*  frontend/src/index.css */
 /* TODO Add site wide styles */
 
+ul {
+    padding-inline-start: 0;
+}
+
+#root {
+    max-width: 1024px;
+}
