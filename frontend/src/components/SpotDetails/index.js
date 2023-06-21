@@ -40,9 +40,10 @@ const SpotDetails = () => {
       <div id='ReserveBttnContainer'>
         <div id='AboveBttn'>
           <div id ='price'>${spot.price} night</div>
-          <div>
+          <div id ='ReserveBttnReviews'>
             <i className="fa-sharp fa-solid fa-star"></i>
             {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
+            <span className="dot"> · </span>
             <p>{Object.values(reviews).length} reviews</p>
           </div>
         </div>
