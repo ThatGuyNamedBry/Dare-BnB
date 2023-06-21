@@ -11,6 +11,8 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [isUsernameValid, setIsUsernameValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +53,10 @@ function LoginFormModal() {
           <input
             type="text"
             value={credential}
-            onChange={(e) => setCredential(e.target.value)}
+            onChange={(e) => {
+              setCredential(e.target.value);
+              setIsUsernameValid(e.target.value.length >= 4);
+            }}
             placeholder="Enter username or email"
             required
           />
@@ -60,7 +65,10 @@ function LoginFormModal() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsPasswordValid(e.target.value.length >= 6);
+            }}
             placeholder="Enter password"
             required
           />
@@ -68,7 +76,7 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={!isUsernameValid || !isPasswordValid}>Log In</button>
         <button type="button" onClick={demoUserLogin}>Demo User</button>
       </form>
     </>
