@@ -35,7 +35,7 @@ export const createReviewAction = (review) => {
 };
 
 //Delete a Review Action
-export const deleteSpotAction = (reviewId) => {
+export const deleteReviewAction = (reviewId) => {
   return {
     type: DELETE_REVIEW,
     payload: reviewId,
@@ -70,14 +70,14 @@ export const createReviewThunk = (spotId, formData) => async (dispatch) => {
   }
 };
 
-//Delete a Spot Thunk
-export const deleteSpotThunk = (spotId) => async (dispatch) => {
+//Delete a Review Thunk
+export const deleteReviewThunk = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: 'DELETE',
   });
 
   if (response.ok) {
-    dispatch(deleteSpotAction(spotId));
+    dispatch(deleteReviewAction(spotId));
     return response;
   }
 };

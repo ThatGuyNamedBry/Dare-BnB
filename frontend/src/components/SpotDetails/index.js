@@ -58,8 +58,8 @@ const SpotDetails = () => {
         <span className="dot"> · </span>
         <p>{Object.values(allReviews).length} reviews</p>
       </div>
-      {!Object.values(allReviews) ? (
-        <p>No reviews available. Create one!</p>
+      {!Object.values(allReviews).length ? (
+        <p>Be the first to post a review!</p>
         ) : (
           <ul>
             {Object.values(allReviews).map((review) => (
