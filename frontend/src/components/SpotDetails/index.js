@@ -10,7 +10,8 @@ const SpotDetails = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot[spotId]);
-  const reviews = useSelector((state) => state.reviews.reviews);
+  const allReviews = useSelector((state) => state.reviews.allReviews);
+  // const review = useSelector((state) => state.reviews.singleReview[spotId]); //Probably do not need as no update crud is required
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));
@@ -44,7 +45,7 @@ const SpotDetails = () => {
             <i className="fa-sharp fa-solid fa-star"></i>
             {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
             <span className="dot"> · </span>
-            <p>{Object.values(reviews).length} reviews</p>
+            <p>{Object.values(allReviews).length} reviews</p>
           </div>
         </div>
         <button id ='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
@@ -55,13 +56,13 @@ const SpotDetails = () => {
         <i className="fa-sharp fa-solid fa-star"></i>
         {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
         <span className="dot"> · </span>
-        <p>{Object.values(reviews).length} reviews</p>
+        <p>{Object.values(allReviews).length} reviews</p>
       </div>
-      {!Object.values(reviews) ? (
+      {!Object.values(allReviews) ? (
         <p>No reviews available. Create one!</p>
         ) : (
           <ul>
-            {Object.values(reviews).map((review) => (
+            {Object.values(allReviews).map((review) => (
               <li key={review.id}>
                 <p>{review.User.firstName}</p>
                 <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
