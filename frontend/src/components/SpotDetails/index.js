@@ -7,11 +7,11 @@ import { getReviewsBySpotIdThunk } from '../../store/reviews';
 import './SpotDetails.css';
 
 const SpotDetails = () => {
-  const { spotId } = useParams();
+  const { spotId, reviewId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot[spotId]);
   const allReviews = useSelector((state) => state.reviews.allReviews);
-  // const review = useSelector((state) => state.reviews.singleReview[spotId]); //Probably do not need as no update crud is required
+  // const review = useSelector((state) => state.reviews.singleReview[reviewId]); //Probably do not need as no update crud is required
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));
