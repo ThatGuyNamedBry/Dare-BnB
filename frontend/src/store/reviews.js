@@ -1,11 +1,16 @@
 // frontend/src/store/reviews.js
 import { csrfFetch } from "./csrf";
 
-// Action Types
+//                           Action Types
 const LOAD_REVIEWS = 'reviews/LOAD_REVIEWS';
+const LOAD_REVIEW = 'reviews/LOAD_REVIEW';
 const CREATE_REVIEW = 'reviews/CREATE_REVIEW';
+const DELETE_REVIEW = 'reviews/DELETE_REVIEW';
 
-// Action Creators
+
+//                         Action Creators
+
+//Get All Reviews Action
 export const loadReviewsAction = (reviews) => {
   return {
     type: LOAD_REVIEWS,
@@ -13,6 +18,15 @@ export const loadReviewsAction = (reviews) => {
   };
 };
 
+//Get Review by ID Action
+export const getReviewByIdAction = (review) => {
+  return {
+    type: LOAD_REVIEW,
+    payload: review,
+  };
+};
+
+//Create Review Action
 export const createReviewAction = (review) => {
   return {
     type: CREATE_REVIEW,
@@ -20,7 +34,17 @@ export const createReviewAction = (review) => {
   };
 };
 
-// Thunks
+//Delete a Review Action
+export const deleteReviewAction = (reviewId) => {
+  return {
+    type: DELETE_REVIEW,
+    payload: reviewId,
+  };
+};
+
+//                              Thunks
+
+//Get All Reviews by SpotId
 export const getReviewsBySpotIdThunk = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
   const reviews = await response.json();
@@ -28,6 +52,7 @@ export const getReviewsBySpotIdThunk = (spotId) => async (dispatch) => {
   return response;
 };
 
+//Create a Review Thunk
 export const createReviewThunk = (spotId, formData) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
@@ -45,9 +70,22 @@ export const createReviewThunk = (spotId, formData) => async (dispatch) => {
   }
 };
 
+//Delete a Review Thunk
+export const deleteReviewThunk = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'DELETE',
+  });
+
+  if (response.ok) {
+    dispatch(deleteReviewAction(spotId));
+    return response;
+  }
+};
+
 // Reducer
 const initialState = {
-  reviews: {}
+  allReviews: {},
+  singleReview: {}
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -57,9 +95,13 @@ const reviewsReducer = (state = initialState, action) => {
       action.payload.Reviews.forEach((review) => {
         allReviewsObject[review.id] = review;
       });
-      return { ...state, reviews: allReviewsObject };
+      return { ...state, allReviews: allReviewsObject };
     case CREATE_REVIEW:
-      return { ...state, reviews: { ...state.reviews, [action.payload.id]: action.payload } };
+      return { ...state, allReviews: { ...state.allReviews, [action.payload.id]: action.payload } };
+    case DELETE_REVIEW:
+      const newReviews = { ...state.allReviews };
+      delete newReviews[action.payload];
+      return { ...state, allReviews: newReviews };
     default:
       return state;
   }
