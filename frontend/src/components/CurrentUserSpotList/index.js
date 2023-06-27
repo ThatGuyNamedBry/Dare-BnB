@@ -5,6 +5,7 @@ import { getCurrentUserAllSpotsThunk } from '../../store/spots';
 import { Link, useHistory } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import './CurrentUserSpotList.css';
 
 const CurrentUserSpotList = () => {
   const dispatch = useDispatch();

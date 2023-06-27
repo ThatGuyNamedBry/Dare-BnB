@@ -1,23 +1,25 @@
 /* frontend/src/components/CurrentUserSpotList/CurrentUserSpotList.css */
 
-#SpotsGrid {
+#CurrentUserSpotsList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
     grid-gap: 20px;
     margin: 0 auto;
-    max-width: 1024px;
+    padding: 10px 40px;
 }
 
-#SpotsGrid > li {
-    border: solid 2px black;
+#CurrentUserSpotsList > li {
+
     list-style: none;
 }
 
-#SpotsGrid > li a {
+#CurrentUserSpotsList > li a {
     text-decoration: none;
 }
 
-#SpotsGrid > li img {
-    max-width: 100%;
-    height: 80%;
+#CurrentUserSpotsList > li a img {
+    border: solid 2px black;
+    width: 100%;
+    height: 215px;
+    object-fit: fill;
 }
