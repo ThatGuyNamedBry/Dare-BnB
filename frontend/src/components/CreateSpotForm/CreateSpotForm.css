@@ -35,9 +35,11 @@ h2 {
     text-align: left;
 }
 
-.error {
+/* .error { //added globally to index.css
     color: red
-}
+} */
+
+
 /* #CityStateInnerDiv {
     display: flex;
 } */

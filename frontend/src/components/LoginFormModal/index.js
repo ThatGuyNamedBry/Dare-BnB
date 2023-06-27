@@ -49,6 +49,7 @@ function LoginFormModal() {
     <div id='LogInForm'>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
+      {errors.credential && <p className="error">{errors.credential}</p>}
         <label>
           <input
             type="text"
@@ -73,10 +74,16 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
+        {/* {errors.credential && (
           <p>{errors.credential}</p>
-        )}
-        <button id='submitbutton' type="submit" disabled={!isUsernameValid || !isPasswordValid}>Log In</button>
+        )} */}
+        <button
+          id='submitbutton'
+          type="submit"
+          disabled={!isUsernameValid || !isPasswordValid}
+          className={`submitButton ${!isUsernameValid || !isPasswordValid ? 'disabled' : ''}`}
+          >Log In
+        </button>
         <span className="demoUserLink" onClick={demoUserLogin}>Demo User</span>
       </form>
     </div>

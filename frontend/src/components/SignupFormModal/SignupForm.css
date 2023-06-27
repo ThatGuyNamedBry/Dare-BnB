@@ -1,17 +1,18 @@
-#SignUpH1 {
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: -10px;
-    font-size: 140%;
-}
-
 #SignUpForm form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    width: 250px;
+}
+
+#SignUpH1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: -10px;
+    font-size: 140%;
 }
 
 #SignUpForm button {
@@ -22,6 +23,7 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .95);
 }
 
-#SignUpForm label {
+#SignUpForm input {
     margin-bottom: 5px;
+    width: 240px;
 }
