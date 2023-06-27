@@ -23,3 +23,8 @@
     height: 215px;
     object-fit: fill;
 }
+
+#ManageSpotsCreateASpot {
+    display: flex;
+    flex-direction: column;
+}
