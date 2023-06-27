@@ -28,7 +28,9 @@ const CurrentUserSpotList = () => {
     <>
       <div id='ManageSpotsCreateASpot'>
         <h1>Manage Spots</h1>
-        <Link to="/spots/new">Create a New Spot</Link>
+        <Link to="/spots/new">
+          <button>Create a New Spot</button>
+        </Link>
       </div>
     <ul id='CurrentUserSpotsList'>
       {Object.values(spots).map((spot) => (
