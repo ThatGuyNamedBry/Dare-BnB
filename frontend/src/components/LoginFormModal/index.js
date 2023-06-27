@@ -77,7 +77,7 @@ function LoginFormModal() {
           <p>{errors.credential}</p>
         )}
         <button id='submitbutton' type="submit" disabled={!isUsernameValid || !isPasswordValid}>Log In</button>
-        <button type="button" onClick={demoUserLogin}>Demo User</button>
+        <span className="demoUserLink" onClick={demoUserLogin}>Demo User</span>
       </form>
     </div>
   );
