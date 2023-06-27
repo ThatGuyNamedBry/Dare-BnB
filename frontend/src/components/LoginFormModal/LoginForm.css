@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
+    width: 250px;
 }
 #LogInForm h1{
     display: flex;
@@ -14,14 +15,30 @@
     font-size: 140%;
 }
 
-#LogInForm label {
+#LogInForm input {
     margin-bottom: 5px;
+    width: 240px;
 }
 
 #LogInForm #submitbutton {
     width: 100%;
-    height: 30px;
+    height: 35px;
     margin-top: 10px;
     margin-bottom: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .95);
+    background-color:red;
+    color: white;
 }
+
+#LogInForm #submitbutton.disabled {
+    background-color: white;
+    color: grey;
+    cursor: pointer;
+  }
+
+.demoUserLink {
+    color: darkcyan;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+

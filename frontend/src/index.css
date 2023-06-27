@@ -5,6 +5,9 @@ ul {
     padding-inline-start: 0;
 }
 
+.error {
+    color: red
+}
 /* #root {
     max-width: 1024px;
 } */
