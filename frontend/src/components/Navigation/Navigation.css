@@ -2,6 +2,7 @@
 
 .profile-dropdown.hidden {
     display: none;
+
 }
 
 .profile-dropdown {
@@ -16,10 +17,49 @@
     /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
     display: flex;
     flex-direction: column;
-    /* align-items:center; */
 }
 .profile-dropdown li button {
     align-items: center;
+}
+
+.profile-dropdown.logged-out {
+    padding: 5px 60px 5px 10px; /* Desired padding when not logged in */
+}
+
+.profile-dropdown ul::after {
+    display: none;
+}
+
+.profile-dropdown button {
+    cursor: pointer;
+    border-radius: 30px;
+    padding: 3px;
+    color: white;
+    background-color: grey;
+    height: 36px;
+    width: 70px;
+}
+
+
+.profile-dropdown .logoutButton {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+  }
+
+.profile-dropdown .helloUser {
+    padding: 0px 10px 5px 10px;
+}
+
+.profile-dropdown .manageSpots {
+    display: block;
+    position: relative;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 1px;
+    padding: 0px 14px 4px 10px;
+    /* text-indent: 10px; */
+    /* padding-bottom: 4px; */
 }
 
 #navigation-ul {
@@ -41,10 +81,6 @@
     height: 3px;
     background-color: lightgrey;
     z-index: -1; /* move the line behind the modal */
-}
-
-.profile-dropdown ul::after {
-    display: none;
 }
 
 #navigation-ul img {
@@ -82,38 +118,6 @@
     cursor: pointer;
     border-radius: 30px;
     padding: 5px;
-}
-
-.profile-dropdown button {
-    cursor: pointer;
-    border-radius: 30px;
-    padding: 3px;
-    color: white;
-    background-color: grey;
-    height: 36px;
-    width: 70px;
-}
-
-
-.profile-dropdown .logoutButton {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
-  }
-
-.profile-dropdown .helloUser {
-    padding: 0px 10px 5px 10px;
-}
-
-.profile-dropdown .manageSpots {
-    display: block;
-    position: relative;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    margin-bottom: 1px;
-    padding: 0px 14px 4px 10px;
-    /* text-indent: 10px; */
-    /* padding-bottom: 4px; */
 }
 
 /* #navigation-ul .profile-dropdown a.nav-link-manage-spots {
