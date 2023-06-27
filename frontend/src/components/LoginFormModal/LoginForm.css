@@ -1,13 +1,27 @@
-/* body form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-} */
 
-form {
+#LogInForm form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+#LogInForm h1{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: -10px;
+    font-size: 140%;
+}
+
+#LogInForm label {
+    margin-bottom: 5px;
+}
+
+#LogInForm #submitbutton {
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .95);
 }
