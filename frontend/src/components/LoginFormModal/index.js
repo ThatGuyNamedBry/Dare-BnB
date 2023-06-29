@@ -74,9 +74,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {/* {errors.credential && (
-          <p>{errors.credential}</p>
-        )} */}
+        {/* {errors.credential && <p className="error">{errors.credential}</p>} */}
         <button
           id='submitbutton'
           type="submit"
