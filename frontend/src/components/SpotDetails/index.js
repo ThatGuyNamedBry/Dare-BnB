@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSpotByIdThunk } from '../../store/spots';
 import { getReviewsBySpotIdThunk } from '../../store/reviews';
+// import ReviewModal from '../ReviewModal';
 import './SpotDetails.css';
 
 const SpotDetails = () => {
@@ -71,6 +72,7 @@ const SpotDetails = () => {
         </div>
         {!Object.values(allReviews).length ? (
           <p>Be the first to post a review!</p>
+          /* Post a review button here*/
         ) : (
           <ul>
             {Object.values(allReviews).map((review) => (
