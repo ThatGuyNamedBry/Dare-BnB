@@ -2,32 +2,44 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReviewThunk } from "../../store/reviews";
-import './ReviewModal.css';
+import "./ReviewModal.css";
 
 function ReviewModal({ spotId }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [comment, setComment] = useState("");
+  const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState({});
+  const [starClicked, setStarClicked] = useState(false);
 
   const handleStarClick = (value) => {
     setStars(value);
+    setStarClicked(true);
   };
+
   const handleStarHover = (value) => {
-    setStars(value);
+    if (!starClicked) {
+      setStars(value);
+    }
   };
+
+  const handleMouseLeave = () => {
+    if (!starClicked) {
+      setStars();
+    }
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
 
     const formData = {
-      comment,
+      review,
       stars,
     };
 
-    if (!comment || stars === 0) {
+    if (!review || stars === 0) {
       setErrors({
         message: "Please provide a comment and star rating.",
       });
@@ -46,11 +58,10 @@ function ReviewModal({ spotId }) {
       });
   };
 
-
   const renderStars = () => {
     const starElements = [];
     for (let i = 1; i <= 5; i++) {
-      const className = i <= stars ? "filled" : "";
+      const className = i <= stars ? "filled" : "empty";
       starElements.push(
         <span
           key={i}
@@ -73,20 +84,12 @@ function ReviewModal({ spotId }) {
       <form onSubmit={handleSubmit}>
         <textarea
           placeholder="Leave your review here..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
         />
         <div className="star-rating">
-          {[1, 2, 3, 4, 5].map((value) => (
-            <span
-              key={value}
-              className={`star ${value <= stars ? "filled" : ""}`}
-              onClick={() => handleStarClick(value)}
-            >
-              &#9733;
-            </span>
-          ))}
-          <p>Stars</p>
+          <div className="stars">{renderStars()}</div>
+          <p>{stars} Stars</p>
         </div>
         <button type="submit">Submit Your Review</button>
       </form>
