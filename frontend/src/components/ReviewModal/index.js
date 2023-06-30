@@ -4,31 +4,24 @@ import { useModal } from "../../context/Modal";
 import { createReviewThunk } from "../../store/reviews";
 import "./ReviewModal.css";
 
-function ReviewModal({ spotId }) {
+function ReviewModal({ spotId, disabled }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState({});
-  const [starClicked, setStarClicked] = useState(false);
+  const [activeRating, setActiveRating] = useState(stars);
 
   const handleStarClick = (value) => {
     setStars(value);
-    setStarClicked(true);
+    setActiveRating(value);
   };
 
   const handleStarHover = (value) => {
-    if (!starClicked) {
-      setStars(value);
+    if (!disabled) {
+      setActiveRating(value);
     }
   };
-
-  const handleMouseLeave = () => {
-    if (!starClicked) {
-      setStars();
-    }
-  };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,13 +54,13 @@ function ReviewModal({ spotId }) {
   const renderStars = () => {
     const starElements = [];
     for (let i = 1; i <= 5; i++) {
-      const className = i <= stars ? "filled" : "empty";
+      const className = i <= activeRating ? 'filled' : 'empty';
       starElements.push(
         <span
           key={i}
           className={`star ${className}`}
           onMouseEnter={() => handleStarHover(i)}
-          onMouseLeave={() => handleStarHover(stars)}
+          onMouseLeave={() => setActiveRating(stars)}
           onClick={() => handleStarClick(i)}
         >
           &#9733;

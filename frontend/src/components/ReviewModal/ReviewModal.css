@@ -1,1 +1,14 @@
 
+.star {
+    color: lightgray;
+    cursor: pointer;
+    font-size: 200%;
+}
+
+  .star.filled {
+    color: black
+}
+
+  .star.empty {
+    color:  lightgray;
+}
