@@ -63,7 +63,7 @@ function ReviewModal({ spotId, disabled }) {
           onMouseLeave={() => setActiveRating(stars)}
           onClick={() => handleStarClick(i)}
         >
-          &#9733;
+        <i className="fa-sharp fa-solid fa-star"></i>
         </span>
       );
     }
@@ -81,10 +81,9 @@ function ReviewModal({ spotId, disabled }) {
           onChange={(e) => setReview(e.target.value)}
         />
         <div className="star-rating">
-          <div className="stars">{renderStars()}</div>
-          <p>{stars} Stars</p>
+          <div className="stars">{renderStars()} Stars</div>
         </div>
-        <button type="submit">Submit Your Review</button>
+        <button className="reviewBttn" type="submit">Submit Your Review</button>
       </form>
     </div>
   );

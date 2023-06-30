@@ -12,3 +12,17 @@
   .star.empty {
     color:  lightgray;
 }
+
+#review-modal {
+    margin: 20px;
+    border-radius: 4px;
+}
+
+button.reviewBttn {
+    font-size: larger;
+    background-color: red;
+    color: white;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    cursor: pointer;
+  }
