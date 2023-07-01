@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSpotByIdThunk } from '../../store/spots';
 import { getReviewsBySpotIdThunk } from '../../store/reviews';
-// import ReviewModal from '../ReviewModal';
+import ReviewModal from '../ReviewModal';
+import { useModal } from "../../context/Modal";
 import './SpotDetails.css';
 
 const SpotDetails = () => {
@@ -13,6 +14,7 @@ const SpotDetails = () => {
   const spot = useSelector((state) => state.spots.singleSpot[spotId]);
   const allReviews = useSelector((state) => state.reviews.allReviews);
   // const review = useSelector((state) => state.reviews.singleReview[reviewId]); //Probably do not need as no update crud is required
+  const { setModalContent } = useModal();
 
   useEffect(() => {
     dispatch(getSpotByIdThunk(spotId));
@@ -22,6 +24,9 @@ const SpotDetails = () => {
   if (!spot || spot === null) {
     return <h1>Loading...</h1>;
   }
+  const openReviewModal = () => {
+    setModalContent(<ReviewModal spotId={spotId} />); // Set the ReviewModal component as the modal content
+  };
 
   return (
     <div id='WholeSpotDetailsPage'>
@@ -71,19 +76,24 @@ const SpotDetails = () => {
           )}
         </div>
         {!Object.values(allReviews).length ? (
-          <p>Be the first to post a review!</p>
-          /* Post a review button here*/
+          <>
+            <p>Be the first to post a review!</p>
+            <button onClick={openReviewModal}>Leave a Review</button>
+          </>
         ) : (
-          <ul>
-            {Object.values(allReviews).map((review) => (
-              <li key={review.id}>
-                <p>{review.User.firstName}</p>
-                <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
-                <p>{review.review}</p>
-                <p>Rating: {review.stars}</p>
-              </li>
-            ))}
-          </ul>
+          <>
+            <button onClick={openReviewModal}>Leave a Review</button>
+            <ul>
+              {Object.values(allReviews).map((review) => (
+                <li key={review.id}>
+                  <p>{review.User?.firstName}</p>
+                  <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                  <p>{review.review}</p>
+                  <p>Rating: {review.stars}</p>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
         {/* <div></div> */}
       </div>

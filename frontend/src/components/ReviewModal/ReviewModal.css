@@ -1,0 +1,46 @@
+div #review-modal {
+    margin: 20px;
+}
+
+.star {
+    color: lightgray;
+    cursor: pointer;
+    font-size: 150%;
+  }
+
+.star.filled {
+    color: black;
+  }
+
+.star.empty {
+    color: lightgray;
+  }
+
+button.reviewBttn {
+    font-size: larger;
+    background-color: red;
+    color: white;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .star-rating {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #review-modal form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #review-modal textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+    padding: 5px;
+    resize: vertical;
+}
