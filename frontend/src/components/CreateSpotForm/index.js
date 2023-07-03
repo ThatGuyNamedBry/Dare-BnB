@@ -41,6 +41,7 @@ const CreateSpotForm = ({ spot }) => {
   //   setValidationObject(errorsObject);
   // }, [country, address, city, state, description, name, price, previewImage]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -55,6 +56,10 @@ const CreateSpotForm = ({ spot }) => {
 
     if (!city) {
       errorsObject.city = 'City is required';
+    }
+
+    if (!state) {
+      errorsObject.state = 'State is required';
     }
 
     setValidationObject(errorsObject);
