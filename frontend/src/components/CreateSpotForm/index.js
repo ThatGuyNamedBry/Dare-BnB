@@ -55,7 +55,7 @@ const CreateSpotForm = ({ spot }) => {
     }
 
     if (!price) {
-      errorsObject.price = 'Price is required';
+      errorsObject.price = 'Price per day is required';
     }
 
     if (!previewImage) {
