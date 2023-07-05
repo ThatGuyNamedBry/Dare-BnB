@@ -7,12 +7,15 @@ import { getReviewsBySpotIdThunk } from '../../store/reviews';
 import ReviewModal from '../ReviewModal';
 import { useModal } from "../../context/Modal";
 import './SpotDetails.css';
+import DeleteReviewConfirmationModal from '../DeleteReviewConfirmationModal';
+// ...
 
 const SpotDetails = () => {
   const { spotId, reviewId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot[spotId]);
   const allReviews = useSelector((state) => state.reviews.allReviews);
+  const currentUser = useSelector((state) => state.session.user);
   // const review = useSelector((state) => state.reviews.singleReview[reviewId]); //Probably do not need as no update crud is required
   const { setModalContent } = useModal();
 
@@ -26,6 +29,10 @@ const SpotDetails = () => {
   }
   const openReviewModal = () => {
     setModalContent(<ReviewModal spotId={spotId} />); // Set the ReviewModal component as the modal content
+  };
+
+  const openDeleteConfirmationModal = (review) => {
+    setModalContent(<DeleteReviewConfirmationModal review={review} />);
   };
 
   return (
@@ -89,7 +96,9 @@ const SpotDetails = () => {
                   <p>{review.User?.firstName}</p>
                   <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                   <p>{review.review}</p>
-                  <p>Rating: {review.stars}</p>
+                  {review.userId === currentUser.id && (
+                    <button onClick={() => openDeleteConfirmationModal(review)}>Delete</button>
+                  )}
                 </li>
               ))}
             </ul>
