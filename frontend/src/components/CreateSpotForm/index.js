@@ -62,9 +62,29 @@ const CreateSpotForm = ({ spot }) => {
       errorsObject.state = 'State is required';
     }
 
+    if (!description) {
+      errorsObject.description = 'Description is required';
+    }
+
+    if (!name) {
+      errorsObject.name = 'Spot Name is required';
+    }
+
+    if (!price) {
+      errorsObject.price = 'Price is required';
+    }
+
+    if (!previewImage) {
+      errorsObject.previewImage = 'Image is required';
+    }
+
+    // if (description.length > 30) {
+    //   errorsObject.description = 'Description is required';
+    // }
+
     setValidationObject(errorsObject);
 
-    if (Object.keys(errorsObject).length === 0) { // Check for validation errors here instead
+    if (Object.keys(errorsObject).length === 0) { 
       const images = [
         { url: previewImage, preview: true },
         { url: image1, preview: false },
