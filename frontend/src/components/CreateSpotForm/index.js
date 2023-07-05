@@ -24,22 +24,6 @@ const CreateSpotForm = ({ spot }) => {
   const [image4, setImage4] = useState('');
   const [validationObject, setValidationObject] = useState({});
 
-  // useEffect(() => {
-  //   const errorsObject = {};
-  //   if (!country) {
-  //     errorsObject.country = 'Country is required';
-  //   }
-
-  //   if (!address) {
-  //     errorsObject.country = 'Address is required';
-  //   }
-
-  //   if (!city) {
-  //     errorsObject.city = 'City is required';
-  //   }
-
-  //   setValidationObject(errorsObject);
-  // }, [country, address, city, state, description, name, price, previewImage]);
 
 
   const handleSubmit = async (e) => {
@@ -84,7 +68,7 @@ const CreateSpotForm = ({ spot }) => {
 
     setValidationObject(errorsObject);
 
-    if (Object.keys(errorsObject).length === 0) { 
+    if (Object.keys(errorsObject).length === 0) {
       const images = [
         { url: previewImage, preview: true },
         { url: image1, preview: false },
@@ -177,7 +161,24 @@ export default CreateSpotForm;
 // const data = await dispatch(createSpotThunk(formData));
 // console.log('create a spot data ', data)
 // if (!data.validationObject) {
-//   history.push(`/spots/${data.id}`)
-// } else {
-//   setValidationObject(validationObject.errors);
+  //   history.push(`/spots/${data.id}`)
+  // } else {
+    //   setValidationObject(validationObject.errors);
 // }
+
+    // useEffect(() => {
+    //   const errorsObject = {};
+    //   if (!country) {
+    //     errorsObject.country = 'Country is required';
+    //   }
+
+    //   if (!address) {
+    //     errorsObject.country = 'Address is required';
+    //   }
+
+    //   if (!city) {
+    //     errorsObject.city = 'City is required';
+    //   }
+
+    //   setValidationObject(errorsObject);
+    // }, [country, address, city, state, description, name, price, previewImage]);
