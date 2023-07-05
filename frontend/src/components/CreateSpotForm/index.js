@@ -46,25 +46,37 @@ const CreateSpotForm = ({ spot }) => {
       errorsObject.state = 'State is required';
     }
 
-    if (!description) {
-      errorsObject.description = 'Description is required';
+    if (description.length < 30) {
+      errorsObject.description = 'Description needs a minimum of 30 characters';
     }
 
     if (!name) {
-      errorsObject.name = 'Spot Name is required';
+      errorsObject.name = 'Name is required';
     }
 
     if (!price) {
-      errorsObject.price = 'Price per day is required';
+      errorsObject.price = 'Price is required';
     }
 
     if (!previewImage) {
-      errorsObject.previewImage = 'Image is required';
+      errorsObject.previewImage = 'Preview image is required';
+    } else if (!previewImage.match(/\.(png|jpg|jpeg)$/i)) {
+      errorsObject.previewImage = 'Image URL must end in .png, .jpg, or .jpeg';
     }
 
-    // if (description.length > 30) {
-    //   errorsObject.description = 'Description is required';
-    // }
+    if (image1 && !image1.match(/\.(png|jpg|jpeg)$/i)) {
+      errorsObject.image1 = 'Image URL must end in .png, .jpg, or .jpeg';
+    }
+
+    if (image2 && !image2.match(/\.(png|jpg|jpeg)$/i)) {
+      errorsObject.image2 = 'Image URL must end in .png, .jpg, or .jpeg';
+    }
+    if (image3 && !image3.match(/\.(png|jpg|jpeg)$/i)) {
+      errorsObject.image3 = 'Image URL must end in .png, .jpg, or .jpeg';
+    }
+    if (image4 && !image4.match(/\.(png|jpg|jpeg)$/i)) {
+      errorsObject.image4 = 'Image URL must end in .png, .jpg, or .jpeg';
+    }
 
     setValidationObject(errorsObject);
 
@@ -119,35 +131,44 @@ const CreateSpotForm = ({ spot }) => {
             {validationObject.city && <p className="error">{validationObject.city}</p>}
             <span>,</span>
             <label>State:</label>
-            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' required />
+            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' />
+            {validationObject.state && <p className="error">{validationObject.state}</p>}
           </div>
         </div>
         <div id='DescriptionDiv'>
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters' required />
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters'/>
+          {validationObject.description && <p className="error">{validationObject.description}</p>}
         </div>
         <div id='SpotNameDiv'>
           <h3>Create a title for your spot</h3>
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot' required />
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot'/>
+          {validationObject.name && <p className="error">{validationObject.name}</p>}
         </div>
         <div id='PriceDiv'>
           <h3>Set a base price for your spot</h3>
           <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
           <div>
             <label>$ </label>
-            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder='Price per night (USD)' required />
+            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder='Price per night (USD)' />
+            {validationObject.price && <p className="error">{validationObject.price}</p>}
           </div>
         </div>
         <div id='ImageDiv'>
           <h3>Liven up your spot with photos</h3>
           <p>Submit a link to at least one photo to publish your spot.</p>
-          <input type="text" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder='Preview Image URL' required />
+          <input type="text" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} placeholder='Preview Image URL' />
+          {validationObject.previewImage && <p className="error">{validationObject.previewImage}</p>}
           <input type="text" value={image1} onChange={(e) => setImage1(e.target.value)} placeholder='Image URL' />
+          {validationObject.image1 && <p className="error">{validationObject.image1}</p>}
           <input type="text" value={image2} onChange={(e) => setImage2(e.target.value)} placeholder='Image URL' />
+          {validationObject.image2 && <p className="error">{validationObject.image2}</p>}
           <input type="text" value={image3} onChange={(e) => setImage3(e.target.value)} placeholder='Image URL' />
+          {validationObject.image3 && <p className="error">{validationObject.image3}</p>}
           <input type="text" value={image4} onChange={(e) => setImage4(e.target.value)} placeholder='Image URL' />
+          {validationObject.image4 && <p className="error">{validationObject.image4}</p>}
         </div>
         <button type='submit'>Create Spot</button>
       </form>
@@ -169,16 +190,25 @@ export default CreateSpotForm;
     // useEffect(() => {
     //   const errorsObject = {};
     //   if (!country) {
-    //     errorsObject.country = 'Country is required';
-    //   }
+      //     errorsObject.country = 'Country is required';
+      //   }
 
     //   if (!address) {
     //     errorsObject.country = 'Address is required';
     //   }
 
     //   if (!city) {
-    //     errorsObject.city = 'City is required';
+      //     errorsObject.city = 'City is required';
     //   }
 
     //   setValidationObject(errorsObject);
     // }, [country, address, city, state, description, name, price, previewImage]);
+
+
+        // if (previewImage || image1 || image2 || image3 || image4) {
+        //   errorsObject.previewImage = 'Image URL must end in .png, .jpg, or .jpeg';
+        //   errorsObject.image1 = 'Image URL must end in .png, .jpg, or .jpeg';
+        //   errorsObject.image2 = 'Image URL must end in .png, .jpg, or .jpeg';
+        //   errorsObject.image3 = 'Image URL must end in .png, .jpg, or .jpeg';
+        //   errorsObject.image4 = 'Image URL must end in .png, .jpg, or .jpeg';
+        // }
