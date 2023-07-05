@@ -97,7 +97,7 @@ const SpotDetails = () => {
                   <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                   <p>{review.review}</p>
                   {review.userId === currentUser.id && (
-                    <button onClick={() => openDeleteConfirmationModal(review)}>Delete</button>
+                    <button className='deleteReviewBttn' onClick={() => openDeleteConfirmationModal(review)}>Delete</button>
                   )}
                 </li>
               ))}
