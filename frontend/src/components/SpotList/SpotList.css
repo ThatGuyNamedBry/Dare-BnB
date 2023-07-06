@@ -24,3 +24,20 @@
     height: 215px;
     object-fit: fill;
 }
+
+#SpotsGrid #LocationNRating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+#SpotsGrid #Price {
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+#SpotsGrid #Price strong {
+    font-weight: bold;
+    font-size: large;
+  }
