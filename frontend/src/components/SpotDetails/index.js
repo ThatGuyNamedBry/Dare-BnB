@@ -108,7 +108,7 @@ const SpotDetails = () => {
               <button onClick={openReviewModal}>Post Your Review</button>
             )}
             <ul>
-              {Object.values(allReviews).map((review) => (
+              {Object.values(allReviews).reverse().map((review) => (
                 <li key={review.id}>
                   <p>{review.User?.firstName}</p>
                   <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
