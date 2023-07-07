@@ -7,12 +7,14 @@ import { getReviewsBySpotIdThunk } from '../../store/reviews';
 import ReviewModal from '../ReviewModal';
 import { useModal } from "../../context/Modal";
 import './SpotDetails.css';
+import DeleteReviewConfirmationModal from '../DeleteReviewConfirmationModal';
 
 const SpotDetails = () => {
   const { spotId, reviewId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots.singleSpot[spotId]);
   const allReviews = useSelector((state) => state.reviews.allReviews);
+  const currentUser = useSelector((state) => state.session.user);
   // const review = useSelector((state) => state.reviews.singleReview[reviewId]); //Probably do not need as no update crud is required
   const { setModalContent } = useModal();
 
@@ -25,8 +27,24 @@ const SpotDetails = () => {
     return <h1>Loading...</h1>;
   }
   const openReviewModal = () => {
-    setModalContent(<ReviewModal spotId={spotId} />); // Set the ReviewModal component as the modal content
+    setModalContent(<ReviewModal spotId={spotId} />);
   };
+
+  const openDeleteConfirmationModal = (review) => {
+    setModalContent(<DeleteReviewConfirmationModal review={review} />);
+  };
+
+  const hasPostedReview = (userId) => {
+    return Object.values(allReviews).some(review => review.userId === userId);
+  };
+
+  const shouldShowReviewButton = () => {
+    if (!currentUser || currentUser.id === spot.Owner?.id || hasPostedReview(currentUser.id)) {
+      return false;
+    }
+    return true;
+  };
+
 
   return (
     <div id='WholeSpotDetailsPage'>
@@ -46,7 +64,7 @@ const SpotDetails = () => {
         </div>
         <div id='ReserveBttnContainer'>
           <div id='AboveBttn'>
-            <div id='price'>${spot.price} night</div>
+            <div id='price'><strong>${spot.price}</strong> night</div>
             <div id='ReserveBttnReviews'>
               <i className="fa-sharp fa-solid fa-star"></i>
               {spot.avgStarRating !== 0 ? spot.avgStarRating?.toFixed(1) : 'New'}
@@ -75,30 +93,36 @@ const SpotDetails = () => {
             </>
           )}
         </div>
-        {!Object.values(allReviews).length ? (
+        {Object.values(allReviews).length === 0 ? (
           <>
-            <p>Be the first to post a review!</p>
-            <button onClick={openReviewModal}>Leave a Review</button>
+            {currentUser && shouldShowReviewButton() && (
+              <>
+              <p>Be the first to post a review!</p>
+              <button onClick={openReviewModal}>Post Your Review</button>
+              </>
+            )}
           </>
         ) : (
           <>
-            <button onClick={openReviewModal}>Leave a Review</button>
+            {currentUser && shouldShowReviewButton() && (
+              <button onClick={openReviewModal}>Post Your Review</button>
+            )}
             <ul>
               {Object.values(allReviews).map((review) => (
                 <li key={review.id}>
                   <p>{review.User?.firstName}</p>
                   <p>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                   <p>{review.review}</p>
-                  <p>Rating: {review.stars}</p>
+                  {review.userId === currentUser?.id && (
+                    <button className='deleteReviewBttn' onClick={() => openDeleteConfirmationModal(review)}>Delete</button>
+                  )}
                 </li>
               ))}
             </ul>
           </>
         )}
-        {/* <div></div> */}
       </div>
     </div>
-
   );
 };
 

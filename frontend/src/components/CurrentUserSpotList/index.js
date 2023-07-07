@@ -29,32 +29,34 @@ const CurrentUserSpotList = () => {
       <div id='ManageSpotsCreateASpot'>
         <h1>Manage Spots</h1>
         <Link to="/spots/new">
-          <button>Create a New Spot</button>
+          <button id='CreateSpotBttn'>Create a New Spot</button>
         </Link>
       </div>
-    <ul id='CurrentUserSpotsList'>
-      {Object.values(spots).map((spot) => (
-        <li key={spot.id} title={spot.name}>
-          <Link to={`/spots/${spot.id}`} name="spot-tile">
-            <img src={spot.previewImage} alt={'Spot Thumbnail'} />
-          </Link>
-          <div>{spot.city}, {spot.state}</div>
-          <div>${spot.price} night</div>
-          <div>
-            <i className="fa-sharp fa-solid fa-star"></i>
-            {spot.avgRating !== 0 ? spot.avgRating.toFixed(1) : 'New'}
-          </div>
-          <div id='UpdateDeleteButtons'>
-            <button onClick={() => handleUpdate(spot)}>Update</button>
-            <OpenModalButton
-              modalComponent={<DeleteConfirmationModal spot={spot} />}
-              buttonText="Delete"
-            />
-          </div>
-        </li>
-      ))}
-    </ul>
-  </>
+      <ul id='CurrentUserSpotsList'>
+        {Object.values(spots).map((spot) => (
+          <li key={spot.id} title={spot.name}>
+            <Link to={`/spots/${spot.id}`} name="spot-tile">
+              <img src={spot.previewImage} alt={'Spot Thumbnail'} />
+            </Link>
+            <div id='LocationNRating'>
+              <div>{spot.city}, {spot.state}</div>
+              <div>
+                <i className="fa-sharp fa-solid fa-star"></i>
+                {spot.avgRating !== 0 ? spot.avgRating.toFixed(1) : 'New'}
+              </div>
+            </div>
+            <div>${spot.price} night</div>
+            <div id='UpdateDeleteButtons'>
+              <button onClick={() => handleUpdate(spot)}>Update</button>
+              <OpenModalButton
+                modalComponent={<DeleteConfirmationModal spot={spot} />}
+                buttonText="Delete"
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

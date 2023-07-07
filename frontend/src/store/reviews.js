@@ -71,13 +71,13 @@ export const createReviewThunk = (spotId, formData) => async (dispatch) => {
 };
 
 //Delete a Review Thunk
-export const deleteReviewThunk = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
+export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: 'DELETE',
   });
 
   if (response.ok) {
-    dispatch(deleteReviewAction(spotId));
+    dispatch(deleteReviewAction(reviewId));
     return response;
   }
 };

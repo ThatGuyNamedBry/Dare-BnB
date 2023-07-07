@@ -24,12 +24,14 @@ const SpotList = () => {
           <Link to={`/spots/${spot.id}`} name="spot-tile">
             <img src={spot.previewImage} alt={'Spot Thumbnail'} />
           </Link>
+          <div id= 'LocationNRating'>
             <div>{spot.city}, {spot.state}</div>
-            <div>${spot.price} night</div>
             <div>
               <i className="fa-sharp fa-solid fa-star"></i>
               {spot.avgRating !== 0 && spot.avgRating !== null && spot.avgRating !== undefined ? spot.avgRating.toFixed(1) : 'New'}
             </div>
+          </div>
+          <div id='Price'><strong>${spot.price}</strong> night</div>
         </li>
       ))}
     </ul>
