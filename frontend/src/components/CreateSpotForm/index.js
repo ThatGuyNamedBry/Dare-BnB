@@ -113,7 +113,7 @@ const CreateSpotForm = ({ spot }) => {
   };
 
   return (
-    <div>
+    <div id= 'CreateSpotForm'>
       <h2>Create a New Spot</h2>
       <form onSubmit={handleSubmit}>
         <div id='LocationDiv'>
@@ -138,13 +138,13 @@ const CreateSpotForm = ({ spot }) => {
         <div id='DescriptionDiv'>
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters'/>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters' />
           {validationObject.description && <p className="error">{validationObject.description}</p>}
         </div>
         <div id='SpotNameDiv'>
           <h3>Create a title for your spot</h3>
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot'/>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot' />
           {validationObject.name && <p className="error">{validationObject.name}</p>}
         </div>
         <div id='PriceDiv'>
@@ -170,7 +170,9 @@ const CreateSpotForm = ({ spot }) => {
           <input type="text" value={image4} onChange={(e) => setImage4(e.target.value)} placeholder='Image URL' />
           {validationObject.image4 && <p className="error">{validationObject.image4}</p>}
         </div>
-        <button type='submit'>Create Spot</button>
+        <div id='SubmitBttnDiv'>
+          <button id='CreateASpotSubmitBttn' type='submit'>Create Spot</button>
+        </div>
       </form>
     </div>
   );

@@ -1,4 +1,4 @@
-h2 {
+#CreateSpotForm h2 {
     text-align: center;
 }
 #ImageDiv {
@@ -33,6 +33,25 @@ h2 {
 #LocationDiv label {
     margin-left: 5px;
     text-align: left;
+}
+
+#ImageDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#CreateASpotSubmitBttn {
+    background-color: red;
+    color: white;
+    padding: 3px 5px;
+    border: 2px solid black;
+    box-shadow: 1px 2px black;
+}
+
+#SubmitBttnDiv {
+    display: flex;
+    justify-content: center;
 }
 
 /* .error { //added globally to index.css
