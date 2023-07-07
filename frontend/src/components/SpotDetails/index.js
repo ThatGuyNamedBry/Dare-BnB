@@ -95,7 +95,7 @@ const SpotDetails = () => {
         </div>
         {Object.values(allReviews).length === 0 ? (
           <>
-            {currentUser && (
+            {currentUser && shouldShowReviewButton() && (
               <>
               <p>Be the first to post a review!</p>
               <button onClick={openReviewModal}>Post Your Review</button>
