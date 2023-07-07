@@ -1,58 +1,140 @@
+/* frontend/src/components/CreateSpotForm/CreateSpotForm.css */
+
+#CreateSpotForm {
+    width: 410px;
+    margin: 0 auto;
+}
+
 #CreateSpotForm h2 {
-    text-align: center;
-}
-#ImageDiv {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+    margin-bottom: 0px;
+    margin-top: -4px;
 }
 
-#PriceDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#CreateSpotForm h3 {
+    margin-top: 10px;
+    margin-bottom: -10px
 }
 
-#SpotNameDiv {
+#CreateSpotForm form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+}
+
+#CreateSpotForm p.error {
+    font-size: smaller;
+}
+
+
+#CreateASpotSubmitBttn {
+    margin-top: 10px;
+    background-color: red;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: 2px solid black;
+    box-shadow: 1px 2px black;
+}
+
+#CityNStateDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 8px
 }
 
 #DescriptionDiv {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-#LocationDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-bottom: 2px solid black;
+    padding-bottom: 20px;
 }
 
-#LocationDiv label {
-    margin-left: 5px;
-    text-align: left;
+#DescriptionDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -15px;
+}
+
+#DescriptionDiv textarea {
+    height: 120px;
 }
 
 #ImageDiv {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
 }
 
-#CreateASpotSubmitBttn {
-    background-color: red;
-    color: white;
-    padding: 3px 5px;
-    border: 2px solid black;
-    box-shadow: 1px 2px black;
+#ImageDiv input {
+    margin-bottom: 15px;
+}
+
+#ImageDiv p.error {
+    margin-top: -14px;
+    margin-bottom: 0px;
+}
+
+#LocationDiv {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+
+}
+
+#PriceDiv {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+#PriceDiv input {
+    width: 95%;
+}
+
+#PriceDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -10px;
+
 }
 
 #SubmitBttnDiv {
     display: flex;
     justify-content: center;
 }
+
+#SpotNameDiv {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+#SpotNameDiv input {
+    width: 98%;
+}
+
+#SpotNameDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -10px;
+
+}
+
+.location-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.location-field p.error {
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: -10px;
+    padding-bottom: -10px;
+}
+
+.field-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 
 /* .error { //added globally to index.css
     color: red

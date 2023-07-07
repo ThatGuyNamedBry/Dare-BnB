@@ -113,26 +113,46 @@ const CreateSpotForm = ({ spot }) => {
   };
 
   return (
-    <div id= 'CreateSpotForm'>
+    <div id='CreateSpotForm'>
       <h2>Create a New Spot</h2>
       <form onSubmit={handleSubmit}>
-        <div id='LocationDiv'>
+      <div id='LocationDiv'>
           <h3>Where's your place located?</h3>
           <p>Guests will only get your exact address once they booked a reservation.</p>
-          <label>Country:</label>
-          <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' />
-          {validationObject.country && <p className="error">{validationObject.country}</p>}
-          <label>Street Address:</label>
-          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' />
-          {validationObject.address && <p className="error">{validationObject.address}</p>}
-          <div id='CityStateInnerDiv'>
-            <label>City:</label>
-            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' />
-            {validationObject.city && <p className="error">{validationObject.city}</p>}
-            <span>,</span>
-            <label>State:</label>
-            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' />
-            {validationObject.state && <p className="error">{validationObject.state}</p>}
+          <div className='location-field'>
+            <div className='field-input'>
+              <label>Country</label>
+              {validationObject.country && <p className="error">{validationObject.country}</p>}
+            </div>
+            <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' />
+          </div>
+          <div className='location-field'>
+            <div className='field-input'>
+              <label>Street Address</label>
+              {validationObject.address && <p className="error">{validationObject.address}</p>}
+            </div>
+            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' />
+          </div>
+          <div id='CityNStateDiv'>
+          <div className='location-field'>
+            <div id='CityDiv'>
+              <div className='field-input'>
+                <label>City</label>
+                {validationObject.city && <p className="error">{validationObject.city}</p>}
+              </div>
+              <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' />
+              <span> , </span>
+            </div>
+          </div>
+          <div className='location-field'>
+            <div id='StateDiv'>
+              <div className='field-input'>
+                <label>State</label>
+                {validationObject.state && <p className="error">{validationObject.state}</p>}
+              </div>
+              <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' />
+            </div>
+          </div>
           </div>
         </div>
         <div id='DescriptionDiv'>
