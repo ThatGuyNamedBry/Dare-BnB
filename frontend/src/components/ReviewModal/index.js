@@ -32,16 +32,10 @@ function ReviewModal({ spotId, disabled }) {
       stars,
     };
 
-    if (!review || stars === 0) {
-      setErrors({
-        message: "Please provide a comment and star rating.",
-      });
-      return;
-    }
 
     dispatch(createReviewThunk(spotId, formData))
-      .then(() => {
-        closeModal();
+    .then(() => {
+      closeModal();
       })
       .catch(async (res) => {
         const data = await res.json();
@@ -49,44 +43,62 @@ function ReviewModal({ spotId, disabled }) {
           setErrors(data.errors);
         }
       });
-  };
+    };
 
-  const renderStars = () => {
-    const starElements = [];
+    const renderStars = () => {
+      const starElements = [];
     for (let i = 1; i <= 5; i++) {
       const className = i <= activeRating ? 'filled' : 'empty';
       starElements.push(
         <span
-          key={i}
-          className={`star ${className}`}
-          onMouseEnter={() => handleStarHover(i)}
+        key={i}
+        className={`star ${className}`}
+        onMouseEnter={() => handleStarHover(i)}
           onMouseLeave={() => setActiveRating(stars)}
           onClick={() => handleStarClick(i)}
         >
-        <i className="fa-sharp fa-solid fa-star"></i>
+          <i className="fa-sharp fa-solid fa-star"></i>
         </span>
       );
     }
     return starElements;
   };
 
+  const isSubmitDisabled = review.length < 10 || stars === 0;
+
   return (
     <div id="review-modal">
       <h2>How was your stay?</h2>
-      {errors.message && <p className="error">{errors.message}</p>}
+      {Object.keys(errors).length > 0 && (
+        <ul className="error-list">
+          {Object.values(errors).map((error, index) => (
+            <li key={index} className="error">{error}</li>
+            ))}
+        </ul>
+      )}
       <form onSubmit={handleSubmit}>
         <textarea
           placeholder="Leave your review here..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
-        />
+          />
         <div className="star-rating">
           <div className="stars">{renderStars()} Stars</div>
         </div>
-        <button className="reviewBttn" type="submit">Submit Your Review</button>
+        <button className="reviewBttn" type="submit" disabled={isSubmitDisabled}>Submit Your Review</button>
       </form>
     </div>
   );
 }
 
 export default ReviewModal;
+
+
+// if (!review || stars === 0) {
+//   setErrors({
+//     message: "Please provide a comment and star rating.",
+//   });
+//   return;
+// }
+
+// {errors.message && <p className="error">{errors.message}</p>}

@@ -620,6 +620,17 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
       });
       return;
     }
+
+    if (!(req.body.review) || req.body.review < 10) {
+      res.status(400).json({
+        message: 'Bad Request',
+        errors: {
+          review: 'Review length must be at least 10 characters'
+        }
+      });
+      return;
+    }
+
     // Check if the user already has a review for the spot
     const existingReview = await Review.findOne({
       where: {
@@ -628,8 +639,11 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
       }
     });
     if (existingReview) {
-      return res.status(403).json({
-        message: 'User already has a review for this spot'
+      res.status(403).json({
+        message: 'Bad Request',
+        errors: {
+          existingReview: 'User already has a review for this spot'
+        }
       });
     }
 
