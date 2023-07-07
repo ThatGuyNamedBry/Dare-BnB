@@ -19,7 +19,7 @@ const SpotList = () => {
   // console.log(spots);
   return (
     <ul id='SpotsGrid'>
-      {Object.values(spots).map((spot) => (
+      {Object.values(spots).reverse().map((spot) => (
         <li key={spot.id} title={spot.name}>
           <Link to={`/spots/${spot.id}`} name="spot-tile">
             <img src={spot.previewImage} alt={'Spot Thumbnail'} />
