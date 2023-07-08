@@ -1,0 +1,33 @@
+/* frontend/src/components/DeleteReviewConfirmationModal/DeleteReviewConfirmationModal.css */
+
+#DeleteConfirmationDiv {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px 0px 10px;
+    border: 4px solid black;
+    width: 300px;
+    border-radius: 10px;
+}
+
+#DeleteConfirmationDiv h2 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: -10px;
+}
+
+#DeleteConfirmationDiv button {
+    margin-bottom: 10px;
+    height: 40px;
+    border: 2px solid black;
+    box-shadow: 2px 2px black;
+}
+
+#DeleteConfirmationDiv #YesBttn {
+    background-color: red;
+    color: white;
+}
+
+#DeleteConfirmationDiv #NoBttn {
+    background-color: rgb(89, 89, 89);
+    color: white;
+}
