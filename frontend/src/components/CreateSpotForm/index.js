@@ -113,38 +113,58 @@ const CreateSpotForm = ({ spot }) => {
   };
 
   return (
-    <div>
+    <div id='CreateSpotForm'>
       <h2>Create a New Spot</h2>
       <form onSubmit={handleSubmit}>
-        <div id='LocationDiv'>
+      <div id='LocationDiv'>
           <h3>Where's your place located?</h3>
           <p>Guests will only get your exact address once they booked a reservation.</p>
-          <label>Country:</label>
-          <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' />
-          {validationObject.country && <p className="error">{validationObject.country}</p>}
-          <label>Street Address:</label>
-          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' />
-          {validationObject.address && <p className="error">{validationObject.address}</p>}
-          <div id='CityStateInnerDiv'>
-            <label>City:</label>
-            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' />
-            {validationObject.city && <p className="error">{validationObject.city}</p>}
-            <span>,</span>
-            <label>State:</label>
-            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' />
-            {validationObject.state && <p className="error">{validationObject.state}</p>}
+          <div className='location-field'>
+            <div className='field-input'>
+              <label>Country</label>
+              {validationObject.country && <p className="error">{validationObject.country}</p>}
+            </div>
+            <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Country' />
+          </div>
+          <div className='location-field'>
+            <div className='field-input'>
+              <label>Street Address</label>
+              {validationObject.address && <p className="error">{validationObject.address}</p>}
+            </div>
+            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Address' />
+          </div>
+          <div id='CityNStateDiv'>
+          <div className='location-field'>
+            <div id='CityDiv'>
+              <div className='field-input'>
+                <label>City</label>
+                {validationObject.city && <p className="error">{validationObject.city}</p>}
+              </div>
+              <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder='City' />
+              <span> , </span>
+            </div>
+          </div>
+          <div className='location-field'>
+            <div id='StateDiv'>
+              <div className='field-input'>
+                <label>State</label>
+                {validationObject.state && <p className="error">{validationObject.state}</p>}
+              </div>
+              <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder='STATE' />
+            </div>
+          </div>
           </div>
         </div>
         <div id='DescriptionDiv'>
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters'/>
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please write at least 30 characters' />
           {validationObject.description && <p className="error">{validationObject.description}</p>}
         </div>
         <div id='SpotNameDiv'>
           <h3>Create a title for your spot</h3>
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot'/>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='Name of your spot' />
           {validationObject.name && <p className="error">{validationObject.name}</p>}
         </div>
         <div id='PriceDiv'>
@@ -170,7 +190,9 @@ const CreateSpotForm = ({ spot }) => {
           <input type="text" value={image4} onChange={(e) => setImage4(e.target.value)} placeholder='Image URL' />
           {validationObject.image4 && <p className="error">{validationObject.image4}</p>}
         </div>
-        <button type='submit'>Create Spot</button>
+        <div id='SubmitBttnDiv'>
+          <button id='CreateASpotSubmitBttn' type='submit'>Create Spot</button>
+        </div>
       </form>
     </div>
   );

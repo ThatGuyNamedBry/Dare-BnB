@@ -18,11 +18,11 @@ const DeleteConfirmationModal = ({ spot }) => {
   };
 
   return (
-    <div>
+    <div id='DeleteConfirmationDiv'>
       <h2>Confirm Delete</h2>
       <p>Are you sure you want to remove this spot from the listings?</p>
-      <button onClick={handleDelete}>Yes (Delete Spot)</button>
-      <button onClick={handleCancel}>No (Keep Spot)</button>
+      <button id='YesBttn' onClick={handleDelete}>Yes (Delete Spot)</button>
+      <button id='NoBttn' onClick={handleCancel}>No (Keep Spot)</button>
     </div>
   );
 };

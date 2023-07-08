@@ -1,0 +1,9 @@
+#UpdateSpotContainer h2 {
+    text-align: center;
+}
+
+#UpdateSpotSubmitBttn {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}

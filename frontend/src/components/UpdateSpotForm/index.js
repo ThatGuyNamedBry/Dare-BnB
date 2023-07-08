@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSpotThunk, getSpotByIdThunk } from '../../store/spots';
 import { useHistory, useParams } from 'react-router-dom';
+import './UpdateSpotForm.css';
 
 const UpdateSpotForm = () => {
   const { spotId } = useParams();
@@ -67,7 +68,7 @@ const UpdateSpotForm = () => {
   };
 
   return (
-    <div>
+    <div id='UpdateSpotContainer'>
       <h2>Update Your Spot</h2>
       <form onSubmit={handleSubmit}>
         <div id='LocationDiv'>
@@ -103,7 +104,9 @@ const UpdateSpotForm = () => {
             <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder='Price per night (USD)' required />
           </div>
         </div>
-        <button type="submit">Update Spot</button>
+        <div id='UpdateSpotSubmitBttn'>
+          <button type="submit">Update Spot</button>
+        </div>
       </form>
     </div>
   );
