@@ -7,7 +7,7 @@
 
 #CreateSpotForm h2 {
     margin-bottom: 0px;
-    margin-top: -4px;
+    margin-top: 12px;
 }
 
 #CreateSpotForm h3 {
@@ -37,7 +37,11 @@
 #CityNStateDiv {
     display: flex;
     flex-direction: row;
-    gap: 8px
+    gap: 8px;
+}
+
+#CityNStateDiv input {
+    min-width: 189px;
 }
 
 #DescriptionDiv {
