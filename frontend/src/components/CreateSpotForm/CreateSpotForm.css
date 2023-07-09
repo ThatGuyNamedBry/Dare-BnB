@@ -37,7 +37,11 @@
 #CityNStateDiv {
     display: flex;
     flex-direction: row;
-    gap: 8px
+    gap: 8px;
+}
+
+#CityNStateDiv input {
+    min-width: 189px;
 }
 
 #DescriptionDiv {
