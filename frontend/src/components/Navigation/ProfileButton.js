@@ -61,7 +61,7 @@ function ProfileButton({ user }) {
             <li>
               <div className="manageSpots">
                 <NavLink to="/spots/current" className="nav-link-manage-spots"
-                  onClick={(e) => {
+                  onClick={() => {
                     closeMenu();
                   }}>Manage Spots</NavLink>
               </div>
