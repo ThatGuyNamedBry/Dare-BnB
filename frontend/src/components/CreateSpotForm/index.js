@@ -103,7 +103,7 @@ const CreateSpotForm = ({ spot }) => {
       };
 
       const data = await dispatch(createSpotThunk(formData));
-      console.log('create a spot data ', data)
+      // console.log('create a spot data ', data)
       if (!data.validationObject) {
         history.push(`/spots/${data.id}`)
       } else {

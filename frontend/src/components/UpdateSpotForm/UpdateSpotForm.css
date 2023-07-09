@@ -1,6 +1,6 @@
 /* frontend/src/components/UpdateSpotForm/UpdateSpotForm.css */
 
-#UpdateSpotContainer {
+/* #UpdateSpotContainer {
     width: 410px;
     margin: 0 auto;
 }
@@ -58,12 +58,6 @@
 
 #DescriptionDiv textarea {
     height: 120px;
-}
-
-#UpdateSpotContainer input[type="text"],
-#UpdateSpotContainer input[type="number"],
-#UpdateSpotContainer textarea {
-    width: 100%;
 }
 
 #ImageDiv {
@@ -140,5 +134,4 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
+} */
