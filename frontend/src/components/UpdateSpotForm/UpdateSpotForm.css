@@ -1,9 +1,144 @@
-#UpdateSpotContainer h2 {
-    text-align: center;
+/* frontend/src/components/UpdateSpotForm/UpdateSpotForm.css */
+
+#UpdateSpotContainer {
+    width: 410px;
+    margin: 0 auto;
 }
 
-#UpdateSpotSubmitBttn {
+#UpdateSpotContainer h2 {
+    margin-bottom: 0px;
+    margin-top: -4px;
+}
+
+#UpdateSpotContainer h3 {
     margin-top: 10px;
+    margin-bottom: -10px
+}
+
+#UpdateSpotContainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+#UpdateSpotContainer p.error {
+    font-size: smaller;
+}
+
+
+#UpdateSpotSubmitBttn button {
+    margin-top: 10px;
+    background-color: red;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: 2px solid black;
+    box-shadow: 1px 2px black;
+}
+
+#CityStateInnerDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+#CityStateInnerDiv input {
+    min-width: 189px;
+}
+
+#DescriptionDiv {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    padding-bottom: 20px;
+}
+
+#DescriptionDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -15px;
+}
+
+#DescriptionDiv textarea {
+    height: 120px;
+}
+
+#UpdateSpotContainer input[type="text"],
+#UpdateSpotContainer input[type="number"],
+#UpdateSpotContainer textarea {
+    width: 100%;
+}
+
+#ImageDiv {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+#ImageDiv input {
+    margin-bottom: 15px;
+}
+
+#ImageDiv p.error {
+    margin-top: -14px;
+    margin-bottom: 0px;
+}
+
+#LocationDiv {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+#PriceDiv {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+#PriceDiv input {
+    width: 95%;
+}
+
+#PriceDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -10px;
+}
+
+#UpdateSpotContainer #UpdateSpotSubmitBttn {
     display: flex;
     justify-content: center;
 }
+
+#SpotNameDiv {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+}
+
+#SpotNameDiv input {
+    width: 98%;
+}
+
+#SpotNameDiv p.error {
+    margin-top: 0px;
+    margin-bottom: -10px;
+}
+
+.location-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.location-field p.error {
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: -10px;
+    padding-bottom: -10px;
+}
+
+.field-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
