@@ -117,7 +117,8 @@ function SignupFormModal() {
             !isUsernameValid ||
             !isFirstNameValid ||
             !isLastNameValid ||
-            !isPasswordValid
+            !isPasswordValid ||
+            confirmPassword.length < 6
           }
           className={!isEmailValid || !isUsernameValid || !isFirstNameValid || !isLastNameValid || !isPasswordValid || isConfirmPasswordValid ? "disabled" : ""}
         >
