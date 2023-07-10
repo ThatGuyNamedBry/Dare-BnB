@@ -23,7 +23,22 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .95);
 }
 
+#SignUpForm button:not([disabled]) {
+    background-color: red;
+    color: white;
+}
+
+#SignUpForm button:disabled {
+    background-color: rgb(227, 227, 227);
+    color: rgb(26, 26, 26);
+}
+
 #SignUpForm input {
     margin-bottom: 5px;
     width: 240px;
 }
+
+#SignUpForm button.active {
+    background-color: red;
+    color: white;
+  }
