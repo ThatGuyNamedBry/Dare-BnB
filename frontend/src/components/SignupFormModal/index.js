@@ -45,7 +45,7 @@ function SignupFormModal() {
         });
     } else {
       return setErrors({
-        confirmPassword: "Confirm Password field must be at least 6 characters and match the Password field"
+        confirmPassword: "Password fields must match!"
       });
     }
   };
