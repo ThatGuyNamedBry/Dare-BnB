@@ -34,7 +34,7 @@ const CurrentUserSpotList = () => {
       </div>
       <ul id='CurrentUserSpotsList'>
         {Object.values(spots).map((spot) => (
-          <li key={spot.id} title={spot.name}>
+          <li key={spot?.id} title={spot?.name}>
             <Link to={`/spots/${spot.id}`} name="spot-tile">
               <img src={spot.previewImage} alt={'Spot Thumbnail'} />
             </Link>
@@ -42,7 +42,7 @@ const CurrentUserSpotList = () => {
               <div>{spot.city}, {spot.state}</div>
               <div>
                 <i className="fa-sharp fa-solid fa-star"></i>
-                {spot.avgRating !== 0 ? spot.avgRating.toFixed(1) : 'New'}
+                {spot?.avgRating !== 0 ? spot?.avgRating?.toFixed(1) : 'New'}
               </div>
             </div>
             <div>${spot.price} night</div>

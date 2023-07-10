@@ -119,7 +119,7 @@ function SignupFormModal() {
             !isLastNameValid ||
             !isPasswordValid
           }
-          className={!isEmailValid || !isUsernameValid || !isFirstNameValid || !isLastNameValid || !isPasswordValid ? "disabled" : isConfirmPasswordValid ? "active" : ""}
+          className={!isEmailValid || !isUsernameValid || !isFirstNameValid || !isLastNameValid || !isPasswordValid || isConfirmPasswordValid ? "disabled" : ""}
         >
           Sign Up
         </button>
@@ -129,4 +129,3 @@ function SignupFormModal() {
 }
 
 export default SignupFormModal;
-
