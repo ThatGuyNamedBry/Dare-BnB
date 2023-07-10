@@ -59,7 +59,6 @@ function LoginFormModal() {
               setIsUsernameValid(e.target.value.length >= 4);
             }}
             placeholder="Enter username or email"
-            required
           />
         </label>
         <label>
@@ -71,7 +70,6 @@ function LoginFormModal() {
               setIsPasswordValid(e.target.value.length >= 6);
             }}
             placeholder="Enter password"
-            required
           />
         </label>
         {/* {errors.credential && <p className="error">{errors.credential}</p>} */}
