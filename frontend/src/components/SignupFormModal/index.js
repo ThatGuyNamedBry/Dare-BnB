@@ -45,7 +45,7 @@ function SignupFormModal() {
         });
     } else {
       return setErrors({
-        confirmPassword: "Confirm Password field must be at least 6 characters and match the Password field"
+        confirmPassword: "Password fields must match!"
       });
     }
   };
@@ -117,9 +117,10 @@ function SignupFormModal() {
             !isUsernameValid ||
             !isFirstNameValid ||
             !isLastNameValid ||
-            !isPasswordValid
+            !isPasswordValid ||
+            confirmPassword.length < 6
           }
-          className={!isEmailValid || !isUsernameValid || !isFirstNameValid || !isLastNameValid || !isPasswordValid ? "disabled" : isConfirmPasswordValid ? "active" : ""}
+          className={!isEmailValid || !isUsernameValid || !isFirstNameValid || !isLastNameValid || !isPasswordValid || isConfirmPasswordValid ? "disabled" : ""}
         >
           Sign Up
         </button>
@@ -129,4 +130,3 @@ function SignupFormModal() {
 }
 
 export default SignupFormModal;
-
