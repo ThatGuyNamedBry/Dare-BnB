@@ -41,7 +41,7 @@ module.exports = {
         lat: 37.7749,
         lng: -122.4194,
         name: 'Spooky Apartment',
-        description: 'Come stay the night in this Spooky Apartment, located in the heart of the city. This apartment brings a whole new meaning to the ciity that never sleeps!',
+        description: 'Come stay the night in this Spooky Apartment, located in the heart of the city. This apartment brings a whole new meaning to the city that never sleeps!',
         price: 199
       },
       {
@@ -53,7 +53,7 @@ module.exports = {
         lat: 39.77,
         lng: -110.41,
         name: 'Grandma Aggies House',
-        description: "Located off Spooky Blvd, Grandma Aggies' house is the perfect place to stay. Enjoy the rich history of Halloween Town smack dab in the middle, only a two minute walk from the giant Pumpkin!",
+        description: "Located off Spooky Blvd, Grandma Aggies' house is the perfect place to stay. Enjoy the rich history of Halloween Town smack dab in the middle, only a two minute walk from The Giant Pumpkin!",
         price: 380
       },
       {
@@ -77,7 +77,7 @@ module.exports = {
         lat: 60.7128,
         lng: -90.0060,
         name: 'Insidious Chapter 2 Home',
-        description: 'Do you have what it takes to stay the night in the very house Insidious Chapter 2 was filmed in? Located in Highland Park, come check out the surreal Insidious house and get the chills running uop your spine from the eerie feeling you are being watched.',
+        description: 'Do you have what it takes to stay the night in the very house Insidious Chapter 2 was filmed in? Located in Highland Park, come check out the surreal Insidious house and get the chills running up your spine from the eerie feeling you are being watched.',
         price: 242
       },
     ], {});
