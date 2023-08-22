@@ -32,14 +32,16 @@ function ReviewModal({ spotId, disabled }) {
       stars,
     };
 
-    const data = await dispatch(createReviewThunk(spotId, formData))
-
-    if (data.errors) {
-      setErrors(data.errors);
-    } else {
-      dispatch(getSpotByIdThunk(spotId));
-      closeModal();
-    }
+    dispatch(createReviewThunk(spotId, formData))
+      .then(() => {
+        closeModal();
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
   };
 
   const renderStars = () => {
@@ -82,13 +84,24 @@ function ReviewModal({ spotId, disabled }) {
         <div className="star-rating">
           <div className="stars">{renderStars()} Stars</div>
         </div>
-        <button className="reviewBttn" type="submit" disabled={isSubmitDisabled}>Submit Your Review</button>
+        <button className="reviewBttn" type="submit" disabled={isSubmitDisabled} >Submit Your Review</button>
       </form>
     </div>
   );
 }
 
 export default ReviewModal;
+
+// dispatch(createReviewThunk(spotId, formData))
+// .then(() => {
+//   closeModal();
+// })
+// .catch(async (res) => {
+//   const data = await res.json();
+//   if (data && data.errors) {
+//     setErrors(data.errors);
+//   }
+// });
 
 
 // if (!review || stars === 0) {
