@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux';
 import { deleteReviewThunk } from '../../store/reviews';
 import { useModal } from '../../context/Modal';
 import './DeleteReviewConfirmationModal.css';
+import { getSpotByIdThunk } from '../../store/spots';
 
-const DeleteReviewConfirmationModal = ({ review }) => {
+const DeleteReviewConfirmationModal = ({ review, spotId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const handleDelete = () => {
     dispatch(deleteReviewThunk(review.id));
+    dispatch(getSpotByIdThunk(spotId))
     closeModal();
   };
 

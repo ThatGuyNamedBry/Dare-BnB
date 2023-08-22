@@ -31,7 +31,7 @@ const SpotDetails = () => {
   };
 
   const openDeleteConfirmationModal = (review) => {
-    setModalContent(<DeleteReviewConfirmationModal review={review} />);
+    setModalContent(<DeleteReviewConfirmationModal review={review} spotId={spotId}/>);
   };
 
   const hasPostedReview = (userId) => {
