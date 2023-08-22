@@ -6,6 +6,7 @@ div #review-modal {
   color: lightgray;
   cursor: pointer;
   font-size: 150%;
+  transition: color 0.1s;
 }
 
 .star.filled {
