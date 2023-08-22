@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReviewThunk } from "../../store/reviews";
+import { getSpotByIdThunk } from "../../store/spots";
 import "./ReviewModal.css";
 
 function ReviewModal({ spotId, disabled }) {
@@ -23,37 +24,33 @@ function ReviewModal({ spotId, disabled }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
 
     const formData = {
       review,
       stars,
     };
 
+    const data = await dispatch(createReviewThunk(spotId, formData))
 
-    dispatch(createReviewThunk(spotId, formData))
-    .then(() => {
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      dispatch(getSpotByIdThunk(spotId));
       closeModal();
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
-    };
+    }
+  };
 
-    const renderStars = () => {
-      const starElements = [];
+  const renderStars = () => {
+    const starElements = [];
     for (let i = 1; i <= 5; i++) {
       const className = i <= activeRating ? 'filled' : 'empty';
       starElements.push(
         <span
-        key={i}
-        className={`star ${className}`}
-        onMouseEnter={() => handleStarHover(i)}
+          key={i}
+          className={`star ${className}`}
+          onMouseEnter={() => handleStarHover(i)}
           onMouseLeave={() => setActiveRating(stars)}
           onClick={() => handleStarClick(i)}
         >
@@ -73,7 +70,7 @@ function ReviewModal({ spotId, disabled }) {
         <ul className="error-list">
           {Object.values(errors).map((error, index) => (
             <li key={index} className="error">{error}</li>
-            ))}
+          ))}
         </ul>
       )}
       <form onSubmit={handleSubmit}>
@@ -81,7 +78,7 @@ function ReviewModal({ spotId, disabled }) {
           placeholder="Leave your review here..."
           value={review}
           onChange={(e) => setReview(e.target.value)}
-          />
+        />
         <div className="star-rating">
           <div className="stars">{renderStars()} Stars</div>
         </div>
