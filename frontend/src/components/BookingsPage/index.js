@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { createBookingThunk } from '../../store/bookings';
+import './BookingsPage.css';
 
 const BookingsPage = () => {
     const { spotId } = useParams();
@@ -32,7 +33,7 @@ const BookingsPage = () => {
     };
 
     return (
-        <div>
+        <div className='bookings-container'>
             <h2>Book your stay</h2>
             <form onSubmit={handleBookingSubmit}>
                 <label htmlFor="startDate">Start Date:</label>
@@ -51,9 +52,9 @@ const BookingsPage = () => {
                     onChange={(e) => setEndDate(e.target.value)}
 
                 />
-                <button type="submit">Confirm Booking</button>
+                <button type="submit">Check Availability</button>
             </form>
-            <ul>
+            <ul className="errors">
                 {/* {console.log('Errors:', errors)} */}
                 {Object.values(errors).map((error, idx) => (
                     <li key={idx}>{error}</li>

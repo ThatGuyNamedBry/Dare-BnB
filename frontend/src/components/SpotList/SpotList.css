@@ -22,6 +22,7 @@
     width: 100%;
     height: 215px;
     object-fit: fill;
+    border-radius: 10px;
 }
 
 #SpotsGrid #LocationNRating {

@@ -45,12 +45,20 @@ export const getAllBookingsThunk = (spotId) => async (dispatch) => {
     return response;
 };
 
+//Get All Bookings by Current User Thunk
+export const getCurrentUserAllBookingsThunk = () => async (dispatch) => {
+    const response = await csrfFetch('/api/bookings/current');
+    const bookings = await response.json();
+    dispatch(getBookingsAction(bookings.Bookings));
+    return response;
+};
+
 //Create Booking Thunk
 export const createBookingThunk = (spotId, formData) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( formData ),
+        body: JSON.stringify(formData),
     });
 
     if (response.ok) {

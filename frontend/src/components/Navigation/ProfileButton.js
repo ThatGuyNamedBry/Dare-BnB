@@ -67,6 +67,14 @@ function ProfileButton({ user }) {
               </div>
             </li>
             <li>
+              <div className="manageBookings">
+                <NavLink to="/manage-bookings" className="nav-link-manage-bookings"
+                  onClick={() => {
+                    closeMenu();
+                  }}>Manage Bookings</NavLink>
+              </div>
+            </li>
+            <li>
               <div className="logoutButton">
                 <button onClick={logout}>Log Out</button>
               </div>

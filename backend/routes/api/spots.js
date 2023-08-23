@@ -351,7 +351,8 @@ router.get('/:spotId', async (req, res, next) => {
 
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
 
@@ -392,14 +393,16 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
 
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== req.user.id) {
       return res.status(403).json({
-        message: 'Forbidden'
+        message: 'Forbidden',
+        errors: { notOwner: 'You must be the owner to add an image to this spot'}
       });
     }
 
@@ -485,14 +488,16 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
 
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== ownerId) {
       return res.status(403).json({
-        message: 'Forbidden'
+        message: 'Forbidden',
+        errors: { notOwner: 'You must be the owner to edit this spot'}
       });
     }
 
@@ -539,14 +544,16 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
 
     // Check if the current user is the owner of the spot
     if (spot.ownerId !== ownerId) {
       return res.status(403).json({
-        message: 'Forbidden'
+        message: 'Forbidden',
+        errors: { notOwner: 'You must be the owner to delete this spot'}
       });
     }
 
@@ -607,7 +614,8 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
     //Body validations
@@ -678,7 +686,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if (!spot) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: { spotId: "Spot couldn't be found" }
       });
     }
 
@@ -742,14 +751,16 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
     if (!spot || !spot.id) {
       return res.status(404).json({
-        message: "Spot couldn't be found"
+        message: "Spot not found",
+        errors: {spotId: "Spot couldn't be found"}
       });
     }
 
     // Check if the spot belongs to the current user
     if (spot.ownerId === userId) {
       return res.status(403).json({
-        message: 'Forbidden, owner cannot book their own spot'
+        message: 'Forbidden',
+        errors: { ownerOwned: 'Owner cannot book their own spot'}
       });
     }
 

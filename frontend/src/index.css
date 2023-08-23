@@ -15,3 +15,12 @@ ul {
 button {
     cursor: pointer;
 }
+
+html {
+    background-color: rgb(230, 217, 202);
+}
+
+.errors li {
+    color: red;
+    list-style: none;
+}

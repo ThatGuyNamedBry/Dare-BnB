@@ -1,46 +1,28 @@
-/* frontend/src/components/CurrentUserSpotList/CurrentUserSpotList.css */
-
-#CurrentUserSpotsList {
+#ManageBookingsList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
     grid-gap: 20px;
     margin: 0 auto;
-    padding: 10px 40px;
-    max-width: 1024px;
 }
 
-#CurrentUserSpotsList>li {
-
+#ManageBookingsList > li {
     list-style: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
 }
 
-#CurrentUserSpotsList>li a {
+#ManageBookingsList > li a {
     text-decoration: none;
 }
 
-#CurrentUserSpotsList>li a img {
+#ManageBookingsList > li a img {
     border: solid 2px black;
     width: 100%;
     height: 215px;
     object-fit: fill;
     border-radius: 10px;
-}
-
-#ManageSpotsCreateASpot {
-    display: flex;
-    flex-direction: column;
-    padding: 0px 0px 0px 40px;
-    margin-bottom: 15px;
-}
-
-#ManageSpotsCreateASpot h1 {
-    margin-bottom: 0px;
-}
-
-#CurrentUserSpotsList #LocationNRating {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 #UpdateDeleteButtons {
@@ -58,7 +40,7 @@
     margin-right: 3px;
 }
 
-#ManageSpotsCreateASpot #CreateSpotBttn{
+#CreateSpotBttn {
     background-color: rgb(90, 90, 90);
     color: white;
     padding: 4px 10px;
