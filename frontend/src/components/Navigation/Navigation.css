@@ -62,6 +62,16 @@
     /* padding-bottom: 4px; */
 }
 
+.profile-dropdown .manageBookings {
+    display: block;
+    position: relative;
+    border-bottom: 1px solid black;
+}
+
+.profile-dropdown .manageBookings:hover, .profile-dropdown .manageSpots:hover {
+    text-decoration: underline;
+}
+
 #navigation-ul {
     position: relative;
     display: flex;
