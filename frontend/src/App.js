@@ -9,6 +9,7 @@ import SpotDetails from "./components/SpotDetails";
 import CreateSpotForm from "./components/CreateSpotForm";
 import CurrentUserSpotList from "./components/CurrentUserSpotList";
 import UpdateSpotForm from "./components/UpdateSpotForm";
+import BookingsPage from "./components/BookingsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/spots/current" component={CurrentUserSpotList} />
         <Route exact path="/spots/:spotId/edit" component={UpdateSpotForm} />
         <Route exact path="/spots/:spotId" component={SpotDetails} />
+        <Route exact path="/spots/:spotId/bookings" component={BookingsPage} />
       </Switch>
       )}
     </>

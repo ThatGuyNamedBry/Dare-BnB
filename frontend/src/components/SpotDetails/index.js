@@ -1,7 +1,7 @@
 // frontend/src/components/SpotDetails/index.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getSpotByIdThunk } from '../../store/spots';
 import { getReviewsBySpotIdThunk } from '../../store/reviews';
 import ReviewModal from '../ReviewModal';
@@ -77,7 +77,9 @@ const SpotDetails = () => {
             </div>
 
           </div>
-          <button id='ReserveBttn' onClick={() => alert('Feature coming soon')}>Reserve</button>
+          <Link to={`/spots/${spotId}/bookings`} >
+                <button id='ReserveBttn'>Reserve</button>
+            </Link>
         </div>
       </div>
       <div id='SDReviewsContainer'>

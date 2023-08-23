@@ -11,53 +11,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 const review = require('../../db/models/review');
 
 
-// // Get all of the Current User's Bookings
-// router.get('/current', requireAuth, async (req, res, next) => {
-//   const { user } = req;
-
-//   try {
-//     const bookings = await Booking.findAll({
-//       where: {
-//         userId: user.id
-//       },
-//       include: [
-//         {
-//           model: Spot,
-//           attributes: [
-//             'id',
-//             'ownerId',
-//             'address',
-//             'city',
-//             'state',
-//             'country',
-//             'lat',
-//             'lng',
-//             'name',
-//             'price',
-//             [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
-//           ]
-//         }
-//       ],
-//       attributes: ['id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt']
-//     });
-
-//     //Reorder the response
-//     const formattedBookings = bookings.map(booking => ({
-//       id: booking.id,
-//       spotId: booking.spotId,
-//       Spot: booking.Spot,
-//       userId: booking.userId,
-//       startDate: booking.startDate,
-//       endDate: booking.endDate,
-//       createdAt: booking.createdAt,
-//       updatedAt: booking.updatedAt
-//     }));
-
-//     res.status(200).json({ Bookings: formattedBookings });
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
 // Get all of the Current User's Bookings
 router.get('/current', requireAuth, async (req, res, next) => {
   const { user } = req;
@@ -132,16 +85,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 // Edit a booking
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
-    const { user } = req;
-    const { bookingId } = req.params;
-    const { startDate, endDate } = req.body;
+  const { user } = req;
+  const { bookingId } = req.params;
+  const { startDate, endDate } = req.body;
 
 
-    try {
-      // Find the booking
-      const booking = await Booking.findByPk(bookingId);
+  try {
+    // Find the booking
+    const booking = await Booking.findByPk(bookingId);
 
-      // Check if the booking exists
+    // Check if the booking exists
       if (!booking) {
         return res.status(404).json({ message: "Booking couldn't be found" });
       }
@@ -149,7 +102,7 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
       // Check if the booking belongs to the current user
       if (booking.userId !== user.id) {
         return res.status(403).json({
-            message: "Forbidden"
+          message: "Forbidden"
         });
       }
 
@@ -159,8 +112,8 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
         return res.status(403).json({ message: "Past bookings can't be modified" });
       }
 
-          // Check if there is a booking conflict
-    const existingBooking = await Booking.findOne({
+      // Check if there is a booking conflict
+      const existingBooking = await Booking.findOne({
         where: {
           [Op.or]: [
             {
@@ -214,13 +167,13 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
   // Delete a booking
 router.delete('/:bookingId', requireAuth, async (req, res, next) => {
-    const { user } = req;
-    const { bookingId } = req.params;
+  const { user } = req;
+  const { bookingId } = req.params;
 
-    try {
-      // Find the booking
-      const booking = await Booking.findByPk(bookingId, {
-        include: [{ model: Spot, attributes: ['ownerId'] }]
+  try {
+    // Find the booking
+    const booking = await Booking.findByPk(bookingId, {
+      include: [{ model: Spot, attributes: ['ownerId'] }]
       });
 
       // Check if the booking exists
@@ -230,7 +183,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
       // Check if the booking or spot belongs to the current user
       if (booking.userId !== user.id && booking.Spot.ownerId !== user.id) {
         return res.status(403).json({
-            message: "Forbidden"
+          message: "Forbidden"
         });
       }
       // Check if the booking belongs to the current user or the associated spot belongs to the current user
@@ -256,3 +209,51 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
 
 
 module.exports = router;
+
+// // Get all of the Current User's Bookings
+// router.get('/current', requireAuth, async (req, res, next) => {
+//   const { user } = req;
+
+//   try {
+//     const bookings = await Booking.findAll({
+//       where: {
+//         userId: user.id
+//       },
+//       include: [
+//         {
+//           model: Spot,
+//           attributes: [
+//             'id',
+//             'ownerId',
+//             'address',
+//             'city',
+//             'state',
+//             'country',
+//             'lat',
+//             'lng',
+//             'name',
+//             'price',
+//             [Sequelize.literal('(SELECT "url" FROM "SpotImages" WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true LIMIT 1)'), 'previewImage']
+//           ]
+//         }
+//       ],
+//       attributes: ['id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt']
+//     });
+
+//     //Reorder the response
+//     const formattedBookings = bookings.map(booking => ({
+//       id: booking.id,
+//       spotId: booking.spotId,
+//       Spot: booking.Spot,
+//       userId: booking.userId,
+//       startDate: booking.startDate,
+//       endDate: booking.endDate,
+//       createdAt: booking.createdAt,
+//       updatedAt: booking.updatedAt
+//     }));
+
+//     res.status(200).json({ Bookings: formattedBookings });
+//   } catch (error) {
+//     return next(error);
+//   }
+// });
