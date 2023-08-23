@@ -33,7 +33,7 @@ const BookingsPage = () => {
     };
 
     return (
-        <div>
+        <div className='bookings-container'>
             <h2>Book your stay</h2>
             <form onSubmit={handleBookingSubmit}>
                 <label htmlFor="startDate">Start Date:</label>
