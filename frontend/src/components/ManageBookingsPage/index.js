@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserAllBookingsThunk } from '../../store/bookings';
 import { Link } from 'react-router-dom';
 import './ManageBookingsPage.css';
+import OpenModalButton from '../OpenModalButton';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
 
 const ManageBookingsPage = () => {
   const dispatch = useDispatch();
@@ -34,9 +36,9 @@ const ManageBookingsPage = () => {
         {Object.values(bookings).map((booking) => (
           <li key={booking.id}>
             <Link to={`/spots/${booking.Spot.id}`} name="booking-tile">
-              <img src={booking.Spot.previewImage} alt={'Spot Thumbnail'} />
+              <img src={booking.Spot?.previewImage} alt={'Spot Thumbnail'} />
             </Link>
-            <div>{booking.Spot.name}</div>
+            <div>{booking.Spot?.name}</div>
             <div>Date: {formatDateRange(booking.startDate, booking.endDate)}</div>
             <div>Length of stay: {lengthOfStay(booking.startDate, booking.endDate)} {lengthOfStay(booking.startDate, booking.endDate) === 1 ? 'day' : 'days'}</div>
             <div>Booking Cost: ${lengthOfStay(booking.startDate, booking.endDate) * booking.Spot.price}</div>
@@ -46,10 +48,10 @@ const ManageBookingsPage = () => {
                 <button>Update</button>
               </Link>
               {/* Delete button */}
-              {/* <OpenModalButton
-                modalComponent={<DeleteConfirmationModal booking={booking} />}
+              <OpenModalButton
+                modalComponent={<DeleteConfirmationModal type='booking' booking={booking} />}
                 buttonText="Delete"
-              /> */}
+              />
             </div>
           </li>
         ))}
