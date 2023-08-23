@@ -38,25 +38,25 @@ export const deleteBookingAction = (bookingId) => {
 
 //                                  Thunks
 //Get All Bookings Thunk
-export const getAllBookingsThunk = () => async (dispatch) => {
-    const response = await csrfFetch('/api/bookings/current');
+export const getAllBookingsThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
     const bookings = await response.json();
     dispatch(getBookingsAction(bookings.Bookings));
     return response;
 };
 
 //Create Booking Thunk
-export const createBookingThunk = (spotId, startDate, endDate) => async (dispatch) => {
-    const response = await csrfFetch('/api/bookings', {
+export const createBookingThunk = (spotId, formData) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ spotId, startDate, endDate }),
+        body: JSON.stringify( formData ),
     });
 
     if (response.ok) {
         const newBooking = await response.json();
-        dispatch(createBookingAction(newBooking));
-        return newBooking;
+        return dispatch(createBookingAction(newBooking));
+        // return newBooking;
     } else {
         const errorData = await response.json();
         return errorData;
@@ -64,11 +64,11 @@ export const createBookingThunk = (spotId, startDate, endDate) => async (dispatc
 };
 
 // Update Booking Thunk
-export const updateBookingThunk = (bookingId, startDate, endDate) => async (dispatch) => {
+export const updateBookingThunk = (bookingId, formData) => async (dispatch) => {
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ startDate, endDate }),
+        body: JSON.stringify(formData),
     });
 
     if (response.ok) {
