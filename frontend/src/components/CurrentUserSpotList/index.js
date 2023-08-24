@@ -49,7 +49,7 @@ const CurrentUserSpotList = () => {
             <div id='UpdateDeleteButtons'>
               <button onClick={() => handleUpdate(spot)}>Update</button>
               <OpenModalButton
-                modalComponent={<DeleteConfirmationModal spot={spot} />}
+                modalComponent={<DeleteConfirmationModal spot={spot} type='spot' />}
                 buttonText="Delete"
               />
             </div>

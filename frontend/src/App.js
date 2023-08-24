@@ -11,6 +11,7 @@ import CurrentUserSpotList from "./components/CurrentUserSpotList";
 import UpdateSpotForm from "./components/UpdateSpotForm";
 import BookingsPage from "./components/BookingsPage";
 import ManageBookingsPage from "./components/ManageBookingsPage";
+import EditBookingsPage from "./components/EditBookingsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/spots/:spotId/edit" component={UpdateSpotForm} />
         <Route exact path="/spots/:spotId" component={SpotDetails} />
         <Route exact path="/spots/:spotId/bookings" component={BookingsPage} />
+        <Route exact path="/bookings/:bookingId/edit" component={EditBookingsPage} />
         <Route exact path="/manage-bookings" component={ManageBookingsPage} />
       </Switch>
       )}
