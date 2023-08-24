@@ -35,13 +35,13 @@ const ManageBookingsPage = () => {
       <ul id='ManageBookingsList'>
         {Object.values(bookings).map((booking) => (
           <li key={booking.id}>
-            <Link to={`/spots/${booking.Spot.id}`} name="booking-tile">
+            <Link to={`/spots/${booking.Spot?.id}`} name="booking-tile">
               <img src={booking.Spot?.previewImage} alt={'Spot Thumbnail'} />
             </Link>
             <div>{booking.Spot?.name}</div>
             <div>Date: {formatDateRange(booking.startDate, booking.endDate)}</div>
             <div>Length of stay: {lengthOfStay(booking.startDate, booking.endDate)} {lengthOfStay(booking.startDate, booking.endDate) === 1 ? 'day' : 'days'}</div>
-            <div>Booking Cost: ${lengthOfStay(booking.startDate, booking.endDate) * booking.Spot.price}</div>
+            <div>Booking Cost: ${lengthOfStay(booking.startDate, booking.endDate) * booking.Spot?.price}</div>
             <div id='UpdateDeleteButtons'>
               {/* Update button */}
               <Link to={`/bookings/${booking.id}/edit`}>

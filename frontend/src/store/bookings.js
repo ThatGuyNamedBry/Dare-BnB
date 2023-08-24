@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 
 // Action Types
 const LOAD_BOOKINGS = 'bookings/LOAD_BOOKINGS';
+const LOAD_BOOKING = 'spots/LOAD_BOOKING';
 const CREATE_BOOKING = 'bookings/CREATE_BOOKING';
 const UPDATE_BOOKING = 'bookings/UPDATE_BOOKING';
 const DELETE_BOOKING = 'bookings/DELETE_BOOKING';
@@ -12,6 +13,13 @@ export const getBookingsAction = (bookings) => {
     return {
         type: LOAD_BOOKINGS,
         payload: bookings,
+    };
+};
+
+export const getBookingByIdAction = (booking) => {
+    return {
+        type: LOAD_BOOKING,
+        payload: booking,
     };
 };
 
@@ -53,6 +61,14 @@ export const getCurrentUserAllBookingsThunk = () => async (dispatch) => {
     return response;
 };
 
+//Get Booking by ID Thunk
+export const getBookingByIdThunk = (bookingId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`);
+    const booking = await response.json();
+    dispatch(getBookingByIdAction(booking));
+    return response;
+};
+
 //Create Booking Thunk
 export const createBookingThunk = (spotId, formData) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
@@ -81,8 +97,8 @@ export const updateBookingThunk = (bookingId, formData) => async (dispatch) => {
 
     if (response.ok) {
         const updatedBooking = await response.json();
-        dispatch(updateBookingAction(updatedBooking));
-        return updatedBooking;
+        return dispatch(updateBookingAction(updatedBooking));
+        // return updatedBooking;
     } else {
         const errorData = await response.json();
         return errorData;
@@ -104,6 +120,7 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
 // Reducer function
 const initialState = {
     allBookings: {},
+    singleBooking: {},
 };
 
 const bookingsReducer = (state = initialState, action) => {
@@ -114,6 +131,8 @@ const bookingsReducer = (state = initialState, action) => {
                 allBookingsObject[booking.id] = booking;
             });
             return { ...state, allBookings: allBookingsObject };
+        case LOAD_BOOKING:
+            return { ...state, singleBooking: {[action.payload.id]: action.payload }};
         case CREATE_BOOKING:
             return { ...state, allBookings: { ...state.allBookings, [action.payload.id]: action.payload } };
         case UPDATE_BOOKING:

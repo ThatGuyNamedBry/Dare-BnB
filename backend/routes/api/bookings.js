@@ -81,7 +81,27 @@ router.get('/current', requireAuth, async (req, res, next) => {
   }
 });
 
+// Get a single booking by ID
+router.get('/:bookingId', async (req, res, next) => {
+  const { bookingId } = req.params;
 
+  try {
+    const booking = await Booking.findByPk(bookingId);
+
+    if (!booking) {
+      return res.status(404).json({
+        message: 'Booking not found',
+        errors: {booking: 'Booking not found'}
+      });
+    }
+
+    res.status(200).json(booking);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
 
 // Edit a booking
 router.put('/:bookingId', requireAuth, async (req, res, next) => {
@@ -96,25 +116,35 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     // Check if the booking exists
       if (!booking) {
-        return res.status(404).json({ message: "Booking couldn't be found" });
+        return res.status(404).json({ message: "Booking couldn't be found", errors: {booking: "Booking couldn't be found"} });
       }
 
       // Check if the booking belongs to the current user
       if (booking.userId !== user.id) {
         return res.status(403).json({
-          message: "Forbidden"
+          message: "Forbidden",
+          errors: {forbidden: "You are not authorized to edit this booking"}
         });
       }
 
       // Check if the booking is in the past
       const currentDate = new Date();
       if (booking.endDate < currentDate) {
-        return res.status(403).json({ message: "Past bookings can't be modified" });
+        return res.status(403).json({
+          message: "Past bookings can't be modified",
+          errors: {pastBooking: "Past bookings can't be modified"}
+        });
       }
 
       // Check if there is a booking conflict
       const existingBooking = await Booking.findOne({
         where: {
+          id: {
+            [Op.ne]: bookingId
+          },
+          userId: {
+            [Op.ne]: user.id
+          },
           [Op.or]: [
             {
               startDate: {
@@ -178,7 +208,10 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
 
       // Check if the booking exists
       if (!booking) {
-        return res.status(404).json({ message: "Booking couldn't be found" });
+        return res.status(404).json({
+          message: "Booking couldn't be found",
+          errors: {booking: "Booking couldn't be found"}
+        });
       }
       // Check if the booking or spot belongs to the current user
       if (booking.userId !== user.id && booking.Spot.ownerId !== user.id) {
