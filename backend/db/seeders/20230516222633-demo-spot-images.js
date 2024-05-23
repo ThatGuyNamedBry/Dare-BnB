@@ -56,7 +56,7 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: 'https://cdn.thecoolist.com/wp-content/uploads/2016/10/New-York-State-of-Mind-halloween-decorations.jpg',
+        url: 'https://thinkingerrorfree.wordpress.com/wp-content/uploads/2018/10/new-york-state-of-mind-halloween-decorations-960x640.jpg',
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date()
