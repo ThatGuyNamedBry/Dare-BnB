@@ -63,21 +63,21 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom8.png',
+        url: 'https://images.squarespace-cdn.com/content/v1/63ec08a7fa1d1a1947280fc6/1708128999893-YIGD2VY9EHOUZYKFYCY4/halloween-2021-home-tour-bedroom8.png',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom9.png',
+        url: 'https://images.squarespace-cdn.com/content/v1/63ec08a7fa1d1a1947280fc6/1708129070772-NJWZT0SRHY94BMUWHCS0/halloween-2021-home-tour-bedroom9.png',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         spotId: 2,
-        url: 'https://spookylittlehalloween.com/wp-content/uploads/2021/10/halloween-2021-home-tour-bedroom7.png',
+        url: 'https://images.squarespace-cdn.com/content/v1/63ec08a7fa1d1a1947280fc6/1708128999689-SOCJK6K21T8KRKUI5X5A/halloween-2021-home-tour-bedroom7.png',
         preview: false,
         createdAt: new Date(),
         updatedAt: new Date()
