@@ -80,6 +80,90 @@ module.exports = {
         description: 'Do you have what it takes to stay the night in the very house Insidious Chapter 2 was filmed in? Located in Highland Park, come check out the surreal Insidious house and get the chills running up your spine from the eerie feeling you are being watched.',
         price: 242
       },
+      {
+        ownerId: 3,
+        address: '666 Elm St',
+        city: 'Springwood',
+        state: 'OH',
+        country: 'USA',
+        lat: 41.1236,
+        lng: -81.6589,
+        name: 'Freddy\'s Nightmare House',
+        description: 'Face your fears in this nightmarish home where Freddy Krueger was said to haunt. Perfect for thrill-seekers looking to spend a night on Elm Street.',
+        price: 320
+      },
+      {
+        ownerId: 3,
+        address: '1313 Mockingbird Lane',
+        city: 'Mockingbird Heights',
+        state: 'CA',
+        country: 'USA',
+        lat: 34.0522,
+        lng: -118.2437,
+        name: 'The Munster Mansion',
+        description: 'Stay in the iconic Munster Mansion. This Gothic-style home offers a spooky yet charming atmosphere, perfect for fans of the classic TV show.',
+        price: 270
+      },
+      {
+        ownerId: 3,
+        address: '14 W Elm St',
+        city: 'Amityville',
+        state: 'NY',
+        country: 'USA',
+        lat: 40.6782,
+        lng: -73.9442,
+        name: 'Amityville Horror House',
+        description: 'Dare to stay in the infamous Amityville Horror House. Known for its eerie past, this house is sure to give you chills with its mysterious and haunted history.',
+        price: 350
+      },
+      {
+        ownerId: 3,
+        address: '1007 Mountain Dr',
+        city: 'Gotham City',
+        state: 'NJ',
+        country: 'USA',
+        lat: 40.7128,
+        lng: -74.0059,
+        name: 'Wayne Manor',
+        description: 'Experience luxury with a spooky twist in Wayne Manor. Rumors say the mansion is haunted by the ghosts of the Wayne family and a giant bat creature.',
+        price: 400
+      },
+      {
+        ownerId: 3,
+        address: '777 Frankenstein St',
+        city: 'Transylvania',
+        state: 'TR',
+        country: 'Romania',
+        lat: 45.9432,
+        lng: 24.9668,
+        name: 'Dr. Frankenstein\'s Castle',
+        description: 'Stay in the legendary castle of Dr. Frankenstein. This ancient fortress offers a chilling ambiance and spectacular views of the Carpathian Mountains.',
+        price: 450
+      },
+      {
+        ownerId: 3,
+        address: '500 Addams Family Rd',
+        city: 'Westfield',
+        state: 'NJ',
+        country: 'USA',
+        lat: 40.6584,
+        lng: -74.3496,
+        name: 'Addams Family Mansion',
+        description: 'Join the creepy and kooky Addams Family for a stay in their mysterious mansion. With hidden rooms and a gothic atmosphere, this is a place you won’t forget.',
+        price: 390
+      },
+      {
+        ownerId: 3,
+        address: '13 Ghosts Ln',
+        city: 'Willows Grove',
+        state: 'PA',
+        country: 'USA',
+        lat: 40.2732,
+        lng: -76.8867,
+        name: '13 Ghosts House',
+        description: 'Enter if you dare! This house is known to be haunted by 13 ghosts, each with their own terrifying story. Perfect for ghost hunters and brave souls.',
+        price: 310
+      },
     ], {});
   },
 

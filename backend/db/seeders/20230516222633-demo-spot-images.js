@@ -166,7 +166,70 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-
+      {
+        spotId: 6,
+        url: 'https://townsquare.media/site/442/files/2021/10/attachment-Nightmare-on-Elm-Street.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 7,
+        url: 'https://img.texasmonthly.com/2021/10/munster-house.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 7,
+        url: 'https://img.texasmonthly.com/2021/10/munster-house-interior.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 8,
+        url: 'https://hips.hearstapps.com/clv.h-cdn.co/assets/17/42/2560x1826/creepy-house-amityville-horror-house-new-york-paul-hawthornegetty-images.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 9,
+        url: 'https://static.wikia.nocookie.net/darians-dc-extended-universe/images/f/f3/Wayne_manor.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 10,
+        url: 'https://media-cdn.tripadvisor.com/media/photo-s/15/13/b0/33/frankenstein-castle-in.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 11,
+        url: 'https://m.media-amazon.com/images/M/MV5BOWM4ZDZjMjEtYzFkMC00NDUwLThmNDctODQzZjc2MWI3OWU5XkEyXkFqcGdeQXVyOTc5MDI5NjE@._V1_.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 12,
+        url: 'https://static.wikia.nocookie.net/evil/images/a/a9/The_Basileus_Machine.jpg',
+        preview: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        spotId: 12,
+        url: 'https://static.wikia.nocookie.net/evil/images/9/98/Inside_the_Glass_House.jpg',
+        preview: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      
     ], {});
   },
 
