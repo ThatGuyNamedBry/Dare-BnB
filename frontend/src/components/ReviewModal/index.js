@@ -26,22 +26,23 @@ function ReviewModal({ spotId, disabled }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const formData = {
       review,
       stars,
     };
-
+    
     dispatch(createReviewThunk(spotId, formData))
-      .then(() => {
-        closeModal();
-      })
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+    .then(() => {
+      closeModal();
+    })
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) {
+        setErrors(data.errors);
+      }
+    });
+    dispatch(getSpotByIdThunk(spotId)); // Update spot with new review
   };
 
   const renderStars = () => {
